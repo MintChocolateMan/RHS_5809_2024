@@ -302,7 +302,7 @@ public class COTSTalonFXSwerveConstants {
                 /** SDS MK4i - (6.75 : 1) */
                 public static final double L2 = (6.75 / 1.0);
                 /** SDS MK4i - (6.12 : 1) */
-                public static final double L3 = (6.12 / 1.0);
+                public static final double L3 = (6.69 / 1.0);//TODO change gear ratio because custom lol
             }
         }
     }

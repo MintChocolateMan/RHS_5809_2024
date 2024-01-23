@@ -21,6 +21,9 @@ public class SwerveModule {
     private TalonFX mDriveMotor;
     private CANcoder angleEncoder;
 
+    private boolean driveInverted;
+    private boolean angleInverted;
+
     private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
     /* drive motor control requests */
@@ -33,6 +36,8 @@ public class SwerveModule {
     public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants){
         this.moduleNumber = moduleNumber;
         this.angleOffset = moduleConstants.angleOffset;
+        this.driveInverted = moduleConstants.driveInverted;
+        this.angleInverted = moduleConstants.angleInverted;
         
         /* Angle Encoder Config */
         angleEncoder = new CANcoder(moduleConstants.cancoderID);
@@ -42,11 +47,13 @@ public class SwerveModule {
         mAngleMotor = new TalonFX(moduleConstants.angleMotorID);
         mAngleMotor.getConfigurator().apply(Robot.ctreConfigs.swerveAngleFXConfig);
         resetToAbsolute();
+        mAngleMotor.setInverted(angleInverted);
 
         /* Drive Motor Config */
         mDriveMotor = new TalonFX(moduleConstants.driveMotorID);
         mDriveMotor.getConfigurator().apply(Robot.ctreConfigs.swerveDriveFXConfig);
         mDriveMotor.getConfigurator().setPosition(0.0);
+        mDriveMotor.setInverted(driveInverted);
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
