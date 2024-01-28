@@ -152,4 +152,16 @@ public final class Constants {
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
+
+    public static final class PathPlanner {
+        public static final double kPTranslation = 5.0;
+        public static final double kITranslation = 0.0;
+        public static final double kDTranslation = 0.0;
+        public static final double kPRotation = 5.0;
+        public static final double kIRotation = 0.0;
+        public static final double kDRotation = 0.0;
+
+        public static final double maxModuleSpeed = 4.5;
+        public static final double driveBaseRadius = 0.82;
+    }
 }

@@ -1,5 +1,9 @@
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.Joystick;
@@ -10,7 +14,6 @@ import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
-
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -18,6 +21,9 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+    /* Auto Chooser */
+    private final SendableChooser<Command> autoChooser;
+    
     /* Controllers */
     private final XboxController driver = new XboxController(0);
 
@@ -45,6 +51,11 @@ public class RobotContainer {
                 () -> robotCentric.getAsBoolean()
             )
         );
+        
+        // Build an auto chooser. This will use Commands.none() as the default option.
+        // Optionally use .buildAutoChooser("Default Auto") to specify a default auto
+        autoChooser = AutoBuilder.buildAutoChooser(); 
+        SmartDashboard.putData("Auto Chooser:", autoChooser);
 
         // Configure the button bindings
         configureButtonBindings();
@@ -67,7 +78,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return new exampleAuto(s_Swerve);
+        return autoChooser.getSelected();
     }
 }
