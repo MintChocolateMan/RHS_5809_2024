@@ -162,6 +162,6 @@ public final class Constants {
         public static final double kDRotation = 0.0;
 
         public static final double maxModuleSpeed = 4.5;
-        public static final double driveBaseRadius = 0.82;
+        public static final double driveBaseRadius = 0.41;
     }
 }
