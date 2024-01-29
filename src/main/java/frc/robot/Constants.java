@@ -18,6 +18,9 @@ public final class Constants {
     public static final class Swerve {
         public static final int pigeonID = 13; //TODO pigeon id
 
+        public static final double translationSensitivity = .5;
+        public static final double rotationSensitivity = 1;
+
         public static final COTSTalonFXSwerveConstants chosenModule = 
         COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L3);
 
