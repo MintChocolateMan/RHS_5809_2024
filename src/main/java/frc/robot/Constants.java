@@ -18,7 +18,7 @@ public final class Constants {
     public static final class Swerve {
         public static final int pigeonID = 13; //TODO pigeon id
 
-        public static final double translationSensitivity = .5;
+        public static final double translationSensitivity = 0.5;
         public static final double rotationSensitivity = 1;
 
         public static final COTSTalonFXSwerveConstants chosenModule = 
@@ -84,7 +84,7 @@ public final class Constants {
         /** Meters per Second */
         public static final double maxSpeed = 5.5; //normally 5.5 TODO: This must be tuned to specific robot
         /** Radians per Second */
-        public static final double maxAngularVelocity = 4.0; //TODO: This must be tuned to specific robot
+        public static final double maxAngularVelocity = 6.0; //TODO: This must be tuned to specific robot
 
         /* Neutral Modes */
         public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Coast;

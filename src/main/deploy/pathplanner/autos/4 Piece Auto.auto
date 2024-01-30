@@ -1,0 +1,67 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.37,
+      "y": 5.57
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Speaker to Center Note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Drive Over Center Note"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Note to Left Note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Drive Over Left Note"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Note to Right Note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Drive Over Right Note"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
