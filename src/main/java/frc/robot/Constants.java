@@ -167,4 +167,10 @@ public final class Constants {
         public static final double maxModuleSpeed = 4.5;
         public static final double driveBaseRadius = 0.41;
     }
+
+    public static final class IntakeSub {
+        public static final int intakeMotorID = 0; // TODO
+        public static final double intakeMotorSpeed = 1;
+        public static final boolean intakeMotorReversed = false;
+    }
 }
