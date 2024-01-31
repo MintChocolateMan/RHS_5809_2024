@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -9,8 +10,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -36,9 +37,12 @@ public class RobotContainer {
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
+    /* Operator Buttons */
+    private final JoystickButton intakeOn = new JoystickButton(driver, XboxController.Button.kB.value);
+
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
-
+    private final IntakeSub i_Intake = new IntakeSub();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -51,7 +55,11 @@ public class RobotContainer {
                 () -> robotCentric.getAsBoolean()
             )
         );
-        
+
+        /* Register Commands with PathPlanner */
+        NamedCommands.registerCommand("IntakeOn", i_Intake.IntakeOn());
+        NamedCommands.registerCommand("IntakeOff", i_Intake.IntakeOff());
+
         // Build an auto chooser. This will use Commands.none() as the default option.
         // Optionally use .buildAutoChooser("Default Auto") to specify a default auto
         autoChooser = AutoBuilder.buildAutoChooser(); 
@@ -70,6 +78,9 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+
+        /* Operator Buttons */
+        intakeOn.whileTrue(new IntakeOnHoldCommand(i_Intake));
     }
 
     /**

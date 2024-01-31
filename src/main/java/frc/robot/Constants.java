@@ -18,6 +18,9 @@ public final class Constants {
     public static final class Swerve {
         public static final int pigeonID = 13; //TODO pigeon id
 
+        public static final double translationSensitivity = 0.5;
+        public static final double rotationSensitivity = 1;
+
         public static final COTSTalonFXSwerveConstants chosenModule = 
         COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L3);
 
@@ -81,7 +84,7 @@ public final class Constants {
         /** Meters per Second */
         public static final double maxSpeed = 5.5; //normally 5.5 TODO: This must be tuned to specific robot
         /** Radians per Second */
-        public static final double maxAngularVelocity = 4.0; //TODO: This must be tuned to specific robot
+        public static final double maxAngularVelocity = 6.0; //TODO: This must be tuned to specific robot
 
         /* Neutral Modes */
         public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Coast;
@@ -163,5 +166,11 @@ public final class Constants {
 
         public static final double maxModuleSpeed = 4.5;
         public static final double driveBaseRadius = 0.41;
+    }
+
+    public static final class IntakeSub {
+        public static final int intakeMotorID = 42; // TODO
+        public static final double intakeMotorSpeed = 1;
+        public static final boolean intakeMotorReversed = false;
     }
 }
