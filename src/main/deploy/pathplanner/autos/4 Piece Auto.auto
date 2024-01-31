@@ -24,9 +24,21 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "IntakeOn"
+          }
+        },
+        {
           "type": "wait",
           "data": {
             "waitTime": 1.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeOff"
           }
         },
         {
@@ -42,9 +54,27 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Turn 30 Deg Right"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeOn"
+          }
+        },
+        {
           "type": "wait",
           "data": {
             "waitTime": 1.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeOff"
           }
         },
         {
@@ -57,6 +87,30 @@
           "type": "path",
           "data": {
             "pathName": "Drive Over Right Note"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Turn 30 Deg Left"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeOn"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeOff"
           }
         }
       ]

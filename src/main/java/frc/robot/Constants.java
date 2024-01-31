@@ -169,7 +169,7 @@ public final class Constants {
     }
 
     public static final class IntakeSub {
-        public static final int intakeMotorID = 0; // TODO
+        public static final int intakeMotorID = 42; // TODO
         public static final double intakeMotorSpeed = 1;
         public static final boolean intakeMotorReversed = false;
     }

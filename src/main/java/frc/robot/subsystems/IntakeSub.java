@@ -16,6 +16,14 @@ public class IntakeSub extends SubsystemBase {
         intakeMotor.setInverted(Constants.IntakeSub.intakeMotorReversed);
     }
 
+    public void intakeMotorOn() {
+        intakeMotor.set(Constants.IntakeSub.intakeMotorSpeed);
+    }
+
+    public void intakeMotorOff() {
+        intakeMotor.set(0);
+    }
+
     public Command IntakeOn() {
         return runOnce(() -> {
             intakeMotor.set(Constants.IntakeSub.intakeMotorSpeed);
