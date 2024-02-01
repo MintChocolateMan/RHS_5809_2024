@@ -36,6 +36,7 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton TeleopShooterAutoAim = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
     /* Operator Buttons */
     private final JoystickButton intakeOn = new JoystickButton(driver, XboxController.Button.kB.value);
@@ -43,9 +44,11 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final IntakeSub i_Intake = new IntakeSub();
+    private final ShooterCameraSub c_ShooterCamera = new ShooterCameraSub();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
@@ -78,6 +81,12 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+        
+        TeleopShooterAutoAim.onTrue(new TeleopAutoAim(c_ShooterCamera, s_Swerve,
+            () -> -driver.getRawAxis(translationAxis),
+            () -> -driver.getRawAxis(strafeAxis),
+            () -> -driver.getRawAxis(rotationAxis)
+        ));
 
         /* Operator Buttons */
         intakeOn.whileTrue(new IntakeOnHoldCommand(i_Intake));
