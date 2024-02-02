@@ -20,7 +20,7 @@ public class TeleopAutoAim extends Command {
     private DoubleSupplier rotationSup;
     private double rotationVal;
 
-    PIDController rotationController = new PIDController(.5, 0, 0);
+    PIDController rotationController = new PIDController(.01, 0, 0);
 
     public TeleopAutoAim(ShooterCameraSub c_ShooterCameraSub, Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup) {
         this.c_ShooterCameraSub = c_ShooterCameraSub;
@@ -40,7 +40,7 @@ public class TeleopAutoAim extends Command {
         
 
         if(c_ShooterCameraSub.driverCameraHasTarget()) {
-            rotationVal = -rotationController.calculate(c_ShooterCameraSub.driverCameraGetYaw());
+            rotationVal = rotationController.calculate(c_ShooterCameraSub.driverCameraGetYaw());
         } else {
             rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
         }
