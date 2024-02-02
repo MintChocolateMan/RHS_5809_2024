@@ -5,15 +5,17 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.photonvision.PhotonCamera;
 
 public class ShooterCameraSub extends SubsystemBase {
-  
+
   PhotonCamera driverCamera;
 
   public ShooterCameraSub() {
 
-    driverCamera = new PhotonCamera("Camera");
+    PhotonCamera driverCamera = new PhotonCamera("driverCamera");
 
   }
 
@@ -47,6 +49,10 @@ public class ShooterCameraSub extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if (driverCameraHasTarget()) {
+      SmartDashboard.putNumber("TargetYaw ", driverCameraGetYaw());
+    }
+    //SmartDashboard.putNumber("TargetYaw ", driverCameraGetYaw());
     // This method will be called once per scheduler run
   }
 

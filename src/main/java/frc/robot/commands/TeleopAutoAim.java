@@ -18,10 +18,9 @@ public class TeleopAutoAim extends Command {
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
-    private BooleanSupplier robotCentricSup;
     private double rotationVal;
 
-    PIDController rotationController = new PIDController(0, 0, 0);
+    PIDController rotationController = new PIDController(.5, 0, 0);
 
     public TeleopAutoAim(ShooterCameraSub c_ShooterCameraSub, Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup) {
         this.c_ShooterCameraSub = c_ShooterCameraSub;
