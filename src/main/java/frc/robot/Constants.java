@@ -13,7 +13,27 @@ import frc.lib.util.COTSTalonFXSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
+    
     public static final double stickDeadband = 0.1;
+
+    public static final class IntakeSub {
+        public static final int intakeMotorID = 42;
+        public static final double intakeMotorSpeed = 1;
+        public static final boolean intakeMotorReversed = false;
+        public static final int lineBreakerID = 1;
+    }
+
+    public static final class PathPlanner {
+        public static final double kPTranslation = 5.0;
+        public static final double kITranslation = 0.0;
+        public static final double kDTranslation = 0.0;
+        public static final double kPRotation = 5.0;
+        public static final double kIRotation = 0.0;
+        public static final double kDRotation = 0.0;
+
+        public static final double maxModuleSpeed = 4.5;
+        public static final double driveBaseRadius = 0.41;
+    }
 
     public static final class Swerve {
         public static final int pigeonID = 13; //TODO pigeon id
@@ -22,7 +42,7 @@ public final class Constants {
         public static final double rotationSensitivity = 1;
 
         public static final COTSTalonFXSwerveConstants chosenModule = 
-        COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L3);
+        COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
 
         /* Drivetrain Constants */
         public static final double trackWidth = Units.inchesToMeters(22.875); //TODO: This must be tuned to specific robot
@@ -140,6 +160,7 @@ public final class Constants {
         }
     }
 
+    //ALL AUTOCONSTANTS UNUSED
     public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
         public static final double kMaxSpeedMetersPerSecond = 5.5;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
@@ -154,23 +175,5 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
-    }
-
-    public static final class PathPlanner {
-        public static final double kPTranslation = 5.0;
-        public static final double kITranslation = 0.0;
-        public static final double kDTranslation = 0.0;
-        public static final double kPRotation = 5.0;
-        public static final double kIRotation = 0.0;
-        public static final double kDRotation = 0.0;
-
-        public static final double maxModuleSpeed = 4.5;
-        public static final double driveBaseRadius = 0.41;
-    }
-
-    public static final class IntakeSub {
-        public static final int intakeMotorID = 42; // TODO
-        public static final double intakeMotorSpeed = 1;
-        public static final boolean intakeMotorReversed = false;
-    }
+    }  
 }

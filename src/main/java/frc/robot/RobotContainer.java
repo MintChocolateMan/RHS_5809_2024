@@ -42,17 +42,16 @@ public class RobotContainer {
     private final JoystickButton intakeOn = new JoystickButton(driver, XboxController.Button.kB.value);
 
     /* Subsystems */
-    private final Swerve s_Swerve = new Swerve();
-    private final IntakeSub i_Intake = new IntakeSub();
+    private final SwerveSub SwerveSub = new SwerveSub();
+    private final IntakeSub IntakeSub = new IntakeSub();
     private final ShooterCameraSub c_ShooterCamera = new ShooterCameraSub();
-    private final LineBreakerSub l_LineBreaker = new LineBreakerSub();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
 
-        s_Swerve.setDefaultCommand(
+        SwerveSub.setDefaultCommand(
             new TeleopSwerve(
-                s_Swerve, 
+                SwerveSub, 
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
@@ -61,8 +60,8 @@ public class RobotContainer {
         );
 
         /* Register Commands with PathPlanner */
-        NamedCommands.registerCommand("IntakeOn", i_Intake.IntakeOn());
-        NamedCommands.registerCommand("IntakeOff", i_Intake.IntakeOff());
+        NamedCommands.registerCommand("IntakeOn", IntakeSub.IntakeOn());
+        NamedCommands.registerCommand("IntakeOff", IntakeSub.IntakeOff());
 
         // Build an auto chooser. This will use Commands.none() as the default option.
         // Optionally use .buildAutoChooser("Default Auto") to specify a default auto
@@ -81,16 +80,16 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+        zeroGyro.onTrue(new InstantCommand(() -> SwerveSub.zeroHeading()));
         
-        TeleopShooterAutoAim.onTrue(new TeleopAutoAim(c_ShooterCamera, s_Swerve,
+        TeleopShooterAutoAim.onTrue(new TeleopAutoAim(c_ShooterCamera, SwerveSub,
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis),
             () -> -driver.getRawAxis(rotationAxis)
         ));
 
         /* Operator Buttons */
-        intakeOn.whileTrue(new IntakeOnHoldCommand(i_Intake));
+        intakeOn.whileTrue(new IntakeOnHoldCommand(IntakeSub));
     }
 
     /**

@@ -7,14 +7,14 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.SwerveSub;
 import frc.robot.subsystems.ShooterCameraSub;
 import edu.wpi.first.math.controller.PIDController;
 
 
 public class TeleopAutoAim extends Command {    
     private ShooterCameraSub c_ShooterCameraSub;
-    private Swerve s_Swerve;    
+    private SwerveSub s_Swerve;    
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
@@ -22,7 +22,7 @@ public class TeleopAutoAim extends Command {
 
     PIDController rotationController = new PIDController(.01, 0, 0);
 
-    public TeleopAutoAim(ShooterCameraSub c_ShooterCameraSub, Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup) {
+    public TeleopAutoAim(ShooterCameraSub c_ShooterCameraSub, SwerveSub s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup) {
         this.c_ShooterCameraSub = c_ShooterCameraSub;
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve, c_ShooterCameraSub);
