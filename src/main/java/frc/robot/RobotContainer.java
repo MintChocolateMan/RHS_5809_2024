@@ -45,6 +45,7 @@ public class RobotContainer {
     private final Swerve s_Swerve = new Swerve();
     private final IntakeSub i_Intake = new IntakeSub();
     private final ShooterCameraSub c_ShooterCamera = new ShooterCameraSub();
+    private final LineBreakerSub l_LineBreaker = new LineBreakerSub();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
