@@ -44,7 +44,7 @@ public class RobotContainer {
     /* Subsystems */
     private final SwerveSub SwerveSub = new SwerveSub();
     private final IntakeSub IntakeSub = new IntakeSub();
-    private final ShooterCameraSub c_ShooterCamera = new ShooterCameraSub();
+    private final CameraSub CameraSub = new CameraSub();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -82,7 +82,7 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> SwerveSub.zeroHeading()));
         
-        TeleopShooterAutoAim.onTrue(new TeleopAutoAim(c_ShooterCamera, SwerveSub,
+        TeleopShooterAutoAim.onTrue(new TeleopAutoAim(CameraSub, SwerveSub,
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis),
             () -> -driver.getRawAxis(rotationAxis)
