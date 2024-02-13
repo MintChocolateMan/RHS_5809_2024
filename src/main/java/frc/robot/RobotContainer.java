@@ -50,7 +50,7 @@ public class RobotContainer {
     public RobotContainer() {
 
         SwerveSub.setDefaultCommand(
-            new TeleopSwerve(
+            new s_TeleopSwerve(
                 SwerveSub, 
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
@@ -89,7 +89,7 @@ public class RobotContainer {
         ));
 
         /* Operator Buttons */
-        intakeOn.whileTrue(new IntakeOnHoldCommand(IntakeSub));
+        intakeOn.whileTrue(new i_TeleopIntake(IntakeSub));
     }
 
     /**

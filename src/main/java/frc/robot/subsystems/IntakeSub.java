@@ -40,13 +40,13 @@ public class IntakeSub extends SubsystemBase {
     //Declare inline Commands
     public Command IntakeOn() {
         return runOnce(() -> {
-            intakeMotor.set(Constants.IntakeSub.intakeMotorSpeed);
+            intakeMotorOn();
         });
     }
 
     public Command IntakeOff() {
         return runOnce(() -> {
-            intakeMotor.set(0);
+            intakeMotorOff();
         });
     }
 
