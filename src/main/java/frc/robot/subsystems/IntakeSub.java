@@ -13,7 +13,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 public class IntakeSub extends SubsystemBase {
 
     //Declare motors and sensors
-    TalonFX intakeMotor;
+    private TalonFX intakeMotor;
     private DigitalInput lineBreaker;
     
     public IntakeSub() { //Subsystem constructor

@@ -35,6 +35,10 @@ public final class Constants {
         public static final double driveBaseRadius = 0.41;
     }
 
+    public static final class PoseEstimatorSub {
+        public static final int gyroID = 13;
+    }
+
     public static final class Swerve {
         public static final int pigeonID = 13; //TODO pigeon id
 
