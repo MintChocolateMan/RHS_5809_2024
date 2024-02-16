@@ -10,22 +10,22 @@ import frc.robot.Constants;
 import frc.robot.subsystems.SwerveSub;
 import frc.robot.subsystems.ShooterCameraSub;
 import edu.wpi.first.math.controller.PIDController;
+import frc.robot.subsystems.CameraSub;
 
 
 public class TeleopAutoAim extends Command {    
-    private ShooterCameraSub c_ShooterCameraSub;
-    private SwerveSub s_Swerve;    
+    private CameraSub CameraSub;
+    private SwerveSub SwerveSub;    
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
-    private double rotationVal;
 
     PIDController rotationController = new PIDController(.01, 0, 0);
 
-    public TeleopAutoAim(ShooterCameraSub c_ShooterCameraSub, SwerveSub s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup) {
-        this.c_ShooterCameraSub = c_ShooterCameraSub;
-        this.s_Swerve = s_Swerve;
-        addRequirements(s_Swerve, c_ShooterCameraSub);
+    public TeleopAutoAim(CameraSub CameraSub, SwerveSub SwerveSub, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup) {
+        this.CameraSub = CameraSub;
+        this.SwerveSub = SwerveSub;
+        addRequirements(SwerveSub);
 
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
@@ -37,15 +37,15 @@ public class TeleopAutoAim extends Command {
         /* Get Values, Deadband*/
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
-        
+        double rotationVal;
 
-        if(c_ShooterCameraSub.driverCameraHasTarget()) {
-            rotationVal = rotationController.calculate(c_ShooterCameraSub.driverCameraGetYaw());
+        if(CameraSub.shooterCamHasTarget()) {
+            rotationVal = rotationController.calculate(CameraSub.shooterCamGetYaw());
         } else {
             rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
         }
 
-        s_Swerve.drive(
+        SwerveSub.drive(
             new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
             rotationVal * Constants.Swerve.maxAngularVelocity, 
             true,

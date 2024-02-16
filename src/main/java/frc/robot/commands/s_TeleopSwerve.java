@@ -10,14 +10,14 @@ import frc.robot.Constants;
 import frc.robot.subsystems.SwerveSub;
 
 
-public class TeleopSwerve extends Command {    
+public class s_TeleopSwerve extends Command {    
     private SwerveSub s_Swerve;    
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
     private BooleanSupplier robotCentricSup;
 
-    public TeleopSwerve(SwerveSub s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
+    public s_TeleopSwerve(SwerveSub s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
