@@ -23,6 +23,22 @@ public final class Constants {
         public static final int lineBreakerID = 1;
     }
 
+    public static final class ShooterSub {
+        public static final int topMotorID = 0;
+        public static final int bottomMotorID = 0;
+        public static final boolean topMotorInverted = false;
+        public static final boolean bottomMotorInverted = false;
+        public static final double shooterSpeed = 5.0;
+    }
+
+    public static final class PneumaticSub {
+        public static final int pneumaticHubID = 0;
+        public static final int leftClimberForwardID = 0;
+        public static final int leftClimberReverseID = 0;
+        public static final int rightClimberForwardID = 0;
+        public static final int rightClimberReverseID = 0;
+    }
+
     public static final class PathPlanner {
         public static final double kPTranslation = 5.0;
         public static final double kITranslation = 0.0;

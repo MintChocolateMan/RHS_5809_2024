@@ -11,11 +11,11 @@ import org.photonvision.PhotonCamera;
 public class CameraSub extends SubsystemBase {
 
     //Declare motors and sensors
-    PhotonCamera shooterCam = new PhotonCamera("shooterCamera");
+    PhotonCamera shooterCam;
     
     public CameraSub() { //Subsystem constructor
         //Initialize motors and sensors
-        PhotonCamera shooterCam = new PhotonCamera("shooterCamera");
+        PhotonCamera shooterCam = new PhotonCamera("shooterCam");
     }
 
     //Declare subsystem suppliers
