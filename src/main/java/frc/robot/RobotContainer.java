@@ -36,7 +36,7 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton TeleopShooterAutoAim = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    //private final JoystickButton TeleopShooterAutoAim = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
     /* Operator Buttons */
     private final JoystickButton intakeOn = new JoystickButton(driver, XboxController.Button.kB.value);
@@ -48,7 +48,7 @@ public class RobotContainer {
     private final IntakeSub IntakeSub = new IntakeSub();
     private final ShooterSub ShooterSub = new ShooterSub();
     private final PneumaticSub PneumaticSub = new PneumaticSub();
-    private final CameraSub CameraSub = new CameraSub();
+    //private final CameraSub CameraSub = new CameraSub();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -86,11 +86,11 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> SwerveSub.zeroHeading()));
         
-        TeleopShooterAutoAim.onTrue(new TeleopAutoAim(CameraSub, SwerveSub,
+        /*TeleopShooterAutoAim.onTrue(new TeleopAutoAim(CameraSub, SwerveSub,
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis),
             () -> -driver.getRawAxis(rotationAxis)
-        ));
+        ));*/
 
         /* Operator Buttons */
         intakeOn.whileTrue(new i_TeleopIntake(IntakeSub));
