@@ -18,17 +18,19 @@ public final class Constants {
 
     public static final class IntakeSub {
         public static final int intakeMotorID = 10;
-        public static final double intakeMotorSpeed = 1;
-        public static final boolean intakeMotorReversed = false;
+        public static final double intakeMotorSpeed = .8;
+        public static final boolean intakeMotorReversed = true;
         public static final int lineBreakerID = 1;
     }
 
     public static final class ShooterSub {
         public static final int topMotorID = 11; //left motor
         public static final int bottomMotorID = 12; //right motor
-        public static final boolean topMotorInverted = false;
-        public static final boolean bottomMotorInverted = false;
-        public static final double shooterSpeed = 5.0;
+        public static final boolean topMotorInverted = true;
+        public static final boolean bottomMotorInverted = true;
+        public static final double shootSpeed = .8;
+        public static final double intakeSpeed = .2;
+        public static final NeutralModeValue motorNeutralMode = NeutralModeValue.Brake;
     }
 
     public static final class PneumaticSub {
@@ -47,7 +49,7 @@ public final class Constants {
         public static final double kIRotation = 0.0;
         public static final double kDRotation = 0.0;
 
-        public static final double maxModuleSpeed = 4.5;
+        public static final double maxModuleSpeed = 5.5;
         public static final double driveBaseRadius = 0.41;
     }
 

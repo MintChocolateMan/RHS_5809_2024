@@ -39,15 +39,17 @@ public class RobotContainer {
     //private final JoystickButton TeleopShooterAutoAim = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
     /* Operator Buttons */
-    private final JoystickButton intakeOn = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton intakeIntake = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton intakeOuttake = new JoystickButton(driver, XboxController.Button.)
     private final JoystickButton shooterShoot = new JoystickButton(driver, XboxController.Button.kA.value);
-    private final JoystickButton climbersExtend = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton shooterIntake = new JoystickButton(driver, XboxController.Button.kX.value);
+    //private final JoystickButton climbersExtend = new JoystickButton(driver, XboxController.Button.kX.value);
 
     /* Subsystems */
     private final SwerveSub SwerveSub = new SwerveSub();
     private final IntakeSub IntakeSub = new IntakeSub();
     private final ShooterSub ShooterSub = new ShooterSub();
-    private final PneumaticSub PneumaticSub = new PneumaticSub();
+    //private final PneumaticSub PneumaticSub = new PneumaticSub();
     //private final CameraSub CameraSub = new CameraSub();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -95,7 +97,8 @@ public class RobotContainer {
         /* Operator Buttons */
         intakeOn.whileTrue(new i_TeleopIntake(IntakeSub));
         shooterShoot.whileTrue(new s_ShooterShoot(ShooterSub));
-        climbersExtend.whileTrue(new p_ClimbersExtend(PneumaticSub));
+        shooterIntake.whileTrue(new s_ShooterIntake(ShooterSub));
+        //climbersExtend.whileTrue(new p_ClimbersExtend(PneumaticSub));
     }
 
     /**

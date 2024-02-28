@@ -3,12 +3,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class s_ShooterShoot extends Command {
+public class s_ShooterIntake extends Command {
   
     //Declare subsystems
     private final ShooterSub shooterSub;
 
-    public s_ShooterShoot(ShooterSub shooterSub) { //Command constructor
+    public s_ShooterIntake(ShooterSub shooterSub) { //Command constructor
         //Initialize subsystems
         this.shooterSub = shooterSub;
 
@@ -18,7 +18,7 @@ public class s_ShooterShoot extends Command {
 
     @Override //Called when the command is initially scheduled.
     public void initialize() {
-        shooterSub.shooterShoot();
+        shooterSub.shooterIntake();
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.
