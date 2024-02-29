@@ -27,8 +27,8 @@ public class ShooterSub extends SubsystemBase {
 
     //Declare methods
     public void shooterShoot() {
-        topMotor.set(Constants.ShooterSub.shootSpeed);
-        bottomMotor.set(Constants.ShooterSub.shootSpeed);
+        topMotor.set(.3);
+        bottomMotor.set(.9);
     }
 
     public void shooterIntake() {

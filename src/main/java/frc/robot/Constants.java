@@ -138,7 +138,7 @@ public final class Constants {
             public static final int driveMotorID = 3; 
             public static final int angleMotorID = 2; 
             public static final int canCoderID = 14; 
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(82.5);
             public static final boolean driveInverted = true; //TODO change for which motors are upside down
             public static final boolean angleInverted = false;  // currently reverse both front left motors and drive on front right
             public static final SwerveModuleConstants constants = 
@@ -150,7 +150,7 @@ public final class Constants {
             public static final int driveMotorID = 5; 
             public static final int angleMotorID = 4; 
             public static final int canCoderID = 15; 
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-140);
             public static final boolean driveInverted = true;
             public static final boolean angleInverted = false;
             public static final SwerveModuleConstants constants = 
@@ -162,7 +162,7 @@ public final class Constants {
             public static final int driveMotorID = 7; //9
             public static final int angleMotorID = 6; //8
             public static final int canCoderID = 16; //17
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(89);
             public static final boolean driveInverted = false;
             public static final boolean angleInverted = true;
             public static final SwerveModuleConstants constants = 
@@ -174,7 +174,7 @@ public final class Constants {
             public static final int driveMotorID = 9; 
             public static final int angleMotorID = 8; 
             public static final int canCoderID = 17; 
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-93.5);
             public static final boolean driveInverted = false;
             public static final boolean angleInverted = true;
             public static final SwerveModuleConstants constants = 

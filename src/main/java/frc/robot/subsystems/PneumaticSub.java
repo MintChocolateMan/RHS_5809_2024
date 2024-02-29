@@ -6,34 +6,44 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import edu.wpi.first.wpilibj.PneumaticHub;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public class PneumaticSub extends SubsystemBase {
 
     //Declare motors and sensors
-    PneumaticHub pneumaitcHub;
-    DoubleSolenoid leftClimber;
-    DoubleSolenoid rightClimber;
+    PneumaticHub pneumaticHub;
+    Solenoid leftClimberForward;
+    Solenoid leftClimberReverse;
+    Solenoid rightClimberForward;
+    Solenoid rightClimberReverse;
     
     public PneumaticSub() { //Subsystem constructor
         //Initialize motors and sensors
-        PneumaticHub pneumaticHub = new PneumaticHub(Constants.PneumaticSub.pneumaticHubID);
-        DoubleSolenoid leftClimber = pneumaticHub.makeDoubleSolenoid(Constants.PneumaticSub.leftClimberForwardID, Constants.PneumaticSub.leftClimberReverseID);
-        DoubleSolenoid rightClimber = pneumaticHub.makeDoubleSolenoid(Constants.PneumaticSub.rightClimberForwardID, Constants.PneumaticSub.rightClimberReverseID);
-        climbersDown();
+        pneumaticHub = new PneumaticHub(Constants.PneumaticSub.pneumaticHubID);
+        
+        leftClimberForward = pneumaticHub.makeSolenoid(Constants.PneumaticSub.leftClimberReverseID);
+        leftClimberReverse = pneumaticHub.makeSolenoid(Constants.PneumaticSub.leftClimberReverseID);
+        rightClimberForward = pneumaticHub.makeSolenoid(Constants.PneumaticSub.rightClimberForwardID);
+        rightClimberReverse = pneumaticHub.makeSolenoid(Constants.PneumaticSub.rightClimberReverseID);
+
+        leftClimberForward.setPulseDuration(0.5);
+        leftClimberReverse.setPulseDuration(0.5);
+        rightClimberForward.setPulseDuration(0.5);
+        rightClimberReverse.setPulseDuration(0.5);
     }
 
     //Declare subsystem suppliers
 
     //Declare methods
     public void climbersUp() {
-        leftClimber.set(DoubleSolenoid.Value.kForward);
-        rightClimber.set(DoubleSolenoid.Value.kForward);
+        leftClimberForward.startPulse();
+        rightClimberForward.startPulse();
     }
 
     public void climbersDown() {
-        leftClimber.set(DoubleSolenoid.Value.kReverse);
-        rightClimber.set(DoubleSolenoid.Value.kReverse);
+        leftClimberReverse.startPulse();
+        rightClimberReverse.startPulse();
     }
 
     //Declare inline Commands
