@@ -13,6 +13,8 @@ public final class CTREConfigs {
 
     public TalonFXConfiguration shooterFXConfig = new TalonFXConfiguration();
 
+    public TalonFXConfiguration actuatorFXConfig = new TalonFXConfiguration();
+
     public CTREConfigs(){
         /** Swerve CANCoder Configuration */
         swerveCANcoderConfig.MagnetSensor.SensorDirection = Constants.Swerve.cancoderInvert;
@@ -65,5 +67,8 @@ public final class CTREConfigs {
 
         // Shooter Motor Configurations
         shooterFXConfig.MotorOutput.NeutralMode = Constants.ShooterSub.motorNeutralMode;
+
+        // Actuator Motor Configurations
+        
     }
 }

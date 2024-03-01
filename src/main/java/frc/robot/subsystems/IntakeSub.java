@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.controller.PIDController;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -15,12 +16,19 @@ public class IntakeSub extends SubsystemBase {
     //Declare motors and sensors
     private TalonFX intakeMotor;
     private DigitalInput lineBreaker;
+    private PIDController intakePID;
     
     public IntakeSub() { //Subsystem constructor
         //Initialize motors and sensors
         intakeMotor = new TalonFX(Constants.IntakeSub.intakeMotorID);
         intakeMotor.setInverted(Constants.IntakeSub.intakeMotorReversed);
+        intakeMotor.setPosition(Constants.IntakeSub.intakePIDGoal);
         lineBreaker = new DigitalInput(Constants.IntakeSub.lineBreakerID);
+        intakePID = new PIDController(
+            Constants.IntakeSub.intakekP,
+            Constants.IntakeSub.intakekI,
+            Constants.IntakeSub.intakekD
+        );
     }
 
     //Declare subsystem suppliers
@@ -34,21 +42,33 @@ public class IntakeSub extends SubsystemBase {
     }
 
     public void intakeMotorReverse() {
-        intakeMotor.set(-Constants.IntakeSub.intakeMotorSpeed);
+        intakeMotor.set(-Constants.IntakeSub.intakeMotorReverseSpeed);
     }
 
     public void intakeMotorOff() {
         intakeMotor.set(0);
     }
 
+    public double getIntakeMotorPosition() {
+        return intakeMotor.getPosition().getValueAsDouble();
+    }
+
+    public void resetIntakeMotorPosition() {
+        intakeMotor.setPosition(0);
+    }
+
+    public void intakeMotorToPID() {
+        intakeMotor.set(intakePID.calculate(getIntakeMotorPosition(), Constants.IntakeSub.intakePIDGoal));
+    }
+
     //Declare inline Commands
-    public Command IntakeOn() {
+    public Command i_IntakeOn() {
         return runOnce(() -> {
             intakeMotorOn();
         });
     }
 
-    public Command IntakeOff() {
+    public Command i_IntakeOff() {
         return runOnce(() -> {
             intakeMotorOff();
         });
@@ -56,6 +76,7 @@ public class IntakeSub extends SubsystemBase {
 
     @Override //This method is called continuously
     public void periodic() {
+        intakeMotorToPID();
         SmartDashboard.putBoolean("NOTE LOADED", getNoteLoaded());
     }
 

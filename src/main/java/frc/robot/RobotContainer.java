@@ -55,6 +55,7 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
 
+        //Set Default Commands
         SwerveSub.setDefaultCommand(
             new d_TeleopSwerve(
                 SwerveSub, 
@@ -64,6 +65,8 @@ public class RobotContainer {
                 () -> robotCentric.getAsBoolean()
             )
         );
+
+        IntakeSub.setDefaultCommand(new i_IntakeToPID(IntakeSub));
 
         /* Register Commands with PathPlanner */
         NamedCommands.registerCommand("IntakeOn", IntakeSub.IntakeOn());

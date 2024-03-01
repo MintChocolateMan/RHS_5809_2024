@@ -19,13 +19,19 @@ public final class Constants {
     public static final class IntakeSub {
         public static final int intakeMotorID = 10;
         public static final double intakeMotorSpeed = .8;
+        public static final double intakeMotorReverseSpeed = .1;
         public static final boolean intakeMotorReversed = true;
         public static final int lineBreakerID = 1;
+
+        public static final double intakekP = 0.1;
+        public static final double intakekI = 0;
+        public static final double intakekD = 0;
+        public static final double intakePIDGoal = -1;
     }
 
     public static final class ShooterSub {
-        public static final int topMotorID = 11; //left motor
-        public static final int bottomMotorID = 12; //right motor
+        public static final int topMotorID = 11; // AKA Left Motor
+        public static final int bottomMotorID = 12; // AKA Right Motor
         public static final boolean topMotorInverted = true;
         public static final boolean bottomMotorInverted = true;
         public static final double shootSpeed = .8;
@@ -39,6 +45,24 @@ public final class Constants {
         public static final int leftClimberReverseID = 0;
         public static final int rightClimberForwardID = 0;
         public static final int rightClimberReverseID = 0;
+    }
+
+    public static final class ActuatorSub {
+        public static final int actuatorMotorID = 19;
+        public static final double actuatorkP = 0.1; //TODO tune
+        public static final double actuatorkI = 0;
+        public static final double actuatorkD = 0;
+
+        public static final double shooterLength = 6.5;
+        public static final double bottomLength = 17.1;
+        public static final double actuatorMinLength = 10.8;
+        public static final double shooterMinAngle = 22.8;
+        public static final double bottomAngle = 6.9;
+
+        public static final double actuatorRate = 0; //TODO find lol
+
+        public static final double maxDesiredAngle = 60;
+        public static final double minDesiredAngle = 28;
     }
 
     public static final class PathPlanner {
