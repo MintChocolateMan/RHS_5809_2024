@@ -97,7 +97,7 @@ public class RobotContainer {
         intakeOuttake.whileTrue(new i_IntakeOuttake(IntakeSub));
         shooterShoot.whileTrue(new s_ShooterShoot(ShooterSub));
         //shooterIntake.whileTrue(new s_ShooterIntake(ShooterSub));
-        shooterAim.whileTrue(new InstantCommand(() -> ActuatorSub.setDesiredAngle(50)));
+        shooterAim.onTrue(new InstantCommand(() -> ActuatorSub.setDesiredAngle(50)));
     }
 
     /**

@@ -50,7 +50,7 @@ public final class Constants {
 
     public static final class ActuatorSub {
         public static final int actuatorMotorID = 19;
-        public static final double actuatorkP = 0.2; //TODO tune
+        public static final double actuatorkP = 0.4; //TODO tune
         public static final double actuatorkI = 0;
         public static final double actuatorkD = 0;
 
