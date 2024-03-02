@@ -45,7 +45,7 @@ public class SwerveSub extends SubsystemBase {;
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
 
-        shooterCam = new PhotonCamera(Constants.CameraSub.shooterCamName);
+        //shooterCam = new PhotonCamera(Constants.CameraSub.shooterCamName);
         robotToShooterCam = new Transform3d(
             new Translation3d(
                 Constants.CameraSub.shooterCamForwardOffset,
@@ -64,19 +64,19 @@ public class SwerveSub extends SubsystemBase {;
             robotToShooterCam
         );
 
-        poseEstimator = new SwerveDrivePoseEstimator(
-            Constants.Swerve.swerveKinematics,
-            getGyroYaw(),
-            getModulePositions(),
-            new Pose2d(new Translation2d(0, 0), new Rotation2d(0))
-        );
-
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
             new SwerveModule(1, Constants.Swerve.Mod1.constants),
             new SwerveModule(2, Constants.Swerve.Mod2.constants),
             new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
+
+        poseEstimator = new SwerveDrivePoseEstimator(
+            Constants.Swerve.swerveKinematics,
+            getGyroYaw(),
+            getModulePositions(),
+            new Pose2d(new Translation2d(0, 0), new Rotation2d(0))
+        );
 
         // Configure AutoBuilder
         AutoBuilder.configureHolonomic(

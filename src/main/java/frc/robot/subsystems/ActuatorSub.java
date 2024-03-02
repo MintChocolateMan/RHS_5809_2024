@@ -50,7 +50,7 @@ public class ActuatorSub extends SubsystemBase {
     } 
 
     public void actuateToGoalAngle() {
-        actuatorMotor.set(actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
+        actuatorMotor.set(-actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
     }
     
     //Declare inline Commands
@@ -69,7 +69,7 @@ public class ActuatorSub extends SubsystemBase {
             desiredAngle = Constants.ActuatorSub.minDesiredAngle;
         }
 
-        //actuateToDesiredAngle();
+        actuateToGoalAngle();
     }
 
     @Override //This method is called continuously during simulation

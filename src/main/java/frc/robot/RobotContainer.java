@@ -44,7 +44,7 @@ public class RobotContainer {
     private final IntakeSub IntakeSub = new IntakeSub();
     private final ShooterSub ShooterSub = new ShooterSub();
     private final ActuatorSub ActuatorSub = new ActuatorSub();
-    private final PneumaticSub PneumaticSub = new PneumaticSub();
+    //private final PneumaticSub PneumaticSub = new PneumaticSub();
     //private final CameraSub CameraSub = new CameraSub();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -64,8 +64,8 @@ public class RobotContainer {
         IntakeSub.setDefaultCommand(new i_IntakeToPID(IntakeSub));
 
         /* Register Commands with PathPlanner */
-        //NamedCommands.registerCommand("IntakeOn", IntakeSub.IntakeOn());
-        //NamedCommands.registerCommand("IntakeOff", IntakeSub.IntakeOff());
+        NamedCommands.registerCommand("IntakeOn", IntakeSub.IntakeOn());
+        NamedCommands.registerCommand("IntakeOff", IntakeSub.IntakeOff());
 
         // Build an auto chooser. This will use Commands.none() as the default option.
         // Optionally use .buildAutoChooser("Default Auto") to specify a default auto

@@ -50,7 +50,7 @@ public final class Constants {
 
     public static final class ActuatorSub {
         public static final int actuatorMotorID = 19;
-        public static final double actuatorkP = 0.1; //TODO tune
+        public static final double actuatorkP = 0.2; //TODO tune
         public static final double actuatorkI = 0;
         public static final double actuatorkD = 0;
 
@@ -60,7 +60,7 @@ public final class Constants {
         public static final double shooterMinAngle = 22.8;
         public static final double bottomAngle = 6.9;
 
-        public static final double actuatorRate = 0; //TODO find lol
+        public static final double actuatorRate = 0.08; //TODO find lol
 
         public static final double maxDesiredAngle = 60;
         public static final double minDesiredAngle = 28;

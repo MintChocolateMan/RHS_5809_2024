@@ -12,7 +12,7 @@ public class ShooterCameraSub extends SubsystemBase {
 
   public ShooterCameraSub() {
 
-    PhotonCamera driverCamera = new PhotonCamera("driverCamera");
+   // PhotonCamera driverCamera = new PhotonCamera("driverCamera");
 
   }
 

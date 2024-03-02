@@ -62,13 +62,13 @@ public class IntakeSub extends SubsystemBase {
     }
 
     //Declare inline Commands
-    public Command i_IntakeOn() {
+    public Command IntakeOn() {
         return runOnce(() -> {
             intakeMotorOn();
         });
     }
 
-    public Command i_IntakeOff() {
+    public Command IntakeOff() {
         return runOnce(() -> {
             intakeMotorOff();
         });
@@ -76,7 +76,6 @@ public class IntakeSub extends SubsystemBase {
 
     @Override //This method is called continuously
     public void periodic() {
-        intakeMotorToPID();
         SmartDashboard.putBoolean("NOTE LOADED", getNoteLoaded());
     }
 
