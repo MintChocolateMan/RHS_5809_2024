@@ -5,6 +5,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -77,8 +78,15 @@ public final class Constants {
         public static final double driveBaseRadius = 0.41;
     }
 
-    public static final class PoseEstimatorSub {
-        public static final int gyroID = 13;
+    public static final class CameraSub {
+        public static final String shooterCamName = "shooterCam";
+
+        public static final double shooterCamForwardOffset = 0; //TODO find lol
+        public static final double shooterCamHorizontalOffset = 0;
+        public static final double shooterCamVerticalOffset = 0;
+        public static final double shooterCamRoll = 0;
+        public static final double shooterCamPitch = 30;
+        public static final double shooterCamYaw = 0;
     }
 
     public static final class Swerve {

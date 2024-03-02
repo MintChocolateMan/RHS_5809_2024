@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 public class PneumaticSub extends SubsystemBase {
 
     //Declare motors and sensors
-    PneumaticHub pneumaticHub;
-    Solenoid leftClimberForward;
-    Solenoid leftClimberReverse;
-    Solenoid rightClimberForward;
-    Solenoid rightClimberReverse;
+    private PneumaticHub pneumaticHub;
+    private Solenoid leftClimberForward;
+    private Solenoid leftClimberReverse;
+    private Solenoid rightClimberForward;
+    private Solenoid rightClimberReverse;
     
     public PneumaticSub() { //Subsystem constructor
         //Initialize motors and sensors

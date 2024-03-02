@@ -15,12 +15,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and button mappings) should be declared here.
- */
 public class RobotContainer {
     /* Auto Chooser */
     private final SendableChooser<Command> autoChooser;
@@ -43,12 +37,13 @@ public class RobotContainer {
     private final JoystickButton intakeOuttake = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton shooterShoot = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     //private final JoystickButton shooterIntake = new JoystickButton(driver, XboxController.Button.kX.value);
-    private final JoystickButton climbersExtend = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton shooterAim = new JoystickButton(driver, XboxController.Button.kX.value);
 
     /* Subsystems */
     private final SwerveSub SwerveSub = new SwerveSub();
     private final IntakeSub IntakeSub = new IntakeSub();
     private final ShooterSub ShooterSub = new ShooterSub();
+    private final ActuatorSub ActuatorSub = new ActuatorSub();
     private final PneumaticSub PneumaticSub = new PneumaticSub();
     //private final CameraSub CameraSub = new CameraSub();
 
@@ -69,8 +64,8 @@ public class RobotContainer {
         IntakeSub.setDefaultCommand(new i_IntakeToPID(IntakeSub));
 
         /* Register Commands with PathPlanner */
-        NamedCommands.registerCommand("IntakeOn", IntakeSub.IntakeOn());
-        NamedCommands.registerCommand("IntakeOff", IntakeSub.IntakeOff());
+        //NamedCommands.registerCommand("IntakeOn", IntakeSub.IntakeOn());
+        //NamedCommands.registerCommand("IntakeOff", IntakeSub.IntakeOff());
 
         // Build an auto chooser. This will use Commands.none() as the default option.
         // Optionally use .buildAutoChooser("Default Auto") to specify a default auto
@@ -102,7 +97,7 @@ public class RobotContainer {
         intakeOuttake.whileTrue(new i_IntakeOuttake(IntakeSub));
         shooterShoot.whileTrue(new s_ShooterShoot(ShooterSub));
         //shooterIntake.whileTrue(new s_ShooterIntake(ShooterSub));
-        climbersExtend.whileTrue(new p_ClimbersExtend(PneumaticSub));
+        shooterAim.whileTrue(new InstantCommand(() -> ActuatorSub.setDesiredAngle(50)));
     }
 
     /**

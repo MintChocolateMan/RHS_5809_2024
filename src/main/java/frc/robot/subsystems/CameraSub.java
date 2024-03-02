@@ -15,7 +15,7 @@ public class CameraSub extends SubsystemBase {
     
     public CameraSub() { //Subsystem constructor
         //Initialize motors and sensors
-        PhotonCamera shooterCam = new PhotonCamera("shooterCam");
+        //PhotonCamera shooterCam = new PhotonCamera("shooterCam");
     }
 
     //Declare subsystem suppliers
