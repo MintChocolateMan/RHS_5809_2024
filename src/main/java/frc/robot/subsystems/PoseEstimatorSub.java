@@ -64,6 +64,22 @@ public class PoseEstimatorSub extends SubsystemBase {
         return Rotation2d.fromDegrees(gyro.getYaw().getValue());
     }
 
+    public Pose2d getPose() {
+        return poseEstimator.getEstimatedPosition();
+    }
+
+    public void setPose(Pose2d pose) {
+        poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), pose);
+    }
+    
+    public void setHeading(Rotation2d heading) {
+        poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
+    }
+
+    public void zeroHeading() {
+        poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
+    }
+
     //Declare methods
     public void exampleMethod() {}
 

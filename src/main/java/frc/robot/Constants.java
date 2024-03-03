@@ -66,10 +66,10 @@ public final class Constants {
         public static final double shooterMinAngle = 22.8;
         public static final double bottomAngle = 6.9;
         
-        public static final double actuatorRate = .0584; //TODO find lol
+        public static final double actuatorRate = .0584;
 
         public static final double maxDesiredAngle = 60;
-        public static final double minDesiredAngle = 28;
+        public static final double minDesiredAngle = 30;
     }
 
     public static final class PoseEstimatorSub {
@@ -93,6 +93,17 @@ public final class Constants {
 
         public static final double maxModuleSpeed = 5.5;
         public static final double driveBaseRadius = 0.41;
+    }
+
+    public static final class CameraSub {
+        public static final String shooterCamName = "shooterCam";
+
+        public static final double shooterCamForwardOffset = 0; //TODO find lol
+        public static final double shooterCamHorizontalOffset = 0;
+        public static final double shooterCamVerticalOffset = 0;
+        public static final double shooterCamRoll = 0;
+        public static final double shooterCamPitch = 30;
+        public static final double shooterCamYaw = 0;
     }
 
     public static final class Swerve {

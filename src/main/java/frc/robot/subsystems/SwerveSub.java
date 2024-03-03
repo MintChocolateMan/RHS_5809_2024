@@ -34,35 +34,11 @@ import frc.robot.Constants;
 
 public class SwerveSub extends SubsystemBase {;
     public SwerveModule[] mSwerveMods;
-    public Pigeon2 gyro;
-    public SwerveDrivePoseEstimator poseEstimator;
-    public PhotonCamera shooterCam;
-    public Transform3d robotToShooterCam;
-    public PhotonPoseEstimator photonPoseEstimator;
+    PoseEstimatorSub poseEstimatorSub;
 
-    public SwerveSub() {
-        gyro = new Pigeon2(Constants.Swerve.pigeonID);
-        gyro.getConfigurator().apply(new Pigeon2Configuration());
-        gyro.setYaw(0);
-
-        //shooterCam = new PhotonCamera(Constants.CameraSub.shooterCamName);
-        robotToShooterCam = new Transform3d(
-            new Translation3d(
-                Constants.CameraSub.shooterCamForwardOffset,
-                Constants.CameraSub.shooterCamHorizontalOffset,
-                Constants.CameraSub.shooterCamVerticalOffset
-            ), new Rotation3d(
-                Constants.CameraSub.shooterCamYaw,
-                Constants.CameraSub.shooterCamRoll,
-                Constants.CameraSub.shooterCamPitch
-            )
-        );
-        photonPoseEstimator = new PhotonPoseEstimator(
-            AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(),
-            PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-            shooterCam,
-            robotToShooterCam
-        );
+    public SwerveSub(PoseEstimatorSub poseEstimatorSub) {
+        this.poseEstimatorSub = poseEstimatorSub;
+        poseEstimatorSub.initialize(this);
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -71,14 +47,6 @@ public class SwerveSub extends SubsystemBase {;
             new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
 
-        poseEstimator = new SwerveDrivePoseEstimator(
-            Constants.Swerve.swerveKinematics,
-            getGyroYaw(),
-            getModulePositions(),
-            new Pose2d(new Translation2d(0, 0), new Rotation2d(0))
-        );
-
-        // Configure AutoBuilder
         AutoBuilder.configureHolonomic(
                 this::getPose, // Robot pose supplier
                 this::setPose, // Method to reset odometry (will be called if your auto has a starting pose)
@@ -180,27 +148,27 @@ public class SwerveSub extends SubsystemBase {;
     }
 
     public Pose2d getPose() {
-        return poseEstimator.getEstimatedPosition();
+        return poseEstimatorSub.getPose();
     }
 
     public void setPose(Pose2d pose) {
-        poseEstimator.resetPosition(getGyroYaw(), getModulePositions(), pose);
+        poseEstimatorSub.setPose(pose);
     }
 
-    public Rotation2d getHeading(){
+    public Rotation2d getHeading() {
         return getPose().getRotation();
     }
 
-    public void setHeading(Rotation2d heading){
-        poseEstimator.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
+    public void setHeading(Rotation2d heading) {
+        poseEstimatorSub.setHeading(heading);
     }
 
-    public void zeroHeading(){
-        poseEstimator.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
+    public void zeroHeading() {
+        poseEstimatorSub.zeroHeading();
     }
 
     public Rotation2d getGyroYaw() {
-        return Rotation2d.fromDegrees(gyro.getYaw().getValue());
+        return poseEstimatorSub.getGyroYaw();
     }
 
     public void resetModulesToAbsolute(){
@@ -211,8 +179,6 @@ public class SwerveSub extends SubsystemBase {;
 
     @Override
     public void periodic(){
-        poseEstimator.update(getGyroYaw(), getModulePositions());
-
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
