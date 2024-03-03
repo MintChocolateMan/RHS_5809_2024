@@ -32,15 +32,17 @@ public class PoseEstimatorSub extends SubsystemBase {
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
 
+        shooterCam = new PhotonCamera(Constants.PoseEstimatorSub.shooterCamName);
+
         robotToShooterCam = new Transform3d(
             new Translation3d(
-                Constants.CameraSub.shooterCamForwardOffset,
-                Constants.CameraSub.shooterCamHorizontalOffset,
-                Constants.CameraSub.shooterCamVerticalOffset
+                Constants.PoseEstimatorSub.shooterCamForwardOffset,
+                Constants.PoseEstimatorSub.shooterCamHorizontalOffset,
+                Constants.PoseEstimatorSub.shooterCamVerticalOffset
             ), new Rotation3d(
-                Constants.CameraSub.shooterCamYaw,
-                Constants.CameraSub.shooterCamRoll,
-                Constants.CameraSub.shooterCamPitch
+                Constants.PoseEstimatorSub.shooterCamYaw,
+                Constants.PoseEstimatorSub.shooterCamRoll,
+                Constants.PoseEstimatorSub.shooterCamPitch
             )
         );
 
@@ -60,6 +62,22 @@ public class PoseEstimatorSub extends SubsystemBase {
 
     public Rotation2d getGyroYaw() {
         return Rotation2d.fromDegrees(gyro.getYaw().getValue());
+    }
+
+    public Pose2d getPose() {
+        return poseEstimator.getEstimatedPosition();
+    }
+
+    public void setPose(Pose2d pose) {
+        poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), pose);
+    }
+    
+    public void setHeading(Rotation2d heading) {
+        poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
+    }
+
+    public void zeroHeading() {
+        poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
     }
 
     //Declare methods

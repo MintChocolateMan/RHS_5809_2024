@@ -81,7 +81,7 @@ public final class Constants {
         public static final double driveBaseRadius = 0.41;
     }
 
-    public static final class CameraSub {
+    public static final class PoseEstimatorSub {
         public static final String shooterCamName = "shooterCam";
 
         public static final double shooterCamForwardOffset = 0; //TODO find lol
