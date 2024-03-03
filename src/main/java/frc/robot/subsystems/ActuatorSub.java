@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 public class ActuatorSub extends SubsystemBase {
 
@@ -20,12 +21,14 @@ public class ActuatorSub extends SubsystemBase {
     public ActuatorSub() { //Subsystem constructor
         //Initialize motors and sensors
         actuatorMotor = new TalonFX(Constants.ActuatorSub.actuatorMotorID);
+        actuatorMotor.setInverted(Constants.ActuatorSub.actuatorMotorInverted);
+        actuatorMotor.setNeutralMode(NeutralModeValue.Brake);
         actuatorPID = new PIDController(
             Constants.ActuatorSub.actuatorkP,
             Constants.ActuatorSub.actuatorkI,
             Constants.ActuatorSub.actuatorkD
         );
-        actuatorMotor.setPosition(-1);
+        actuatorMotor.setPosition(0);
     }
 
     //Declare subsystem methods
@@ -37,8 +40,16 @@ public class ActuatorSub extends SubsystemBase {
         return desiredAngle;
     }
 
+    public void actuatorMotorOn() {
+        actuatorMotor.set(.5);
+    }
+
+    public void actuatorMotorOff() {
+        actuatorMotor.set(0);
+    }
+
     public double getMotorPosition() {
-        return actuatorMotor.getPosition().getValueAsDouble();
+        return actuatorMotor.getRotorPosition().getValueAsDouble();
     }
 
     public double desiredAngleToGoalAngle() {
@@ -56,7 +67,7 @@ public class ActuatorSub extends SubsystemBase {
     } 
 
     public void actuateToGoalAngle() {
-        actuatorMotor.set(-actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
+        actuatorMotor.set(actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
     }
     
     //Declare inline Commands
