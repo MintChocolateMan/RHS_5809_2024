@@ -32,15 +32,17 @@ public class PoseEstimatorSub extends SubsystemBase {
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
 
+        shooterCam = new PhotonCamera(Constants.PoseEstimatorSub.shooterCamName);
+
         robotToShooterCam = new Transform3d(
             new Translation3d(
-                Constants.CameraSub.shooterCamForwardOffset,
-                Constants.CameraSub.shooterCamHorizontalOffset,
-                Constants.CameraSub.shooterCamVerticalOffset
+                Constants.PoseEstimatorSub.shooterCamForwardOffset,
+                Constants.PoseEstimatorSub.shooterCamHorizontalOffset,
+                Constants.PoseEstimatorSub.shooterCamVerticalOffset
             ), new Rotation3d(
-                Constants.CameraSub.shooterCamYaw,
-                Constants.CameraSub.shooterCamRoll,
-                Constants.CameraSub.shooterCamPitch
+                Constants.PoseEstimatorSub.shooterCamYaw,
+                Constants.PoseEstimatorSub.shooterCamRoll,
+                Constants.PoseEstimatorSub.shooterCamPitch
             )
         );
 
@@ -74,6 +76,8 @@ public class PoseEstimatorSub extends SubsystemBase {
     @Override //This method is called continuously
     public void periodic() {
         poseEstimator.update(getGyroYaw(), swerveSub.getModulePositions());
+
+        
     }
 
     @Override //This method is called continuously during simulation

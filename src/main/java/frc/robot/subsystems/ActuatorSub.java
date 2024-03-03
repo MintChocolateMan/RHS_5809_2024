@@ -67,7 +67,11 @@ public class ActuatorSub extends SubsystemBase {
     } 
 
     public void actuateToGoalAngle() {
-        actuatorMotor.set(actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
+        if (Math.abs(actuatorPID.getPositionError()) < Constants.ActuatorSub.actuatorMaxError) {
+            actuatorMotor.stopMotor();
+        } else {
+            actuatorMotor.set(actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
+        }
     }
     
     //Declare inline Commands
@@ -90,6 +94,10 @@ public class ActuatorSub extends SubsystemBase {
 
         SmartDashboard.putNumber("actuatorMotorPosition", getMotorPosition());
         SmartDashboard.putNumber("desiredPosition", getDesiredAngle());
+
+        SmartDashboard.putNumber("UpPID", actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
+        SmartDashboard.putNumber("positionError", actuatorPID.getPositionError());
+        SmartDashboard.putNumber("velocityError", actuatorPID.getVelocityError());
     }
 
     @Override //This method is called continuously during simulation

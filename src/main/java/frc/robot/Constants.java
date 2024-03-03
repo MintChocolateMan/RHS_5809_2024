@@ -51,9 +51,12 @@ public final class Constants {
     public static final class ActuatorSub {
         public static final int actuatorMotorID = 19;
         public static final boolean actuatorMotorInverted = false;
-        public static final double actuatorkP = 0.05; //TODO tune
-        public static final double actuatorkI = .01;
-        public static final double actuatorkD = .5;
+
+        public static final double actuatorkP = 0.038; //.035
+        public static final double actuatorkI = 0.003; //.02
+        public static final double actuatorkD = 2; //.01
+
+        public static final double actuatorMaxError = 0.15;
 
         public static final double shooterLength = 6.5;
         public static final double bottomLength = 17.1;
@@ -69,6 +72,17 @@ public final class Constants {
         public static final double minDesiredAngle = 28;
     }
 
+    public static final class PoseEstimatorSub {
+        public static final String shooterCamName = "shooterCam";
+
+        public static final double shooterCamForwardOffset = 0; //TODO find lol
+        public static final double shooterCamHorizontalOffset = 0;
+        public static final double shooterCamVerticalOffset = 0;
+        public static final double shooterCamRoll = 0;
+        public static final double shooterCamPitch = 30;
+        public static final double shooterCamYaw = 0;
+    }
+
     public static final class PathPlanner {
         public static final double kPTranslation = 5.0;
         public static final double kITranslation = 0.0;
@@ -79,17 +93,6 @@ public final class Constants {
 
         public static final double maxModuleSpeed = 5.5;
         public static final double driveBaseRadius = 0.41;
-    }
-
-    public static final class CameraSub {
-        public static final String shooterCamName = "shooterCam";
-
-        public static final double shooterCamForwardOffset = 0; //TODO find lol
-        public static final double shooterCamHorizontalOffset = 0;
-        public static final double shooterCamVerticalOffset = 0;
-        public static final double shooterCamRoll = 0;
-        public static final double shooterCamPitch = 30;
-        public static final double shooterCamYaw = 0;
     }
 
     public static final class Swerve {
@@ -173,7 +176,7 @@ public final class Constants {
             public static final int driveMotorID = 3; 
             public static final int angleMotorID = 2; 
             public static final int canCoderID = 14; 
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(81.2);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-39);
             public static final boolean driveInverted = true; //TODO change for which motors are upside down
             public static final boolean angleInverted = false;  // currently reverse both front left motors and drive on front right
             public static final SwerveModuleConstants constants = 
@@ -185,7 +188,7 @@ public final class Constants {
             public static final int driveMotorID = 5; 
             public static final int angleMotorID = 4; 
             public static final int canCoderID = 15; 
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-147.7);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(42);
             public static final boolean driveInverted = true;
             public static final boolean angleInverted = false;
             public static final SwerveModuleConstants constants = 
@@ -197,7 +200,7 @@ public final class Constants {
             public static final int driveMotorID = 7; //9
             public static final int angleMotorID = 6; //8
             public static final int canCoderID = 16; //17
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-90.7 + 180);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-90.43);
             public static final boolean driveInverted = false;
             public static final boolean angleInverted = true;
             public static final SwerveModuleConstants constants = 
@@ -209,7 +212,7 @@ public final class Constants {
             public static final int driveMotorID = 9; 
             public static final int angleMotorID = 8; 
             public static final int canCoderID = 17; 
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-93.8);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-94.1);
             public static final boolean driveInverted = false;
             public static final boolean angleInverted = true;
             public static final SwerveModuleConstants constants = 
