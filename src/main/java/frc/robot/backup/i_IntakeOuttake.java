@@ -1,24 +1,24 @@
-package frc.robot.commands;
+package frc.robot.backup;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class a_RunActuatorManualy extends Command {
+public class i_IntakeOuttake extends Command {
   
     //Declare subsystems
-    private final ActuatorSub ActuatorSub;
+    private final IntakeSub intakeSub;
 
-    public a_RunActuatorManualy(ActuatorSub ActuatorSub) { //Command constructor
+    public i_IntakeOuttake(IntakeSub intakeSub) { //Command constructor
         //Initialize subsystems
-        this.ActuatorSub = ActuatorSub;
+        this.intakeSub = intakeSub;
 
         //Add subsystem requirements
-        addRequirements(ActuatorSub);
+        addRequirements(intakeSub);
     }
 
     @Override //Called when the command is initially scheduled.
     public void initialize() {
-        ActuatorSub.actuatorMotorOn();
+        intakeSub.intakeMotorReverse();
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.
@@ -26,7 +26,7 @@ public class a_RunActuatorManualy extends Command {
 
     @Override // Called once the command ends or is interrupted.
     public void end(boolean interrupted) {
-        ActuatorSub.actuatorMotorOff();
+        intakeSub.intakeMotorOff();
     }
 
     @Override // Returns true when the command should end.

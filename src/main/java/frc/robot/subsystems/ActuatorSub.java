@@ -16,7 +16,7 @@ public class ActuatorSub extends SubsystemBase {
     TalonFX actuatorMotor;
     PIDController actuatorPID;
 
-    double desiredAngle = 0;
+    double desiredAngle = Constants.ActuatorSub.defaultAngle;
     
     public ActuatorSub() { //Subsystem constructor
         //Initialize motors and sensors

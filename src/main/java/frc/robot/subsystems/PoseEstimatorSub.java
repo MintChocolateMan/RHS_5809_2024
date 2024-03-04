@@ -108,8 +108,15 @@ public class PoseEstimatorSub extends SubsystemBase {
         }
     }
     
-    public double robotToSpeaker() {
-        return PhotonUtils.getYawToPose(getPose(), getSpeakerTargetPose()).getRadians();
+    public double getTargetYaw() {
+        return PhotonUtils.getYawToPose(getPose(), getSpeakerTargetPose()).getDegrees();
+    }
+
+    public double getTargetPitch() {
+        return Math.tanh(
+            Constants.PoseEstimatorSub.speakerTargetHeight / 
+            PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose())
+            ) * 180 / Math.PI;
     }
 
     public void update() {

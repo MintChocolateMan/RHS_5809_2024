@@ -3,22 +3,22 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class a_tempAimActuator extends Command {
+public class i_Intake extends Command {
   
     //Declare subsystems
-    private final ActuatorSub actuatorSub;
+    private final IntakeSub intakeSub;
 
-    public a_tempAimActuator(ActuatorSub actuatorSub) { //Command constructor
+    public i_Intake(IntakeSub intakeSub) { //Command constructor
         //Initialize subsystems
-        this.actuatorSub = actuatorSub;
+        this.intakeSub = intakeSub;
 
         //Add subsystem requirements
-        addRequirements(actuatorSub);
+        addRequirements(intakeSub);
     }
 
     @Override //Called when the command is initially scheduled.
     public void initialize() {
-        actuatorSub.setDesiredAngle(60);
+        intakeSub.intakeMotorOn();
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.
@@ -26,7 +26,7 @@ public class a_tempAimActuator extends Command {
 
     @Override // Called once the command ends or is interrupted.
     public void end(boolean interrupted) {
-        actuatorSub.setDesiredAngle(40);
+        intakeSub.intakeMotorOff();
     }
 
     @Override // Returns true when the command should end.

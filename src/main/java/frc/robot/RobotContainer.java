@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.backup.a_tempAimActuator;
+import frc.robot.backup.i_IntakeOuttake;
+import frc.robot.backup.s_ShooterShoot;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -29,15 +32,15 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton TeleopShooterAutoAim = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kB.value);
 
     /* Operator Buttons */
-    private final JoystickButton intakeIntake = new JoystickButton(driver, XboxController.Button.kA.value);
-    private final JoystickButton intakeOuttake = new JoystickButton(driver, XboxController.Button.kB.value);
-    private final JoystickButton shooterShoot = new JoystickButton(driver, XboxController.Button.kX.value);
-    private final JoystickButton climbersExtend = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
-    private final JoystickButton shooterAim = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton intake = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    private final JoystickButton autoShoot = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton extendClimbers = new JoystickButton(driver, XboxController.Button.kRightStick.value);
+
+    private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton revShooter = new JoystickButton(driver, XboxController.Button.kX.value);
 
     /* Subsystems */
     private final PoseEstimatorSub poseEstimatorSub = new PoseEstimatorSub();
@@ -53,7 +56,7 @@ public class RobotContainer {
 
         //Set Default Commands
         swerveSub.setDefaultCommand(
-            new d_TeleopSwerve(
+            new d_Swerve(
                 swerveSub, 
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
@@ -62,7 +65,7 @@ public class RobotContainer {
             )
         );
 
-        intakeSub.setDefaultCommand(new i_IntakeToPID(intakeSub));
+        intakeSub.setDefaultCommand(new i_DefaultIntake(intakeSub));
 
         /* Register Commands with PathPlanner */
         NamedCommands.registerCommand("IntakeOn", intakeSub.IntakeOn());
@@ -86,20 +89,17 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> swerveSub.zeroHeading()));
-        
-        /*TeleopShooterAutoAim.onTrue(new TeleopAutoAim(CameraSub, SwerveSub,
-            () -> -driver.getRawAxis(translationAxis),
-            () -> -driver.getRawAxis(strafeAxis),
-            () -> -driver.getRawAxis(rotationAxis)
-        ));*/
 
         /* Operator Buttons */
-        intakeIntake.whileTrue(new i_TeleopIntake(intakeSub));
-        intakeOuttake.whileTrue(new i_IntakeOuttake(intakeSub));
-        shooterShoot.whileTrue(new s_ShooterShoot(shooterSub));
-        climbersExtend.whileTrue(new p_ClimbersExtend(pneumaticSub));
-        shooterAim.whileTrue(new a_tempAimActuator(actuatorSub));
-        TeleopShooterAutoAim.whileTrue(new TeleopAutoAim(poseEstimatorSub, swerveSub, shooterSub, actuatorSub));
+        intake.whileTrue(new i_Intake(intakeSub));
+        autoShoot.whileTrue(new TeleopAutoAim(poseEstimatorSub, swerveSub, shooterSub, actuatorSub,
+            () -> -driver.getRawAxis(translationAxis), 
+            () -> -driver.getRawAxis(strafeAxis)
+        ));
+        extendClimbers.whileTrue(new p_ExtendClimbers(pneumaticSub));
+
+        revShooter.whileTrue(new s_ShooterShoot(shooterSub));
+        aimClose.whileTrue(new a_tempAimActuator(actuatorSub));
     }
 
     /**

@@ -5,7 +5,6 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -70,6 +69,8 @@ public final class Constants {
 
         public static final double maxDesiredAngle = 60;
         public static final double minDesiredAngle = 30;
+
+        public static final double defaultAngle = 55;
     }
 
     public static final class PoseEstimatorSub {
@@ -81,6 +82,8 @@ public final class Constants {
         public static final double shooterCamRoll = 0;
         public static final double shooterCamPitch = 30;
         public static final double shooterCamYaw = 0;
+
+        public static final double speakerTargetHeight = 2;
     }
 
     public static final class PathPlanner {
@@ -235,5 +238,11 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
-    }  
+    }
+    
+    public static final class TeleopAutoAim {
+        public static final double kP = 0.1;
+        public static final double kI = 0;
+        public static final double kD = 0;
+    }
 }

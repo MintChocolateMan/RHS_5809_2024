@@ -3,12 +3,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class p_ClimbersExtend extends Command {
+public class p_ExtendClimbers extends Command {
   
     //Declare subsystems
     private final PneumaticSub pneumaticSub;
 
-    public p_ClimbersExtend(PneumaticSub pneumaticSub) { //Command constructor
+    public p_ExtendClimbers(PneumaticSub pneumaticSub) { //Command constructor
         //Initialize subsystems
         this.pneumaticSub = pneumaticSub;
 
