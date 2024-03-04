@@ -47,7 +47,6 @@ public class RobotContainer {
     private final ShooterSub shooterSub = new ShooterSub();
     private final ActuatorSub actuatorSub = new ActuatorSub();
     private final PneumaticSub pneumaticSub = new PneumaticSub();
-    //private final CameraSub CameraSub = new CameraSub();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -66,8 +65,13 @@ public class RobotContainer {
         intakeSub.setDefaultCommand(new i_DefaultIntake(intakeSub));
 
         /* Register Commands with PathPlanner */
-        NamedCommands.registerCommand("IntakeOn", intakeSub.IntakeOn());
-        NamedCommands.registerCommand("IntakeOff", intakeSub.IntakeOff());
+        NamedCommands.registerCommand("i_Intake", new i_Intake(intakeSub));
+        NamedCommands.registerCommand("s_ShooterShoot", new s_ShooterShoot(shooterSub));
+        NamedCommands.registerCommand("TeleopAutoAim", new TeleopAutoAim(
+            poseEstimatorSub, swerveSub, shooterSub, actuatorSub,
+            () -> 0, 
+            () -> 0
+        ));
 
         // Build an auto chooser. This will use Commands.none() as the default option.
         // Optionally use .buildAutoChooser("Default Auto") to specify a default auto

@@ -94,15 +94,29 @@ public class PoseEstimatorSub extends SubsystemBase {
         poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
     }
 
-    public Pose2d getSpeakerTargetPose() {
+    public Pose2d getStartingPose() {
         if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
             return new Pose2d(
-                new Translation2d(16.58, 5.5),
+                new Translation2d(15.15, 5.5),
                 new Rotation2d()
             );
         } else {
                 return new Pose2d(
-                    new Translation2d(-0.04, 5.55),
+                    new Translation2d(1.35, 5.55),
+                    new Rotation2d()
+                );
+        }
+    }
+
+    public Pose2d getSpeakerTargetPose() {
+        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+            return new Pose2d(
+                new Translation2d(16.5, 5.5),
+                new Rotation2d()
+            );
+        } else {
+                return new Pose2d(
+                    new Translation2d(0, 5.55),
                     new Rotation2d()
                 );
         }

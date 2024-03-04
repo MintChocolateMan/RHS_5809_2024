@@ -9,6 +9,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -22,6 +23,11 @@ import frc.robot.Constants;
 public class SwerveSub extends SubsystemBase {;
     public SwerveModule[] mSwerveMods;
     PoseEstimatorSub poseEstimatorSub;
+    PIDController rotationPID = new PIDController(
+        Constants.Swerve.rotationkP,
+        Constants.Swerve.rotationkI,
+        Constants.Swerve.rotationkD
+    );
 
     public SwerveSub(PoseEstimatorSub poseEstimatorSub) {
         this.poseEstimatorSub = poseEstimatorSub;
@@ -86,7 +92,16 @@ public class SwerveSub extends SubsystemBase {;
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
-    }    
+    }
+
+    public void driveWithRotation(Translation2d translation, double goalAngle) {
+        drive(
+            translation,
+            rotationPID.calculate(goalAngle),
+            true,
+            true
+            );
+    }
 
     //Drive method used by PathPlanner, different than one above because it needs to be robot oriented and only take a chassisSpeeds instead of translation2d and rotation
     public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
@@ -97,7 +112,7 @@ public class SwerveSub extends SubsystemBase {;
         for(SwerveModule mod : mSwerveMods) {
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], false);
         }
-    }//gyro
+    }
 
     //Get ChassisSpeeds robot relative, used by PathPlanner
     public ChassisSpeeds getRobotRelativeSpeeds(){

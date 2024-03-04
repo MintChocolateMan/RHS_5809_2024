@@ -101,8 +101,12 @@ public final class Constants {
     public static final class Swerve {
         public static final int pigeonID = 13;
 
-        public static final double translationSensitivity = 0.5;
+        public static final double translationSensitivity = 1;
         public static final double rotationSensitivity = 1;
+
+        public static final double rotationkP = 0.1;
+        public static final double rotationkI = 0;
+        public static final double rotationkD = 0;
 
         public static final COTSTalonFXSwerveConstants chosenModule = 
         COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
@@ -238,11 +242,5 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
-    }
-    
-    public static final class TeleopAutoAim {
-        public static final double kP = 0.1;
-        public static final double kI = 0;
-        public static final double kD = 0;
     }
 }

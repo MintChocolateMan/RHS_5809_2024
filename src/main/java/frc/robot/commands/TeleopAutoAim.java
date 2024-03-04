@@ -3,7 +3,6 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -18,12 +17,6 @@ public class TeleopAutoAim extends Command {
     private final ActuatorSub actuatorSub;
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
-
-    private PIDController rotationPID = new PIDController(
-        Constants.TeleopAutoAim.kP,
-        Constants.TeleopAutoAim.kI,
-        Constants.TeleopAutoAim.kD
-    );
 
     public TeleopAutoAim(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
         //Initialize subsystems
@@ -49,11 +42,9 @@ public class TeleopAutoAim extends Command {
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
 
-        swerveSub.drive(
+        swerveSub.driveWithRotation(
             new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
-            rotationPID.calculate(poseEstimatorSub.getTargetYaw()), 
-            true,
-            true
+            poseEstimatorSub.getTargetYaw()
         );
 
         actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch());
