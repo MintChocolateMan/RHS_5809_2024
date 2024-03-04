@@ -30,30 +30,31 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    //private final JoystickButton TeleopShooterAutoAim = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    private final JoystickButton TeleopShooterAutoAim = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
     /* Operator Buttons */
     private final JoystickButton intakeIntake = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton intakeOuttake = new JoystickButton(driver, XboxController.Button.kB.value);
-    private final JoystickButton shooterShoot = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    private final JoystickButton shooterShoot = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton climbersExtend = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
     private final JoystickButton shooterAim = new JoystickButton(driver, XboxController.Button.kX.value);
 
     /* Subsystems */
-    private final SwerveSub SwerveSub = new SwerveSub();
-    private final IntakeSub IntakeSub = new IntakeSub();
-    private final ShooterSub ShooterSub = new ShooterSub();
-    private final ActuatorSub ActuatorSub = new ActuatorSub();
-    private final PneumaticSub PneumaticSub = new PneumaticSub();
+    private final PoseEstimatorSub poseEstimatorSub = new PoseEstimatorSub();
+    private final SwerveSub swerveSub = new SwerveSub(poseEstimatorSub);
+    private final IntakeSub intakeSub = new IntakeSub();
+    private final ShooterSub shooterSub = new ShooterSub();
+    private final ActuatorSub actuatorSub = new ActuatorSub();
+    private final PneumaticSub pneumaticSub = new PneumaticSub();
     //private final CameraSub CameraSub = new CameraSub();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
 
         //Set Default Commands
-        SwerveSub.setDefaultCommand(
+        swerveSub.setDefaultCommand(
             new d_TeleopSwerve(
-                SwerveSub, 
+                swerveSub, 
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
@@ -61,11 +62,11 @@ public class RobotContainer {
             )
         );
 
-        IntakeSub.setDefaultCommand(new i_IntakeToPID(IntakeSub));
+        intakeSub.setDefaultCommand(new i_IntakeToPID(intakeSub));
 
         /* Register Commands with PathPlanner */
-        NamedCommands.registerCommand("IntakeOn", IntakeSub.IntakeOn());
-        NamedCommands.registerCommand("IntakeOff", IntakeSub.IntakeOff());
+        NamedCommands.registerCommand("IntakeOn", intakeSub.IntakeOn());
+        NamedCommands.registerCommand("IntakeOff", intakeSub.IntakeOff());
 
         // Build an auto chooser. This will use Commands.none() as the default option.
         // Optionally use .buildAutoChooser("Default Auto") to specify a default auto
@@ -84,7 +85,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> SwerveSub.zeroHeading()));
+        zeroGyro.onTrue(new InstantCommand(() -> swerveSub.zeroHeading()));
         
         /*TeleopShooterAutoAim.onTrue(new TeleopAutoAim(CameraSub, SwerveSub,
             () -> -driver.getRawAxis(translationAxis),
@@ -93,11 +94,12 @@ public class RobotContainer {
         ));*/
 
         /* Operator Buttons */
-        intakeIntake.whileTrue(new i_TeleopIntake(IntakeSub));
-        intakeOuttake.whileTrue(new i_IntakeOuttake(IntakeSub));
-        shooterShoot.whileTrue(new s_ShooterShoot(ShooterSub));
-        climbersExtend.whileTrue(new p_ClimbersExtend(PneumaticSub));
-        shooterAim.whileTrue(new a_tempAimActuator(ActuatorSub));
+        intakeIntake.whileTrue(new i_TeleopIntake(intakeSub));
+        intakeOuttake.whileTrue(new i_IntakeOuttake(intakeSub));
+        shooterShoot.whileTrue(new s_ShooterShoot(shooterSub));
+        climbersExtend.whileTrue(new p_ClimbersExtend(pneumaticSub));
+        shooterAim.whileTrue(new a_tempAimActuator(actuatorSub));
+        TeleopShooterAutoAim.whileTrue(new TeleopAutoAim(poseEstimatorSub, swerveSub, shooterSub, actuatorSub));
     }
 
     /**

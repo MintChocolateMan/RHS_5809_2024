@@ -95,17 +95,6 @@ public final class Constants {
         public static final double driveBaseRadius = 0.41;
     }
 
-    public static final class CameraSub {
-        public static final String shooterCamName = "shooterCam";
-
-        public static final double shooterCamForwardOffset = 0; //TODO find lol
-        public static final double shooterCamHorizontalOffset = 0;
-        public static final double shooterCamVerticalOffset = 0;
-        public static final double shooterCamRoll = 0;
-        public static final double shooterCamPitch = 30;
-        public static final double shooterCamYaw = 0;
-    }
-
     public static final class Swerve {
         public static final int pigeonID = 13;
 
