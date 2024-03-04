@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -27,8 +28,8 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 public class PoseEstimatorSub extends SubsystemBase {
 
     //Declare motors and sensors
-    Pigeon2 gyro;
-    SwerveDrivePoseEstimator poseEstimator;
+    public Pigeon2 gyro;
+    public SwerveDrivePoseEstimator poseEstimator;
     PhotonCamera shooterCam;
     PhotonPoseEstimator photonPoseEstimator;
     Transform3d robotToShooterCam;
@@ -48,9 +49,9 @@ public class PoseEstimatorSub extends SubsystemBase {
                 Constants.PoseEstimatorSub.shooterCamHorizontalOffset,
                 Constants.PoseEstimatorSub.shooterCamVerticalOffset
             ), new Rotation3d(
-                Constants.PoseEstimatorSub.shooterCamYaw,
                 Constants.PoseEstimatorSub.shooterCamRoll,
-                Constants.PoseEstimatorSub.shooterCamPitch
+                Constants.PoseEstimatorSub.shooterCamPitch,
+                Constants.PoseEstimatorSub.shooterCamYaw
             )
         );
 
@@ -70,7 +71,7 @@ public class PoseEstimatorSub extends SubsystemBase {
             Constants.Swerve.swerveKinematics,
             getGyroYaw(),
             swerveSub.getModulePositions(),
-            new Pose2d(new Translation2d(0, 0), new Rotation2d(0))
+            getStartingPose()
         );
     }
 
@@ -86,6 +87,10 @@ public class PoseEstimatorSub extends SubsystemBase {
         poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), pose);
     }
     
+    public Rotation2d getHeading() {
+        return getPose().getRotation();
+    }
+
     public void setHeading(Rotation2d heading) {
         poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
     }
@@ -156,8 +161,14 @@ public class PoseEstimatorSub extends SubsystemBase {
 
     @Override //This method is called continuously
     public void periodic() {
-        poseEstimator.update(getGyroYaw(), swerveSub.getModulePositions());
+        update();
 
+        SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
+        SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
+
+        SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
+        SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
+        SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
         
     }
 

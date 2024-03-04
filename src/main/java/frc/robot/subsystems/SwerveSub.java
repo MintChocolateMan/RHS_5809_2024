@@ -31,7 +31,6 @@ public class SwerveSub extends SubsystemBase {;
 
     public SwerveSub(PoseEstimatorSub poseEstimatorSub) {
         this.poseEstimatorSub = poseEstimatorSub;
-        poseEstimatorSub.initialize(this);
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -39,6 +38,8 @@ public class SwerveSub extends SubsystemBase {;
             new SwerveModule(2, Constants.Swerve.Mod2.constants),
             new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
+
+        poseEstimatorSub.initialize(this);
 
         AutoBuilder.configureHolonomic(
                 this::getPose, // Robot pose supplier
@@ -158,7 +159,7 @@ public class SwerveSub extends SubsystemBase {;
     }
 
     public Rotation2d getHeading() {
-        return getPose().getRotation();
+        return poseEstimatorSub.getHeading();
     }
 
     public void setHeading(Rotation2d heading) {
@@ -181,6 +182,8 @@ public class SwerveSub extends SubsystemBase {;
 
     @Override
     public void periodic(){
+        SmartDashboard.putNumber("getheading", getHeading().getDegrees());
+
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());

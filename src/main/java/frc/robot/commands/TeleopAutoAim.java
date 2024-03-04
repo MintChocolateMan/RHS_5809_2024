@@ -47,7 +47,7 @@ public class TeleopAutoAim extends Command {
             poseEstimatorSub.getTargetYaw()
         );
 
-        actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch());
+        actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch() + 180);
     }
 
     @Override // Called once the command ends or is interrupted.

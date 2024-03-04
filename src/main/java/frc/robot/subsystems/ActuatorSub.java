@@ -16,7 +16,7 @@ public class ActuatorSub extends SubsystemBase {
     TalonFX actuatorMotor;
     PIDController actuatorPID;
 
-    double desiredAngle = Constants.ActuatorSub.defaultAngle;
+    double desiredAngle = 0;//Constants.ActuatorSub.defaultAngle;
     
     public ActuatorSub() { //Subsystem constructor
         //Initialize motors and sensors
@@ -90,7 +90,7 @@ public class ActuatorSub extends SubsystemBase {
             setDesiredAngle(Constants.ActuatorSub.minDesiredAngle);
         }
 
-        actuateToGoalAngle();
+        //actuateToGoalAngle();
 
         SmartDashboard.putNumber("actuatorMotorPosition", getMotorPosition());
         SmartDashboard.putNumber("desiredPosition", getDesiredAngle());

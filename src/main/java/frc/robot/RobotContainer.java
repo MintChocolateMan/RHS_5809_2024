@@ -31,6 +31,7 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton resetSwerveToAbsolute = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
 
     /* Operator Buttons */
     private final JoystickButton intake = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
@@ -102,6 +103,8 @@ public class RobotContainer {
 
         revShooter.whileTrue(new s_ShooterShoot(shooterSub));
         aimClose.whileTrue(new a_tempAimActuator(actuatorSub));
+
+        resetSwerveToAbsolute.onTrue(new InstantCommand(() -> {swerveSub.resetModulesToAbsolute();}));
     }
 
     /**
