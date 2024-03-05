@@ -18,7 +18,7 @@ public class s_ShooterShoot extends Command {
 
     @Override //Called when the command is initially scheduled.
     public void initialize() {
-        shooterSub.shooterShoot();
+        shooterSub.shooterMotorsOn();
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.

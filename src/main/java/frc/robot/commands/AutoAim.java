@@ -4,6 +4,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
@@ -19,6 +20,8 @@ public class AutoAim extends Command {
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
 
+    Timer timer;
+
     public AutoAim(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
         //Initialize subsystems
         this.swerveSub = swerveSub;
@@ -28,15 +31,18 @@ public class AutoAim extends Command {
         this.intakeSub = intakeSub;
 
         //Add subsystem requirements
-        addRequirements(swerveSub, shooterSub, actuatorSub);
+        addRequirements(swerveSub, shooterSub, actuatorSub, intakeSub);
 
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
+
+        timer = new Timer();
+        timer.stop();
     }
 
     @Override //Called when the command is initially scheduled.
     public void initialize() {
-        shooterSub.shooterShoot();
+        shooterSub.shooterMotorsOn();
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.
@@ -47,23 +53,27 @@ public class AutoAim extends Command {
         actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch());
 
         if (
-            swerveSub.driveWithRotation(
+            swerveSub.driveWithRotationGoal(
                 new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
                 poseEstimatorSub.getTargetYaw()
             ) == true && 
             actuatorSub.onTarget() == true) {
-                intakeSub.intakeMotorOn();
+                timer.start();
             }
+
+        if (timer.get() != 0) intakeSub.intakeMotorOn();
     }
 
     @Override // Called once the command ends or is interrupted.
     public void end(boolean interrupted) {
         shooterSub.stopMotors();
+        intakeSub.intakeMotorOff();
         actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
     }
 
     @Override // Returns true when the command should end.
     public boolean isFinished() {
+        if (timer.hasElapsed(.5)) return true;
         return false;
     }
 }

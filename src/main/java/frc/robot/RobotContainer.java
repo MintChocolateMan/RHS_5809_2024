@@ -62,21 +62,16 @@ public class RobotContainer {
                 () -> robotCentric.getAsBoolean()
             )
         );
-
         intakeSub.setDefaultCommand(new i_DefaultIntake(intakeSub));
 
         /* Register Commands with PathPlanner */
         NamedCommands.registerCommand("i_Intake", new i_Intake(intakeSub));
-        NamedCommands.registerCommand("s_ShooterShoot", new s_ShooterShoot(shooterSub));
-        NamedCommands.registerCommand("TeleopAutoAim", new AutoAim(
-            poseEstimatorSub, swerveSub, shooterSub, actuatorSub,
+        NamedCommands.registerCommand("AutoAim", new AutoAim(
+            poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub, 
             () -> 0, 
             () -> 0
         ));
-
-        // Build an auto chooser. This will use Commands.none() as the default option.
-        // Optionally use .buildAutoChooser("Default Auto") to specify a default auto
-        autoChooser = AutoBuilder.buildAutoChooser(); 
+        autoChooser = AutoBuilder.buildAutoChooser("Close to Speaker"); 
         SmartDashboard.putData("Auto Chooser:", autoChooser);
 
         // Configure the button bindings
@@ -91,11 +86,11 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> swerveSub.zeroHeading()));
+        zeroGyro.onTrue(new InstantCommand(() -> poseEstimatorSub.zeroHeading()));
 
         /* Operator Buttons */
         intake.whileTrue(new i_Intake(intakeSub));
-        autoShoot.whileTrue(new AutoAim(poseEstimatorSub, swerveSub, shooterSub, actuatorSub,
+        autoShoot.whileTrue(new AutoAim(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
             () -> -driver.getRawAxis(translationAxis), 
             () -> -driver.getRawAxis(strafeAxis)
         ));

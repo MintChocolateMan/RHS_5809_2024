@@ -10,8 +10,6 @@ public final class CTREConfigs {
     public TalonFXConfiguration swerveDriveFXConfig = new TalonFXConfiguration();
     public CANcoderConfiguration swerveCANcoderConfig = new CANcoderConfiguration();
 
-    public TalonFXConfiguration shooterFXConfig = new TalonFXConfiguration();
-
     public TalonFXConfiguration actuatorFXConfig = new TalonFXConfiguration();
 
     public CTREConfigs(){
@@ -63,11 +61,5 @@ public final class CTREConfigs {
 
         swerveDriveFXConfig.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = Constants.Swerve.closedLoopRamp;
         swerveDriveFXConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = Constants.Swerve.closedLoopRamp;
-
-        // Shooter Motor Configurations
-        shooterFXConfig.MotorOutput.NeutralMode = Constants.ShooterSub.motorNeutralMode;
-
-        // Actuator Motor Configurations
-        
     }
 }

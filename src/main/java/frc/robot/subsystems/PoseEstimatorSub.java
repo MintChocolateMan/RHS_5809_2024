@@ -5,10 +5,6 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -137,6 +133,8 @@ public class PoseEstimatorSub extends SubsystemBase {
     @Override //This method is called continuously
     public void periodic() {
         update();
+
+        SmartDashboard.putNumber("targetDistance", PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose()));
 
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
         //SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);

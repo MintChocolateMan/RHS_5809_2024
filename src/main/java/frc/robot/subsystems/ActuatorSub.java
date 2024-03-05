@@ -5,7 +5,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -14,7 +14,6 @@ public class ActuatorSub extends SubsystemBase {
 
     //Declare motors and sensors
     TalonFX actuatorMotor;
-    PIDController actuatorPID;
 
     double desiredAngle = 0;//Constants.ActuatorSub.defaultAngle;
     
@@ -23,11 +22,6 @@ public class ActuatorSub extends SubsystemBase {
         actuatorMotor = new TalonFX(Constants.ActuatorSub.actuatorMotorID);
         actuatorMotor.setInverted(Constants.ActuatorSub.actuatorMotorInverted);
         actuatorMotor.setNeutralMode(NeutralModeValue.Brake);
-        actuatorPID = new PIDController(
-            Constants.ActuatorSub.actuatorkP,
-            Constants.ActuatorSub.actuatorkI,
-            Constants.ActuatorSub.actuatorkD
-        );
         actuatorMotor.setPosition(0);
     }
 
@@ -75,15 +69,16 @@ public class ActuatorSub extends SubsystemBase {
     }
 
     public boolean onTarget() {
-        if (Math.abs(currentAngle() - desiredAngle) < 3) return true;
+        if (Math.abs(currentAngle() - desiredAngle) < Constants.ActuatorSub.maxError) return true;
         else return false;
     }
 
     public void actuateToGoalAngle() {
-        if (Math.abs(actuatorPID.getPositionError()) < Constants.ActuatorSub.actuatorMaxError) {
+        if (onTarget()) {
             actuatorMotor.stopMotor();
         } else {
-            actuatorMotor.set(actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
+            actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(currentAngle(), getDesiredAngle()));
+            //actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
         }
     }
     

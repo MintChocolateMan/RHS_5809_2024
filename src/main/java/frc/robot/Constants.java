@@ -3,7 +3,11 @@ package frc.robot;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -13,6 +17,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.lib.util.COTSTalonFXSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
@@ -27,9 +32,11 @@ public final class Constants {
         public static final boolean intakeMotorReversed = true;
         public static final int lineBreakerID = 1;
 
-        public static final double intakekP = 0.05;
-        public static final double intakekI = 0;
-        public static final double intakekD = 0;
+        public static final PIDController intakePID = new PIDController(
+            0.05,
+            0,
+            0
+        );
         public static final double intakePIDGoal = -2;
     }
 
@@ -55,11 +62,13 @@ public final class Constants {
         public static final int actuatorMotorID = 19;
         public static final boolean actuatorMotorInverted = false;
 
-        public static final double actuatorkP = 0.038; //.035
-        public static final double actuatorkI = 0.003; //.02
-        public static final double actuatorkD = 2; //.01
+        public static final PIDController actuatorPID = new PIDController(
+            0.038,
+            0.003,
+            2
+        );
 
-        public static final double actuatorMaxError = 0;
+        public static final double maxError = 3;
 
         public static final double shooterLength = 6.5;
         public static final double bottomLength = 17.1;
@@ -114,15 +123,20 @@ public final class Constants {
     }
 
     public static final class PathPlanner {
-        public static final double kPTranslation = 5.0;
-        public static final double kITranslation = 0.0;
-        public static final double kDTranslation = 0.0;
-        public static final double kPRotation = 5.0;
-        public static final double kIRotation = 0.0;
-        public static final double kDRotation = 0.0;
-
-        public static final double maxModuleSpeed = 5.5;
-        public static final double driveBaseRadius = 0.41;
+        public static final HolonomicPathFollowerConfig pathPlannerConfig = new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+            new PIDConstants( // Translation PID constants
+                5.0, 
+                0.0, 
+                0.0), 
+            new PIDConstants( // Rotation PID constants
+                5.0, 
+                0.0, 
+                0.0
+            ),
+            5.5,
+            .41,
+            new ReplanningConfig()
+        );
     }
 
     public static final class Swerve {

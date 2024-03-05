@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 public class ShooterSub extends SubsystemBase {
 
@@ -17,8 +18,8 @@ public class ShooterSub extends SubsystemBase {
         //Initialize motors and sensors
         topMotor = new TalonFX(Constants.ShooterSub.topMotorID);
         bottomMotor = new TalonFX(Constants.ShooterSub.bottomMotorID);
-        topMotor.getConfigurator().apply(Robot.ctreConfigs.shooterFXConfig);
-        bottomMotor.getConfigurator().apply(Robot.ctreConfigs.shooterFXConfig);
+        topMotor.setNeutralMode(NeutralModeValue.Brake);
+        bottomMotor.setNeutralMode(NeutralModeValue.Brake);
         topMotor.setInverted(Constants.ShooterSub.topMotorInverted);
         bottomMotor.setInverted(Constants.ShooterSub.bottomMotorInverted);
     }
@@ -26,7 +27,7 @@ public class ShooterSub extends SubsystemBase {
     //Declare subsystem suppliers
 
     //Declare methods
-    public void shooterShoot() {
+    public void shooterMotorsOn() {
         topMotor.set(Constants.ShooterSub.shootSpeed);
         bottomMotor.set(Constants.ShooterSub.shootSpeed);
     }
