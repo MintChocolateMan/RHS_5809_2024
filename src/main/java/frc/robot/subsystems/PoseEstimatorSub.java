@@ -135,7 +135,7 @@ public class PoseEstimatorSub extends SubsystemBase {
         return Math.tanh(
             Constants.PoseEstimatorSub.speakerTargetHeight / 
             PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose())
-            ) * 180 / Math.PI;
+            );
     }
 
     public void update() {

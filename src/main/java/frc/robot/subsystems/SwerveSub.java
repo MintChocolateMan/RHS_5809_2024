@@ -98,7 +98,7 @@ public class SwerveSub extends SubsystemBase {;
     public void driveWithRotation(Translation2d translation, double goalAngle) {
         drive(
             translation,
-            rotationPID.calculate(goalAngle),
+            -rotationPID.calculate(goalAngle),
             true,
             true
             );

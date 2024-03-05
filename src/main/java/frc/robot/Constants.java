@@ -53,7 +53,7 @@ public final class Constants {
 
         public static final double actuatorkP = 0.038; //.035
         public static final double actuatorkI = 0.003; //.02
-        public static final double actuatorkD = 2; //.01
+        public static final double actuatorkD = 3; //.01
 
         public static final double actuatorMaxError = 0.15;
 
@@ -104,7 +104,7 @@ public final class Constants {
         public static final double translationSensitivity = .5;
         public static final double rotationSensitivity = 1;
 
-        public static final double rotationkP = 0.1;
+        public static final double rotationkP = 0.01;
         public static final double rotationkI = 0;
         public static final double rotationkD = 0;
 
