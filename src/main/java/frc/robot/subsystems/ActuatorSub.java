@@ -5,7 +5,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -97,17 +97,11 @@ public class ActuatorSub extends SubsystemBase {
 
     @Override //This method is called continuously
     public void periodic() {
-        if (getDesiredAngle() > Constants.ActuatorSub.maxDesiredAngle) {
-            setDesiredAngle(Constants.ActuatorSub.maxDesiredAngle);
-        }
-        if (getDesiredAngle() < Constants.ActuatorSub.minDesiredAngle) {
-            setDesiredAngle(Constants.ActuatorSub.minDesiredAngle);
-        }
 
         actuateToGoalAngle();
 
         //SmartDashboard.putNumber("actuatorMotorPosition", getMotorPosition());
-        //SmartDashboard.putNumber("desiredPosition", getDesiredAngle());
+        SmartDashboard.putNumber("desiredAngle", getDesiredAngle());
 
         //SmartDashboard.putNumber("UpPID", actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
         //SmartDashboard.putNumber("positionError", actuatorPID.getPositionError());

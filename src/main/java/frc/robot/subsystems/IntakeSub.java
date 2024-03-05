@@ -13,24 +13,20 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 public class IntakeSub extends SubsystemBase {
 
-    //Declare motors and sensors
     private TalonFX intakeMotor;
     private DigitalInput lineBreaker;
     
-    public IntakeSub() { //Subsystem constructor
-        //Initialize motors and sensors
+    public IntakeSub() { 
         intakeMotor = new TalonFX(Constants.IntakeSub.intakeMotorID);
         intakeMotor.setInverted(Constants.IntakeSub.intakeMotorReversed);
         intakeMotor.setPosition(Constants.IntakeSub.intakePIDGoal);
         lineBreaker = new DigitalInput(Constants.IntakeSub.lineBreakerID);
     }
 
-    //Declare subsystem suppliers
     public boolean getNoteLoaded() {
         return lineBreaker.get();
     }
 
-    //Declare methods
     public void intakeMotorOn() {
         intakeMotor.set(Constants.IntakeSub.intakeMotorSpeed);
     }
@@ -55,24 +51,11 @@ public class IntakeSub extends SubsystemBase {
         intakeMotor.set(Constants.IntakeSub.intakePID.calculate(getIntakeMotorPosition(), Constants.IntakeSub.intakePIDGoal));
     }
 
-    //Declare inline Commands
-    public Command IntakeOn() {
-        return runOnce(() -> {
-            intakeMotorOn();
-        });
-    }
-
-    public Command IntakeOff() {
-        return runOnce(() -> {
-            intakeMotorOff();
-        });
-    }
-
-    @Override //This method is called continuously
+    @Override 
     public void periodic() {
         //SmartDashboard.putBoolean("NOTE LOADED", getNoteLoaded());
     }
 
-    @Override //This method is called continuously during simulation
+    @Override 
     public void simulationPeriodic() {}
 }

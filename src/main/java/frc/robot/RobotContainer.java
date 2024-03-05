@@ -30,16 +30,14 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kB.value);
-    private final JoystickButton resetSwerveToAbsolute = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
+    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kA.value);
 
     /* Operator Buttons */
     private final JoystickButton intake = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     private final JoystickButton autoShoot = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton extendClimbers = new JoystickButton(driver, XboxController.Button.kRightStick.value);
-
-    private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kA.value);
-    private final JoystickButton revShooter = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton resetActuator = new JoystickButton(driver, XboxController.Button.kB.value);
 
     /* Subsystems */
     private final PoseEstimatorSub poseEstimatorSub = new PoseEstimatorSub();
@@ -59,14 +57,14 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
-                () -> robotCentric.getAsBoolean()
+                robotCentric
             )
         );
         intakeSub.setDefaultCommand(new i_DefaultIntake(intakeSub));
 
         /* Register Commands with PathPlanner */
         NamedCommands.registerCommand("i_Intake", new i_Intake(intakeSub));
-        NamedCommands.registerCommand("AutoAim", new AutoAim(
+        NamedCommands.registerCommand("AutoAim", new AutoShoot(
             poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub, 
             () -> 0, 
             () -> 0
@@ -90,16 +88,14 @@ public class RobotContainer {
 
         /* Operator Buttons */
         intake.whileTrue(new i_Intake(intakeSub));
-        autoShoot.whileTrue(new AutoAim(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
+        autoShoot.whileTrue(new AutoShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
             () -> -driver.getRawAxis(translationAxis), 
             () -> -driver.getRawAxis(strafeAxis)
         ));
         extendClimbers.whileTrue(new p_ExtendClimbers(pneumaticSub));
-
-        revShooter.whileTrue(new s_ShooterShoot(shooterSub));
         aimClose.whileTrue(new a_tempAimActuator(actuatorSub));
+        resetActuator.whileTrue(new a_ResetActuator(actuatorSub));
 
-        resetSwerveToAbsolute.onTrue(new InstantCommand(() -> {swerveSub.resetModulesToAbsolute();}));
     }
 
     /**

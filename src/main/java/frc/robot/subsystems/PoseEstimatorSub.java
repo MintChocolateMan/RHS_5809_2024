@@ -23,15 +23,15 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 
 public class PoseEstimatorSub extends SubsystemBase {
 
-    //Declare motors and sensors
     public Pigeon2 gyro;
     public SwerveDrivePoseEstimator poseEstimator;
     PhotonCamera shooterCam;
     PhotonPoseEstimator photonPoseEstimator;
     SwerveSub swerveSub;
+
+    int visionCount = 0;
     
-    public PoseEstimatorSub() { //Subsystem constructor
-        //Initialize motors and sensors
+    public PoseEstimatorSub() { 
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
@@ -46,7 +46,6 @@ public class PoseEstimatorSub extends SubsystemBase {
         );
     }
 
-    //Declare subsystem suppliers
     public void initialize(SwerveSub swerveSub) {
         this.swerveSub = swerveSub;
 
@@ -118,17 +117,9 @@ public class PoseEstimatorSub extends SubsystemBase {
             poseEstimator.addVisionMeasurement(
                 estimatedPose.estimatedPose.toPose2d(),
                 estimatedPose.timestampSeconds);
-                System.out.println("Added vision measurement");
+                visionCount += 1;
+                SmartDashboard.putNumber("visionCount", visionCount);
         }
-    }
-
-    //Declare methods
-    public void exampleMethod() {}
-
-    //Declare inline Commands
-    public Command ExampleInlineCommand() {
-        return runOnce(() -> {
-        });
     }
 
     @Override //This method is called continuously
@@ -136,13 +127,14 @@ public class PoseEstimatorSub extends SubsystemBase {
         update();
 
         SmartDashboard.putNumber("targetDistance", PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose()));
+        SmartDashboard.putNumber("targetPitch", getTargetPitch());
 
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
         //SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
 
-        SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
-        SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
-        SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
+        //SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
+        //SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
+        //SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
     }
 
     @Override //This method is called continuously during simulation

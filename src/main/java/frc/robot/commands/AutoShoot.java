@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
-public class AutoAim extends Command {
+public class AutoShoot extends Command {
   
     //Declare subsystems
     private final PoseEstimatorSub poseEstimatorSub;
@@ -22,7 +22,7 @@ public class AutoAim extends Command {
 
     Timer timer;
 
-    public AutoAim(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
+    public AutoShoot(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
         //Initialize subsystems
         this.swerveSub = swerveSub;
         this.poseEstimatorSub = poseEstimatorSub;
@@ -66,7 +66,7 @@ public class AutoAim extends Command {
 
     @Override // Called once the command ends or is interrupted.
     public void end(boolean interrupted) {
-        shooterSub.stopMotors();
+        shooterSub.shooterMotorsOff();
         intakeSub.intakeMotorOff();
         actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
     }

@@ -18,7 +18,7 @@ public class s_ShooterIntake extends Command {
 
     @Override //Called when the command is initially scheduled.
     public void initialize() {
-        shooterSub.shooterIntake();
+        shooterSub.shooterMotorsReverse();
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.
@@ -26,7 +26,7 @@ public class s_ShooterIntake extends Command {
 
     @Override // Called once the command ends or is interrupted.
     public void end(boolean interrupted) {
-        shooterSub.stopMotors();
+        shooterSub.shooterMotorsOff();
     }
 
     @Override // Returns true when the command should end.

@@ -46,7 +46,7 @@ public final class Constants {
         public static final boolean topMotorInverted = true;
         public static final boolean bottomMotorInverted = true;
         public static final double shootSpeed = 1;
-        public static final double intakeSpeed = .2;
+        public static final double reverseSpeed = .2;
         public static final NeutralModeValue motorNeutralMode = NeutralModeValue.Brake;
     }
 

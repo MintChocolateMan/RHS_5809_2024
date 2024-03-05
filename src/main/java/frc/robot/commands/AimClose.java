@@ -1,24 +1,28 @@
-package frc.robot.backups;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
-public class a_RunActuatorManualy extends Command {
+public class AimClose extends Command {
   
     //Declare subsystems
-    private final ActuatorSub ActuatorSub;
+    private final ActuatorSub actuatorSub;
+    private final ShooterSub shooterSub;
 
-    public a_RunActuatorManualy(ActuatorSub ActuatorSub) { //Command constructor
+    public AimClose(ActuatorSub actuatorSub, ShooterSub shooterSub) { //Command constructor
         //Initialize subsystems
-        this.ActuatorSub = ActuatorSub;
+        this.actuatorSub = actuatorSub;
+        this.shooterSub = shooterSub;
 
         //Add subsystem requirements
-        addRequirements(ActuatorSub);
+        addRequirements(actuatorSub, shooterSub);
     }
 
     @Override //Called when the command is initially scheduled.
     public void initialize() {
-        ActuatorSub.actuatorMotorOn();
+        shooterSub.shooterMotorsOn();
+        actuatorSub.setDesiredAngle(55);
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.
@@ -26,7 +30,8 @@ public class a_RunActuatorManualy extends Command {
 
     @Override // Called once the command ends or is interrupted.
     public void end(boolean interrupted) {
-        ActuatorSub.actuatorMotorOff();
+        shooterSub.shooterMotorsOff();
+        actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
     }
 
     @Override // Returns true when the command should end.

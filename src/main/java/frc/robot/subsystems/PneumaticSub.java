@@ -10,13 +10,11 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class PneumaticSub extends SubsystemBase {
 
-    //Declare motors and sensors
     private PneumaticHub pneumaticHub;
     private DoubleSolenoid leftClimber;
     private DoubleSolenoid rightClimber;
     
-    public PneumaticSub() { //Subsystem constructor
-        //Initialize motors and sensors
+    public PneumaticSub() { 
         pneumaticHub = new PneumaticHub(Constants.PneumaticSub.pneumaticHubID);
         
         leftClimber = pneumaticHub.makeDoubleSolenoid(Constants.PneumaticSub.leftClimberForwardID, Constants.PneumaticSub.leftClimberReverseID);
@@ -26,7 +24,6 @@ public class PneumaticSub extends SubsystemBase {
         rightClimber.set(Value.kOff);
     }
 
-    //Declare methods
     public void climbersUp() {
         leftClimber.set(Value.kForward);
         rightClimber.set(Value.kForward);
@@ -42,15 +39,9 @@ public class PneumaticSub extends SubsystemBase {
         rightClimber.set(Value.kOff);
     }
 
-    //Declare inline Commands
-    public Command ExampleInlineCommand() {
-        return runOnce(() -> {
-        });
-    }
-
-    @Override //This method is called continuously
+    @Override 
     public void periodic() {}
 
-    @Override //This method is called continuously during simulation
+    @Override 
     public void simulationPeriodic() {}
 }
