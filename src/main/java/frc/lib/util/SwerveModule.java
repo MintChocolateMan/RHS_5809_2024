@@ -1,5 +1,6 @@
 package frc.lib.util;
 
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
@@ -33,7 +34,7 @@ public class SwerveModule {
     private final VelocityVoltage driveVelocity = new VelocityVoltage(0);
 
     /* angle motor control requests */
-    private final PositionVoltage anglePosition = new PositionVoltage(0);
+    private final PositionVoltage anglePosition = new PositionVoltage(0); 
 
     public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants){
         this.moduleNumber = moduleNumber;
@@ -48,8 +49,8 @@ public class SwerveModule {
         /* Angle Motor Config */
         mAngleMotor = new TalonFX(moduleConstants.angleMotorID);
         mAngleMotor.getConfigurator().apply(Robot.ctreConfigs.swerveAngleFXConfig);
-        resetToAbsolute();
         mAngleMotor.setInverted(angleInverted);
+        resetToAbsolute();
 
         /* Drive Motor Config */
         mDriveMotor = new TalonFX(moduleConstants.driveMotorID);

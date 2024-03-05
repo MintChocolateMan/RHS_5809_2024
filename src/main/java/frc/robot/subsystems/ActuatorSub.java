@@ -90,7 +90,7 @@ public class ActuatorSub extends SubsystemBase {
             setDesiredAngle(Constants.ActuatorSub.minDesiredAngle);
         }
 
-        //actuateToGoalAngle();
+        actuateToGoalAngle();
 
         SmartDashboard.putNumber("actuatorMotorPosition", getMotorPosition());
         SmartDashboard.putNumber("desiredPosition", getDesiredAngle());
