@@ -42,28 +42,15 @@ public class SwerveSub extends SubsystemBase {;
         poseEstimatorSub.initialize(this);
 
         AutoBuilder.configureHolonomic(
-                this::getPose, // Robot pose supplier
-                this::setPose, // Method to reset odometry (will be called if your auto has a starting pose)
-                this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-                this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-                new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                        new PIDConstants( // Translation PID constants
-                            Constants.PathPlanner.kPTranslation, 
-                            Constants.PathPlanner.kITranslation, 
-                            Constants.PathPlanner.kDTranslation), 
-                        new PIDConstants( // Rotation PID constants
-                            Constants.PathPlanner.kPRotation, 
-                            Constants.PathPlanner.kIRotation, 
-                            Constants.PathPlanner.kDRotation), 
-                        Constants.PathPlanner.maxModuleSpeed, // Max module speed, in m/s
-                        Constants.PathPlanner.driveBaseRadius, // Drive base radius in meters. Distance from robot center to furthest module.
-                        new ReplanningConfig() // Default path replanning config. See the API for the options here
-                ),
+                poseEstimatorSub::getPose, //Robot pose supplier
+                poseEstimatorSub::setPose, //Method to reset odometry (will be called if your auto has a starting pose)
+                this::getRobotRelativeSpeeds, //ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+                this::pathPlannerDrive, //Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+                Constants.PathPlanner.pathPlannerConfig,
                 () -> {
                     // Boolean supplier that controls when the path will be mirrored for the red alliance
                     // This will flip the path being followed to the red side of the field.
                     // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
                     var alliance = DriverStation.getAlliance();
                     if (alliance.isPresent()) {
                         return alliance.get() == DriverStation.Alliance.Red;
@@ -81,7 +68,7 @@ public class SwerveSub extends SubsystemBase {;
                                     translation.getX() * Constants.Swerve.translationSensitivity, 
                                     translation.getY() * Constants.Swerve.translationSensitivity, 
                                     rotation * Constants.Swerve.rotationSensitivity, 
-                                    getHeading()
+                                    poseEstimatorSub.getHeading()
                                 )
                                 : new ChassisSpeeds(
                                     translation.getX() * Constants.Swerve.translationSensitivity, 
@@ -95,17 +82,26 @@ public class SwerveSub extends SubsystemBase {;
         }
     }
 
-    public void driveWithRotation(Translation2d translation, double goalAngle) {
-        drive(
-            translation,
-            -rotationPID.calculate(goalAngle),
-            true,
-            true
-            );
+    public boolean driveWithRotationGoal(Translation2d translation, double goalAngle) {
+        SwerveModuleState[] swerveModuleStates =
+            Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+                ChassisSpeeds.fromFieldRelativeSpeeds(
+                                    translation.getX() * Constants.Swerve.translationSensitivity, 
+                                    translation.getY() * Constants.Swerve.translationSensitivity, 
+                                    -rotationPID.calculate(goalAngle), 
+                                    poseEstimatorSub.getHeading()
+                                ));
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+
+        for(SwerveModule mod : mSwerveMods){
+            mod.setDesiredState(swerveModuleStates[mod.moduleNumber], true);
+        }
+
+        if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() - goalAngle) < 5) return true;
+        else return false;
     }
 
-    //Drive method used by PathPlanner, different than one above because it needs to be robot oriented and only take a chassisSpeeds instead of translation2d and rotation
-    public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
+    public void pathPlannerDrive(ChassisSpeeds chassisSpeeds) {
         SwerveModuleState[] swerveModuleStates = 
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
@@ -125,7 +121,6 @@ public class SwerveSub extends SubsystemBase {;
         return chassisSpeeds;
     }
 
-    /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
         
@@ -150,30 +145,6 @@ public class SwerveSub extends SubsystemBase {;
         return positions;
     }
 
-    public Pose2d getPose() {
-        return poseEstimatorSub.getPose();
-    }
-
-    public void setPose(Pose2d pose) {
-        poseEstimatorSub.setPose(pose);
-    }
-
-    public Rotation2d getHeading() {
-        return poseEstimatorSub.getHeading();
-    }
-
-    public void setHeading(Rotation2d heading) {
-        poseEstimatorSub.setHeading(heading);
-    }
-
-    public void zeroHeading() {
-        poseEstimatorSub.zeroHeading();
-    }
-
-    public Rotation2d getGyroYaw() {
-        return poseEstimatorSub.getGyroYaw();
-    }
-
     public void resetModulesToAbsolute(){
         for(SwerveModule mod : mSwerveMods){
             mod.resetToAbsolute();
@@ -182,12 +153,12 @@ public class SwerveSub extends SubsystemBase {;
 
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("getheading", getHeading().getDegrees());
+        //SmartDashboard.putNumber("getheading", getHeading().getDegrees());
 
-        for(SwerveModule mod : mSwerveMods){
+        /*for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
-        }
+        }*/
     }
 }

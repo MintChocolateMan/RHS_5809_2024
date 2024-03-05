@@ -22,11 +22,9 @@ public class PneumaticSub extends SubsystemBase {
         leftClimber = pneumaticHub.makeDoubleSolenoid(Constants.PneumaticSub.leftClimberForwardID, Constants.PneumaticSub.leftClimberReverseID);
         rightClimber = pneumaticHub.makeDoubleSolenoid(Constants.PneumaticSub.rightClimberForwardID, Constants.PneumaticSub.rightClimberReverseID);
 
-        leftClimber.set(Value.kReverse);
-        rightClimber.set(Value.kReverse);
+        leftClimber.set(Value.kOff);
+        rightClimber.set(Value.kOff);
     }
-
-    //Declare subsystem suppliers
 
     //Declare methods
     public void climbersUp() {
@@ -37,6 +35,11 @@ public class PneumaticSub extends SubsystemBase {
     public void climbersDown() {
         leftClimber.set(Value.kReverse);
         rightClimber.set(Value.kReverse);
+    }
+
+    public void climbersOff() {
+        leftClimber.set(Value.kOff);
+        rightClimber.set(Value.kOff);
     }
 
     //Declare inline Commands

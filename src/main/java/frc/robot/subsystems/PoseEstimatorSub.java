@@ -5,10 +5,6 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -32,7 +28,6 @@ public class PoseEstimatorSub extends SubsystemBase {
     public SwerveDrivePoseEstimator poseEstimator;
     PhotonCamera shooterCam;
     PhotonPoseEstimator photonPoseEstimator;
-    Transform3d robotToShooterCam;
     SwerveSub swerveSub;
     
     public PoseEstimatorSub() { //Subsystem constructor
@@ -43,23 +38,11 @@ public class PoseEstimatorSub extends SubsystemBase {
 
         shooterCam = new PhotonCamera(Constants.PoseEstimatorSub.shooterCamName);
 
-        robotToShooterCam = new Transform3d(
-            new Translation3d(
-                Constants.PoseEstimatorSub.shooterCamForwardOffset,
-                Constants.PoseEstimatorSub.shooterCamHorizontalOffset,
-                Constants.PoseEstimatorSub.shooterCamVerticalOffset
-            ), new Rotation3d(
-                Constants.PoseEstimatorSub.shooterCamRoll,
-                Constants.PoseEstimatorSub.shooterCamPitch,
-                Constants.PoseEstimatorSub.shooterCamYaw
-            )
-        );
-
         photonPoseEstimator = new PhotonPoseEstimator(
             AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(),
             PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
             shooterCam,
-            robotToShooterCam
+            Constants.PoseEstimatorSub.robotToShooterCam
         );
     }
 
@@ -101,29 +84,17 @@ public class PoseEstimatorSub extends SubsystemBase {
 
     public Pose2d getStartingPose() {
         if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-            return new Pose2d(
-                new Translation2d(15.15, 5.5),
-                new Rotation2d()
-            );
+            return Constants.PoseEstimatorSub.redStartingPose;
         } else {
-                return new Pose2d(
-                    new Translation2d(1.35, 5.55),
-                    new Rotation2d()
-                );
+                return Constants.PoseEstimatorSub.blueStartingPose;
         }
     }
 
     public Pose2d getSpeakerTargetPose() {
         if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-            return new Pose2d(
-                new Translation2d(16.5, 5.5),
-                new Rotation2d()
-            );
+            return Constants.PoseEstimatorSub.redSpeakerTarget;
         } else {
-                return new Pose2d(
-                    new Translation2d(0, 5.55),
-                    new Rotation2d()
-                );
+            return Constants.PoseEstimatorSub.blueSpeakerTarget;
         }
     }
     
@@ -163,13 +134,14 @@ public class PoseEstimatorSub extends SubsystemBase {
     public void periodic() {
         update();
 
-        SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
-        SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
+        SmartDashboard.putNumber("targetDistance", PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose()));
 
-        SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
-        SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
-        SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
-        
+        //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
+        //SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
+
+        //SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
+        //SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
+        //SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
     }
 
     @Override //This method is called continuously during simulation
