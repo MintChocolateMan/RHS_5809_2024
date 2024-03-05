@@ -108,7 +108,7 @@ public class ActuatorSub extends SubsystemBase {
 
         //SmartDashboard.putNumber("actuatorMotorPosition", getMotorPosition());
         SmartDashboard.putNumber("desiredAngle", getDesiredAngle());
-        SmartDashboard.putNumber("currentAngle", motorPositionToCurrentAngle());
+        SmartDashboard.putNumber("currentAngle", getActuatorAngle());
         SmartDashboard.putNumber("desiredToMotor", desiredAngleToMotorPosition());
         SmartDashboard.putNumber("motorPosition", getMotorPosition());
         
