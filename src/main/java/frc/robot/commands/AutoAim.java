@@ -31,7 +31,7 @@ public class AutoAim extends Command {
         this.intakeSub = intakeSub;
 
         //Add subsystem requirements
-        addRequirements(swerveSub, shooterSub, actuatorSub, intakeSub);
+        addRequirements(swerveSub, shooterSub, actuatorSub);
 
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;

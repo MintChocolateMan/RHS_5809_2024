@@ -36,7 +36,7 @@ public class PoseEstimatorSub extends SubsystemBase {
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
 
-        shooterCam = new PhotonCamera(Constants.PoseEstimatorSub.shooterCamName);
+        shooterCam = new PhotonCamera("shooterCam");
 
         photonPoseEstimator = new PhotonPoseEstimator(
             AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(),
@@ -118,6 +118,7 @@ public class PoseEstimatorSub extends SubsystemBase {
             poseEstimator.addVisionMeasurement(
                 estimatedPose.estimatedPose.toPose2d(),
                 estimatedPose.timestampSeconds);
+                System.out.println("Added vision measurement");
         }
     }
 
@@ -139,9 +140,9 @@ public class PoseEstimatorSub extends SubsystemBase {
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
         //SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
 
-        //SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
-        //SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
-        //SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
+        SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
+        SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
+        SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
     }
 
     @Override //This method is called continuously during simulation

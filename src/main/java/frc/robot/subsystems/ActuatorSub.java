@@ -77,8 +77,8 @@ public class ActuatorSub extends SubsystemBase {
         if (onTarget()) {
             actuatorMotor.stopMotor();
         } else {
-            actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(currentAngle(), getDesiredAngle()));
-            //actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
+            //actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(currentAngle(), getDesiredAngle()));
+            actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
         }
     }
     

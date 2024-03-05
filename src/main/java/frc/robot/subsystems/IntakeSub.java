@@ -16,7 +16,6 @@ public class IntakeSub extends SubsystemBase {
     //Declare motors and sensors
     private TalonFX intakeMotor;
     private DigitalInput lineBreaker;
-    private PIDController intakePID;
     
     public IntakeSub() { //Subsystem constructor
         //Initialize motors and sensors
@@ -53,7 +52,7 @@ public class IntakeSub extends SubsystemBase {
     }
 
     public void intakeMotorToPID() {
-        intakeMotor.set(intakePID.calculate(getIntakeMotorPosition(), Constants.IntakeSub.intakePIDGoal));
+        intakeMotor.set(Constants.IntakeSub.intakePID.calculate(getIntakeMotorPosition(), Constants.IntakeSub.intakePIDGoal));
     }
 
     //Declare inline Commands
