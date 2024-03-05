@@ -93,7 +93,7 @@ public class RobotContainer {
             () -> -driver.getRawAxis(strafeAxis)
         ));
         extendClimbers.whileTrue(new p_ExtendClimbers(pneumaticSub));
-        aimClose.whileTrue(new a_tempAimActuator(actuatorSub));
+        aimClose.whileTrue(new AimClose(actuatorSub, shooterSub));
         resetActuator.whileTrue(new a_ResetActuator(actuatorSub));
 
     }
