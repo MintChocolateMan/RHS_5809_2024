@@ -63,9 +63,9 @@ public final class Constants {
         public static final boolean actuatorMotorInverted = false;
 
         public static final PIDController actuatorPID = new PIDController(
-            0.038,
-            0.003,
-            2
+            0.008,
+            0,
+            0
         );
 
         public static final double maxError = 3;
@@ -144,7 +144,7 @@ public final class Constants {
     public static final class Swerve {
         public static final int pigeonID = 13;
 
-        public static final double translationSensitivity = 1;
+        public static final double translationSensitivity = 0.7;
         public static final double rotationSensitivity = 1;
 
         public static final double rotationkP = 0.01;

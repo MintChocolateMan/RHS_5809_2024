@@ -33,7 +33,7 @@ public class ActuatorSub extends SubsystemBase {
     }
 
     public void actuatorMotorDown() {
-        actuatorMotor.set(Constants.ActuatorSub.actuatorDownSpeed);
+        actuatorMotor.set(-Constants.ActuatorSub.actuatorDownSpeed);
     }
 
     public void actuatorMotorOff() {
@@ -58,11 +58,11 @@ public class ActuatorSub extends SubsystemBase {
     } 
 
     public double motorPositionToCurrentAngle() {
-        return (Math.PI / 180 * Math.cosh(
-            (Math.pow((2 * Math.PI * Constants.ActuatorSub.actuatorRate * getMotorPosition()), 2) - 
+        return ((Math.PI / 180 * Math.cosh(
+            (Math.pow((Constants.ActuatorSub.actuatorRate * getMotorPosition()), 2) - 
             Math.pow(Constants.ActuatorSub.shooterLength, 2) - Math.pow(Constants.ActuatorSub.bottomLength, 2)) /
             (-2.0 * Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.bottomLength)
-        )) + Constants.ActuatorSub.shooterMinAngle - Constants.ActuatorSub.bottomAngle;
+        )) + Constants.ActuatorSub.shooterMinAngle - Constants.ActuatorSub.bottomAngle);
     }
 
     public boolean onTarget() {
@@ -98,10 +98,14 @@ public class ActuatorSub extends SubsystemBase {
     @Override //This method is called continuously
     public void periodic() {
 
-        actuateToGoalAngle();
+        //actuateToGoalAngle();
 
         //SmartDashboard.putNumber("actuatorMotorPosition", getMotorPosition());
         SmartDashboard.putNumber("desiredAngle", getDesiredAngle());
+        SmartDashboard.putNumber("currentAngle", motorPositionToCurrentAngle());
+        SmartDashboard.putNumber("desiredToMotor", desiredAngleToMotorPosition());
+        SmartDashboard.putNumber("motorPosition", getMotorPosition());
+        
 
         //SmartDashboard.putNumber("UpPID", actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
         //SmartDashboard.putNumber("positionError", actuatorPID.getPositionError());
