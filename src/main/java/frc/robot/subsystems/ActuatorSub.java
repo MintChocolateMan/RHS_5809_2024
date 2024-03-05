@@ -66,6 +66,19 @@ public class ActuatorSub extends SubsystemBase {
         (2.0 * Math.PI * Constants.ActuatorSub.actuatorRate);
     } 
 
+    public double currentAngle() {
+        return (Math.PI / 180 * Math.cosh(
+            (Math.pow((2 * Math.PI * Constants.ActuatorSub.actuatorRate * getMotorPosition()), 2) - 
+            Math.pow(Constants.ActuatorSub.shooterLength, 2) - Math.pow(Constants.ActuatorSub.bottomLength, 2)) /
+            (-2.0 * Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.bottomLength)
+        )) + Constants.ActuatorSub.shooterMinAngle - Constants.ActuatorSub.bottomAngle;
+    }
+
+    public boolean onTarget() {
+        if (Math.abs(currentAngle() - desiredAngle) < 3) return true;
+        else return false;
+    }
+
     public void actuateToGoalAngle() {
         if (Math.abs(actuatorPID.getPositionError()) < Constants.ActuatorSub.actuatorMaxError) {
             actuatorMotor.stopMotor();
@@ -90,14 +103,14 @@ public class ActuatorSub extends SubsystemBase {
             setDesiredAngle(Constants.ActuatorSub.minDesiredAngle);
         }
 
-        //actuateToGoalAngle();
+        actuateToGoalAngle();
 
-        SmartDashboard.putNumber("actuatorMotorPosition", getMotorPosition());
-        SmartDashboard.putNumber("desiredPosition", getDesiredAngle());
+        //SmartDashboard.putNumber("actuatorMotorPosition", getMotorPosition());
+        //SmartDashboard.putNumber("desiredPosition", getDesiredAngle());
 
-        SmartDashboard.putNumber("UpPID", actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
-        SmartDashboard.putNumber("positionError", actuatorPID.getPositionError());
-        SmartDashboard.putNumber("velocityError", actuatorPID.getVelocityError());
+        //SmartDashboard.putNumber("UpPID", actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
+        //SmartDashboard.putNumber("positionError", actuatorPID.getPositionError());
+        //SmartDashboard.putNumber("velocityError", actuatorPID.getVelocityError());
     }
 
     @Override //This method is called continuously during simulation

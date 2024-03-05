@@ -95,13 +95,15 @@ public class SwerveSub extends SubsystemBase {;
         }
     }
 
-    public void driveWithRotation(Translation2d translation, double goalAngle) {
+    public boolean driveWithRotation(Translation2d translation, double goalAngle) {
         drive(
             translation,
-            rotationPID.calculate(goalAngle),
+            -rotationPID.calculate(goalAngle),
             true,
             true
             );
+        if (Math.abs(getPose().getRotation().getDegrees() - goalAngle) < 5) return true;
+        else return false;
     }
 
     //Drive method used by PathPlanner, different than one above because it needs to be robot oriented and only take a chassisSpeeds instead of translation2d and rotation
@@ -182,12 +184,12 @@ public class SwerveSub extends SubsystemBase {;
 
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("getheading", getHeading().getDegrees());
+        //SmartDashboard.putNumber("getheading", getHeading().getDegrees());
 
-        for(SwerveModule mod : mSwerveMods){
+        /*for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
-        }
+        }*/
     }
 }

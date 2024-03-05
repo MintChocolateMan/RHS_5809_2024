@@ -76,7 +76,7 @@ public class IntakeSub extends SubsystemBase {
 
     @Override //This method is called continuously
     public void periodic() {
-        SmartDashboard.putBoolean("NOTE LOADED", getNoteLoaded());
+        //SmartDashboard.putBoolean("NOTE LOADED", getNoteLoaded());
     }
 
     @Override //This method is called continuously during simulation

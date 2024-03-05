@@ -4,8 +4,12 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
@@ -23,10 +27,10 @@ public final class Constants {
         public static final boolean intakeMotorReversed = true;
         public static final int lineBreakerID = 1;
 
-        public static final double intakekP = 0.1;
+        public static final double intakekP = 0.05;
         public static final double intakekI = 0;
         public static final double intakekD = 0;
-        public static final double intakePIDGoal = -1;
+        public static final double intakePIDGoal = -2;
     }
 
     public static final class ShooterSub {
@@ -55,7 +59,7 @@ public final class Constants {
         public static final double actuatorkI = 0.003; //.02
         public static final double actuatorkD = 2; //.01
 
-        public static final double actuatorMaxError = 0.15;
+        public static final double actuatorMaxError = 0;
 
         public static final double shooterLength = 6.5;
         public static final double bottomLength = 17.1;
@@ -70,18 +74,41 @@ public final class Constants {
         public static final double maxDesiredAngle = 60;
         public static final double minDesiredAngle = 30;
 
-        public static final double defaultAngle = 55;
+        public static final double defaultAngle = 40;
     }
 
     public static final class PoseEstimatorSub {
         public static final String shooterCamName = "shooterCam";
 
-        public static final double shooterCamForwardOffset = -0.35; //TODO find lol
-        public static final double shooterCamHorizontalOffset = .1;
-        public static final double shooterCamVerticalOffset = 0.2;
-        public static final double shooterCamRoll = 0;
-        public static final double shooterCamPitch = 30;
-        public static final double shooterCamYaw = 0;
+        public static final Transform3d robotToShooterCam = new Transform3d(
+            new Translation3d(
+                -0.035,
+                .1,
+                .2
+            ), new Rotation3d(
+                0.0,
+                30.0,
+                0.0
+            )
+        );
+
+        public static final Pose2d redStartingPose = new Pose2d(
+            new Translation2d(15.15, 5.5),
+            new Rotation2d()
+        );
+        public static final Pose2d blueStartingPose = new Pose2d(
+            new Translation2d(1.35, 5.55),
+            new Rotation2d()
+        );
+        public static final Pose2d redSpeakerTarget = new Pose2d(
+            new Translation2d(16.5, 5.5),
+            new Rotation2d()
+        );
+        public static final Pose2d blueSpeakerTarget = new Pose2d(
+            new Translation2d(0, 5.55),
+            new Rotation2d()
+        );
+        
 
         public static final double speakerTargetHeight = 1.7;
     }
@@ -101,12 +128,12 @@ public final class Constants {
     public static final class Swerve {
         public static final int pigeonID = 13;
 
-        public static final double translationSensitivity = .5;
+        public static final double translationSensitivity = 1;
         public static final double rotationSensitivity = 1;
 
-        public static final double rotationkP = 0.1;
+        public static final double rotationkP = 0.2;
         public static final double rotationkI = 0;
-        public static final double rotationkD = 0;
+        public static final double rotationkD = 0.2;
 
         public static final COTSTalonFXSwerveConstants chosenModule = 
         COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);

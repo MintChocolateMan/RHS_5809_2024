@@ -68,7 +68,7 @@ public class RobotContainer {
         /* Register Commands with PathPlanner */
         NamedCommands.registerCommand("i_Intake", new i_Intake(intakeSub));
         NamedCommands.registerCommand("s_ShooterShoot", new s_ShooterShoot(shooterSub));
-        NamedCommands.registerCommand("TeleopAutoAim", new TeleopAutoAim(
+        NamedCommands.registerCommand("TeleopAutoAim", new AutoAim(
             poseEstimatorSub, swerveSub, shooterSub, actuatorSub,
             () -> 0, 
             () -> 0
@@ -95,7 +95,7 @@ public class RobotContainer {
 
         /* Operator Buttons */
         intake.whileTrue(new i_Intake(intakeSub));
-        autoShoot.whileTrue(new TeleopAutoAim(poseEstimatorSub, swerveSub, shooterSub, actuatorSub,
+        autoShoot.whileTrue(new AutoAim(poseEstimatorSub, swerveSub, shooterSub, actuatorSub,
             () -> -driver.getRawAxis(translationAxis), 
             () -> -driver.getRawAxis(strafeAxis)
         ));
