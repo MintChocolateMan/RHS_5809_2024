@@ -6,8 +6,8 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-//import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 //import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -20,24 +20,34 @@ public class RobotContainer {
     /* Auto Chooser */
     private final SendableChooser<Command> autoChooser;
     
-    /* Controllers */
+    /*
+    // XBOX Controller Buttons
     private final XboxController driver = new XboxController(0);
-
-    /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
-
-    /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kA.value);
-
-    /* Operator Buttons */
     private final JoystickButton intake = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     private final JoystickButton autoShoot = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton extendClimbers = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton resetActuator = new JoystickButton(driver, XboxController.Button.kB.value);
+    */
+
+    // JOYSTICK Buttons
+    private final Joystick driver = new Joystick(0);
+    private final int translationAxis = Joystick.AxisType.kY.value;
+    private final int strafeAxis = Joystick.AxisType.kX.value;
+    private final int rotationAxis = Joystick.AxisType.kZ.value;
+    private final JoystickButton zeroGyro = new JoystickButton(driver, 4);
+    private final JoystickButton robotCentric = new JoystickButton(driver, 6);
+    private final JoystickButton intake = new JoystickButton(driver, 1);
+    private final JoystickButton autoShoot = new JoystickButton(driver, 2);
+    private final JoystickButton extendClimbers = new JoystickButton(driver, 8);
+    private final JoystickButton aimClose = new JoystickButton(driver, 3);
+    private final JoystickButton resetActuator = new JoystickButton(driver, 5);
+
 
     /* Subsystems */
     private final PoseEstimatorSub poseEstimatorSub = new PoseEstimatorSub();
