@@ -84,6 +84,8 @@ public final class Constants {
         public static final double minDesiredAngle = 30;
 
         public static final double defaultAngle = 40;
+
+        public static final double actuatorDownSpeed = .3;
     }
 
     public static final class PoseEstimatorSub {

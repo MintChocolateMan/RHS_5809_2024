@@ -12,13 +12,11 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 public class ActuatorSub extends SubsystemBase {
 
-    //Declare motors and sensors
+    //Declare motors, sensors, and variables
     TalonFX actuatorMotor;
-
-    double desiredAngle = 0;//Constants.ActuatorSub.defaultAngle;
+    double desiredAngle = Constants.ActuatorSub.defaultAngle;
     
-    public ActuatorSub() { //Subsystem constructor
-        //Initialize motors and sensors
+    public ActuatorSub() {
         actuatorMotor = new TalonFX(Constants.ActuatorSub.actuatorMotorID);
         actuatorMotor.setInverted(Constants.ActuatorSub.actuatorMotorInverted);
         actuatorMotor.setNeutralMode(NeutralModeValue.Brake);
@@ -34,33 +32,32 @@ public class ActuatorSub extends SubsystemBase {
         return desiredAngle;
     }
 
-    public void actuatorMotorOn() {
-        actuatorMotor.set(.5);
+    public void actuatorMotorDown() {
+        actuatorMotor.set(Constants.ActuatorSub.actuatorDownSpeed);
     }
 
     public void actuatorMotorOff() {
         actuatorMotor.set(0);
     }
 
+    public void setMotorPosition(double position) {
+        actuatorMotor.setPosition(position);
+    }
+
     public double getMotorPosition() {
         return actuatorMotor.getRotorPosition().getValueAsDouble();
     }
 
-    public double desiredAngleToGoalAngle() {
-        return getDesiredAngle() - Constants.ActuatorSub.shooterMinAngle + Constants.ActuatorSub.bottomAngle;
-    }
-
-    public double goalAngleToPIDRotations() {
+    public double desiredAngleToMotorPosition() {
         return ( Math.sqrt(
-            Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.shooterLength +
-            Constants.ActuatorSub.bottomLength * Constants.ActuatorSub.bottomLength +
+            Math.pow(Constants.ActuatorSub.shooterLength, 2) + Math.pow(Constants.ActuatorSub.bottomLength, 2) +
             -2.0 * Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.bottomLength *
-            Math.cos(desiredAngleToGoalAngle() * Math.PI / 180.0)
-        ) - Constants.ActuatorSub.actuatorMinLength ) / 
-        (2.0 * Math.PI * Constants.ActuatorSub.actuatorRate);
+            Math.cos(getDesiredAngle() - Constants.ActuatorSub.shooterMinAngle + Constants.ActuatorSub.bottomAngle * 
+            Math.PI / 180.0)) - Constants.ActuatorSub.actuatorMinLength ) / 
+            (2.0 * Math.PI * Constants.ActuatorSub.actuatorRate);
     } 
 
-    public double currentAngle() {
+    public double motorPositionToCurrentAngle() {
         return (Math.PI / 180 * Math.cosh(
             (Math.pow((2 * Math.PI * Constants.ActuatorSub.actuatorRate * getMotorPosition()), 2) - 
             Math.pow(Constants.ActuatorSub.shooterLength, 2) - Math.pow(Constants.ActuatorSub.bottomLength, 2)) /
@@ -69,16 +66,25 @@ public class ActuatorSub extends SubsystemBase {
     }
 
     public boolean onTarget() {
-        if (Math.abs(currentAngle() - desiredAngle) < Constants.ActuatorSub.maxError) return true;
+        if (Math.abs(motorPositionToCurrentAngle() - desiredAngle) < Constants.ActuatorSub.maxError) return true;
         else return false;
     }
 
+    public void regulateDesiredAngle() {
+        if (getDesiredAngle() > Constants.ActuatorSub.maxDesiredAngle) {
+            setDesiredAngle(Constants.ActuatorSub.maxDesiredAngle);
+        } else if (getDesiredAngle() < Constants.ActuatorSub.minDesiredAngle) {
+            setDesiredAngle(Constants.ActuatorSub.minDesiredAngle);
+        }
+    }
+
     public void actuateToGoalAngle() {
+        regulateDesiredAngle();
         if (onTarget()) {
             actuatorMotor.stopMotor();
         } else {
-            //actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(currentAngle(), getDesiredAngle()));
-            actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
+            actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(motorPositionToCurrentAngle(), getDesiredAngle()));
+            //actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
         }
     }
     
