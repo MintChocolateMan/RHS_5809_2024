@@ -48,6 +48,7 @@ public class ActuatorSub extends SubsystemBase {
         return actuatorMotor.getRotorPosition().getValueAsDouble();
     }
 
+    //currently unused
     public double desiredAngleToMotorPosition() {
         return ( Math.sqrt(
             Math.pow(Constants.ActuatorSub.shooterLength, 2) + Math.pow(Constants.ActuatorSub.bottomLength, 2) +
@@ -57,16 +58,21 @@ public class ActuatorSub extends SubsystemBase {
             (2.0 * Math.PI * Constants.ActuatorSub.actuatorRate);
     } 
 
-    public double motorPositionToCurrentAngle() {
-        return ((Math.PI / 180 * Math.cosh(
-            (Math.pow((Constants.ActuatorSub.actuatorRate * getMotorPosition()), 2) - 
-            Math.pow(Constants.ActuatorSub.shooterLength, 2) - Math.pow(Constants.ActuatorSub.bottomLength, 2)) /
-            (-2.0 * Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.bottomLength)
-        )) + Constants.ActuatorSub.shooterMinAngle - Constants.ActuatorSub.bottomAngle);
+
+    public double getActuatorAngle() {
+        return 
+            (((180 / Math.PI) * Math.cosh(
+                (
+                    Math.pow((Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition()), 2) -
+                    Math.pow(Constants.ActuatorSub.shooterLength, 2) - Math.pow(Constants.ActuatorSub.bottomLength, 2)
+                ) / (
+                -2.0 * Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.bottomLength
+                )
+            )) - Constants.ActuatorSub.bottomAngle + Constants.ActuatorSub.shooterMinAngle);
     }
 
     public boolean onTarget() {
-        if (Math.abs(motorPositionToCurrentAngle() - desiredAngle) < Constants.ActuatorSub.maxError) return true;
+        if (Math.abs(getActuatorAngle() - getDesiredAngle()) < Constants.ActuatorSub.maxError) return true;
         else return false;
     }
 
@@ -83,7 +89,7 @@ public class ActuatorSub extends SubsystemBase {
         if (onTarget()) {
             actuatorMotor.stopMotor();
         } else {
-            actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(motorPositionToCurrentAngle(), getDesiredAngle()));
+            actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(getActuatorAngle(), getDesiredAngle()));
             //actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
         }
     }
