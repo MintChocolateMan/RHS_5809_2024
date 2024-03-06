@@ -63,7 +63,7 @@ public final class Constants {
         public static final boolean actuatorMotorInverted = false;
 
         public static final PIDController actuatorPID = new PIDController(
-            0.02,
+            0.01,
             0,
             0
         );
