@@ -25,9 +25,10 @@ public class PoseEstimatorSub extends SubsystemBase {
 
     public Pigeon2 gyro;
     public SwerveDrivePoseEstimator poseEstimator;
-    PhotonCamera shooterCam;
     PhotonPoseEstimator photonPoseEstimator;
     SwerveSub swerveSub;
+
+    PhotonCamera shooterCam = new PhotonCamera(Constants.PoseEstimatorSub.shooterCamName);
 
     int visionCount = 0;
     
@@ -36,7 +37,7 @@ public class PoseEstimatorSub extends SubsystemBase {
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
 
-        shooterCam = new PhotonCamera("shooterCam");
+        shooterCam = new PhotonCamera(Constants.PoseEstimatorSub.shooterCamName);
 
         photonPoseEstimator = new PhotonPoseEstimator(
             AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(),

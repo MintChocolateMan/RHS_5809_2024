@@ -3,12 +3,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class a_ResetActuator extends Command {
+public class a_ZeroActuator extends Command {
   
     //Declare subsystems
     private final ActuatorSub actuatorSub;
 
-    public a_ResetActuator(ActuatorSub actuatorSub) { //Command constructor
+    public a_ZeroActuator(ActuatorSub actuatorSub) { //Command constructor
         //Initialize subsystems
         this.actuatorSub = actuatorSub;
 
@@ -18,7 +18,9 @@ public class a_ResetActuator extends Command {
 
     @Override //Called when the command is initially scheduled.
     public void initialize() {
+        actuatorSub.setZeroing(true);
         actuatorSub.actuatorMotorDown();
+
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.
@@ -28,6 +30,8 @@ public class a_ResetActuator extends Command {
     public void end(boolean interrupted) {
         actuatorSub.actuatorMotorOff();
         actuatorSub.setMotorPosition(0);
+        actuatorSub.setDesiredAngle(0);
+        actuatorSub.setZeroing(false);
     }
 
     @Override // Returns true when the command should end.

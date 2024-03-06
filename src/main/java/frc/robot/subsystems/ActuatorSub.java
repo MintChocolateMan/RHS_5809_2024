@@ -14,8 +14,10 @@ public class ActuatorSub extends SubsystemBase {
 
     //Declare motors, sensors, and variables
     TalonFX actuatorMotor;
-    double desiredAngle = Constants.ActuatorSub.defaultAngle;
-    
+
+    double desiredAngle = 0; //Constants.ActuatorSub.defaultAngle;
+    boolean zeroing = false;
+
     public ActuatorSub() {
         actuatorMotor = new TalonFX(Constants.ActuatorSub.actuatorMotorID);
         actuatorMotor.setInverted(Constants.ActuatorSub.actuatorMotorInverted);
@@ -61,12 +63,26 @@ public class ActuatorSub extends SubsystemBase {
 
 
     public double getActuatorAngle() {
-        return (((180 / Math.PI) * Math.acos((((Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition())) * ((Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition())) - (Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.shooterLength) - (Constants.ActuatorSub.bottomLength * Constants.ActuatorSub.bottomLength)) / (-2.0 * Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.bottomLength))) - Constants.ActuatorSub.bottomAngle + Constants.ActuatorSub.shooterMinAngle);
+        return (((180 / Math.PI) * 
+            Math.acos((((Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition())) * 
+            ((Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition())) - 
+            (Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.shooterLength) - 
+            (Constants.ActuatorSub.bottomLength * Constants.ActuatorSub.bottomLength)) / 
+            (-2.0 * Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.bottomLength))) - 
+            Constants.ActuatorSub.bottomAngle + Constants.ActuatorSub.shooterMinAngle);
     }
 
     public boolean onTarget() {
         if (Math.abs(getActuatorAngle() - getDesiredAngle()) < Constants.ActuatorSub.maxError) return true;
         else return false;
+    }
+
+    public void setZeroing(boolean zeroing) {
+        this.zeroing = zeroing;
+    }
+
+    public boolean getZeroing() {
+        return zeroing;
     }
 
     public void regulateDesiredAngle() {
@@ -79,11 +95,13 @@ public class ActuatorSub extends SubsystemBase {
 
     public void actuateToGoalAngle() {
         regulateDesiredAngle();
-        if (onTarget()) {
+        if (!getZeroing()) {
+            if (onTarget()) {
             actuatorMotor.stopMotor();
         } else {
             actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(getActuatorAngle(), getDesiredAngle()));
             //actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
+        }
         }
     }
     
@@ -100,10 +118,10 @@ public class ActuatorSub extends SubsystemBase {
         actuateToGoalAngle();
 
         //SmartDashboard.putNumber("actuatorMotorPosition", getMotorPosition());
-        //SmartDashboard.putNumber("desiredAngle", getDesiredAngle());
-        //SmartDashboard.putNumber("currentAngle", getActuatorAngle());
+        SmartDashboard.putNumber("desiredAngle", getDesiredAngle());
+        SmartDashboard.putNumber("currentAngle", getActuatorAngle());
         //SmartDashboard.putNumber("desiredToMotor", desiredAngleToMotorPosition());
-        //SmartDashboard.putNumber("motorPosition", getMotorPosition());
+        SmartDashboard.putNumber("motorPosition", getMotorPosition());
         
 
         //SmartDashboard.putNumber("UpPID", actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));

@@ -32,7 +32,7 @@ public class RobotContainer {
     private final JoystickButton autoShoot = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton extendClimbers = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kX.value);
-    private final JoystickButton resetActuator = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton zeroActuator = new JoystickButton(driver, XboxController.Button.kB.value);
     
     /*
     // JOYSTICK Buttons
@@ -104,7 +104,7 @@ public class RobotContainer {
         ));
         extendClimbers.whileTrue(new p_ExtendClimbers(pneumaticSub));
         aimClose.whileTrue(new AimClose(actuatorSub, shooterSub));
-        resetActuator.whileTrue(new a_ResetActuator(actuatorSub));
+        zeroActuator.whileTrue(new a_ZeroActuator(actuatorSub));
 
     }
 

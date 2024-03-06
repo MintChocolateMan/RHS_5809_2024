@@ -80,14 +80,17 @@ public final class Constants {
         
         public static final double actuatorRate = .3846;
 
-        public static final double calculatedRate = (13.7 - 10.8) / 6.2;
-
-        public static final double maxDesiredAngle = 60;
-        public static final double minDesiredAngle = 30;
+        public static final double maxDesiredAngle = 62;
+        public static final double minDesiredAngle = 28;
 
         public static final double defaultAngle = 45;
 
-        public static final double actuatorDownSpeed = .3;
+        public static final double actuatorDownSpeed = .03;
+
+        public static final int actuatorCurrentLimit = 30;
+        public static final int actuatorCurrentThreshold = 50;
+        public static final double actuatorCurrentThresholdTime = 0.1;
+        public static final boolean actuatorEnableCurrentLimit = true;
     }
 
     public static final class PoseEstimatorSub {

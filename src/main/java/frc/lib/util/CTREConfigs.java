@@ -63,9 +63,9 @@ public final class CTREConfigs {
         swerveDriveFXConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = Constants.Swerve.closedLoopRamp;
         
         //Actuator motor current limiting
-        actuatorFXConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.Swerve.driveEnableCurrentLimit;
-        actuatorFXConfig.CurrentLimits.SupplyCurrentLimit = Constants.Swerve.driveCurrentLimit;
-        actuatorFXConfig.CurrentLimits.SupplyCurrentThreshold = Constants.Swerve.driveCurrentThreshold;
-        actuatorFXConfig.CurrentLimits.SupplyTimeThreshold = Constants.Swerve.driveCurrentThresholdTime;
+        actuatorFXConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.ActuatorSub.actuatorEnableCurrentLimit;
+        actuatorFXConfig.CurrentLimits.SupplyCurrentLimit = Constants.ActuatorSub.actuatorCurrentLimit;
+        actuatorFXConfig.CurrentLimits.SupplyCurrentThreshold = Constants.ActuatorSub.actuatorCurrentThreshold;
+        actuatorFXConfig.CurrentLimits.SupplyTimeThreshold = Constants.ActuatorSub.actuatorCurrentThresholdTime;
     }
 }
