@@ -102,7 +102,7 @@ public class PoseEstimatorSub extends SubsystemBase {
     }
 
     public double getTargetPitch() {
-        return Math.tanh(
+        return Math.atan(
             Constants.PoseEstimatorSub.speakerTargetHeight / 
             PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose())
             ) * 180 / Math.PI;
@@ -132,9 +132,9 @@ public class PoseEstimatorSub extends SubsystemBase {
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
         //SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
 
-        //SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
-        //SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
-        //SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
+        SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
+        SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
+        SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
     }
 
     @Override //This method is called continuously during simulation

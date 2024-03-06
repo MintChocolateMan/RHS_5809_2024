@@ -16,7 +16,7 @@ public class AimClose extends Command {
         this.shooterSub = shooterSub;
 
         //Add subsystem requirements
-        addRequirements(actuatorSub, shooterSub);
+        addRequirements(shooterSub);
     }
 
     @Override //Called when the command is initially scheduled.

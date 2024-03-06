@@ -63,7 +63,7 @@ public final class Constants {
         public static final boolean actuatorMotorInverted = false;
 
         public static final PIDController actuatorPID = new PIDController(
-            0.008,
+            0.02,
             0,
             0
         );
@@ -78,12 +78,14 @@ public final class Constants {
         public static final double shooterMinAngle = 22.8;
         public static final double bottomAngle = 6.9;
         
-        public static final double actuatorRate = .0584;
+        public static final double actuatorRate = .3846;
+
+        public static final double calculatedRate = (13.7 - 10.8) / 6.2;
 
         public static final double maxDesiredAngle = 60;
         public static final double minDesiredAngle = 30;
 
-        public static final double defaultAngle = 40;
+        public static final double defaultAngle = 45;
 
         public static final double actuatorDownSpeed = .3;
     }
@@ -93,7 +95,7 @@ public final class Constants {
 
         public static final Transform3d robotToShooterCam = new Transform3d(
             new Translation3d(
-                -0.035,
+                0.035,
                 .1,
                 .2
             ), new Rotation3d(
@@ -121,7 +123,7 @@ public final class Constants {
         );
         
 
-        public static final double speakerTargetHeight = 1.7;
+        public static final double speakerTargetHeight = 2.25;
     }
 
     public static final class PathPlanner {
@@ -147,7 +149,7 @@ public final class Constants {
         public static final double translationSensitivity = 0.7;
         public static final double rotationSensitivity = 1;
 
-        public static final double rotationkP = 0.01;
+        public static final double rotationkP = 0.005;
         public static final double rotationkI = 0;
         public static final double rotationkD = 0;
 

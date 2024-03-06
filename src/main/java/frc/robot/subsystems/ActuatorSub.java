@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
-
+import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.PIDController;
@@ -20,6 +20,7 @@ public class ActuatorSub extends SubsystemBase {
         actuatorMotor = new TalonFX(Constants.ActuatorSub.actuatorMotorID);
         actuatorMotor.setInverted(Constants.ActuatorSub.actuatorMotorInverted);
         actuatorMotor.setNeutralMode(NeutralModeValue.Brake);
+        actuatorMotor.getConfigurator().apply(Robot.ctreConfigs.actuatorFXConfig);
         actuatorMotor.setPosition(0);
     }
 
@@ -60,15 +61,7 @@ public class ActuatorSub extends SubsystemBase {
 
 
     public double getActuatorAngle() {
-        return 
-            (((180 / Math.PI) * Math.cosh(
-                (
-                    Math.pow((Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition()), 2) -
-                    Math.pow(Constants.ActuatorSub.shooterLength, 2) - Math.pow(Constants.ActuatorSub.bottomLength, 2)
-                ) / (
-                -2.0 * Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.bottomLength
-                )
-            )) - Constants.ActuatorSub.bottomAngle + Constants.ActuatorSub.shooterMinAngle);
+        return (((180 / Math.PI) * Math.acos((((Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition())) * ((Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition())) - (Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.shooterLength) - (Constants.ActuatorSub.bottomLength * Constants.ActuatorSub.bottomLength)) / (-2.0 * Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.bottomLength))) - Constants.ActuatorSub.bottomAngle + Constants.ActuatorSub.shooterMinAngle);
     }
 
     public boolean onTarget() {
@@ -104,13 +97,13 @@ public class ActuatorSub extends SubsystemBase {
     @Override //This method is called continuously
     public void periodic() {
 
-        //actuateToGoalAngle();
+        actuateToGoalAngle();
 
         //SmartDashboard.putNumber("actuatorMotorPosition", getMotorPosition());
-        SmartDashboard.putNumber("desiredAngle", getDesiredAngle());
-        SmartDashboard.putNumber("currentAngle", getActuatorAngle());
-        SmartDashboard.putNumber("desiredToMotor", desiredAngleToMotorPosition());
-        SmartDashboard.putNumber("motorPosition", getMotorPosition());
+        //SmartDashboard.putNumber("desiredAngle", getDesiredAngle());
+        //SmartDashboard.putNumber("currentAngle", getActuatorAngle());
+        //SmartDashboard.putNumber("desiredToMotor", desiredAngleToMotorPosition());
+        //SmartDashboard.putNumber("motorPosition", getMotorPosition());
         
 
         //SmartDashboard.putNumber("UpPID", actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));

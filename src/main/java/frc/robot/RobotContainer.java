@@ -20,7 +20,7 @@ public class RobotContainer {
     /* Auto Chooser */
     private final SendableChooser<Command> autoChooser;
     
-    /*
+    
     // XBOX Controller Buttons
     private final XboxController driver = new XboxController(0);
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -33,8 +33,8 @@ public class RobotContainer {
     private final JoystickButton extendClimbers = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton resetActuator = new JoystickButton(driver, XboxController.Button.kB.value);
-    */
-
+    
+    /*
     // JOYSTICK Buttons
     private final Joystick driver = new Joystick(0);
     private final int translationAxis = Joystick.AxisType.kY.value;
@@ -47,7 +47,7 @@ public class RobotContainer {
     private final JoystickButton extendClimbers = new JoystickButton(driver, 8);
     private final JoystickButton aimClose = new JoystickButton(driver, 3);
     private final JoystickButton resetActuator = new JoystickButton(driver, 5);
-
+    */
 
     /* Subsystems */
     private final PoseEstimatorSub poseEstimatorSub = new PoseEstimatorSub();
