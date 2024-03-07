@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 //import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.backups.*;
+//import frc.robot.backups.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -46,7 +46,7 @@ public class RobotContainer {
     private final JoystickButton autoShoot = new JoystickButton(driver, 2);
     private final JoystickButton extendClimbers = new JoystickButton(driver, 8);
     private final JoystickButton aimClose = new JoystickButton(driver, 3);
-    private final JoystickButton resetActuator = new JoystickButton(driver, 5);
+    private final JoystickButton zeroActuator = new JoystickButton(driver, 5);
     */
 
     /* Subsystems */
@@ -98,7 +98,7 @@ public class RobotContainer {
 
         /* Operator Buttons */
         intake.whileTrue(new i_Intake(intakeSub));
-        autoShoot.whileTrue(new AutoShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
+        autoShoot.onTrue(new AutoShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
             () -> -driver.getRawAxis(translationAxis), 
             () -> -driver.getRawAxis(strafeAxis)
         ));

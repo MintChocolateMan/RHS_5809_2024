@@ -22,7 +22,7 @@ public class AimClose extends Command {
     @Override //Called when the command is initially scheduled.
     public void initialize() {
         shooterSub.shooterMotorsOn();
-        actuatorSub.setDesiredAngle(55);
+        actuatorSub.setDesiredAngle(64);
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.

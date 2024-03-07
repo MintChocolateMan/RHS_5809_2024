@@ -5,9 +5,9 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.util.Optional;
@@ -54,7 +54,7 @@ public class PoseEstimatorSub extends SubsystemBase {
             Constants.Swerve.swerveKinematics,
             getGyroYaw(),
             swerveSub.getModulePositions(),
-            getStartingPose()
+            getStartingPose() //getStartingPose()
         );
     }
 
@@ -83,23 +83,36 @@ public class PoseEstimatorSub extends SubsystemBase {
     }
 
     public Pose2d getStartingPose() {
-        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-            return Constants.PoseEstimatorSub.redStartingPose;
-        } else {
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+            if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+                return Constants.PoseEstimatorSub.redStartingPose;
+            } else {
                 return Constants.PoseEstimatorSub.blueStartingPose;
+            }
         }
+        else return Constants.PoseEstimatorSub.blueStartingPose;
     }
 
     public Pose2d getSpeakerTargetPose() {
-        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-            return Constants.PoseEstimatorSub.redSpeakerTarget;
-        } else {
-            return Constants.PoseEstimatorSub.blueSpeakerTarget;
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+            if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+                return Constants.PoseEstimatorSub.redSpeakerTarget;
+            } else {
+                return Constants.PoseEstimatorSub.blueSpeakerTarget;
+            }
         }
+        else return Constants.PoseEstimatorSub.blueSpeakerTarget;
     }
     
     public double getTargetYaw() {
-        return PhotonUtils.getYawToPose(getPose(), getSpeakerTargetPose()).getDegrees();
+        return (180 / Math.PI) * Math.atan(
+            (getPose().getY() - getSpeakerTargetPose().getY()) / 
+            (getPose().getX() - getSpeakerTargetPose().getX())
+            
+        );
+        //return PhotonUtils.getYawToPose(getPose(), getSpeakerTargetPose()).getDegrees();
     }
 
     public double getTargetPitch() {
@@ -129,6 +142,7 @@ public class PoseEstimatorSub extends SubsystemBase {
 
         SmartDashboard.putNumber("targetDistance", PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose()));
         SmartDashboard.putNumber("targetPitch", getTargetPitch());
+        SmartDashboard.putNumber("targetYaw", getTargetYaw());
 
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
         //SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
