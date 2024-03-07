@@ -72,8 +72,6 @@ public final class Constants {
         public static final double shooterLength = 6.5;
         public static final double bottomLength = 17.1;
         public static final double actuatorMinLength = 10.8;
-        public static final double actuaterMaxLength = 13.7;
-        public static final double maxRotations = 8.44;
         public static final double shooterMinAngle = 22.8;
         public static final double bottomAngle = 6.9;
         
@@ -107,25 +105,32 @@ public final class Constants {
             )
         );
 
-        public static final Pose2d redStartingPose = new Pose2d(
+        public static final double speakerTargetHeight = 2.25;
+
+        public static final Pose2d redCloseSpeakerPose = new Pose2d(
             new Translation2d(15.15, 5.5),
             new Rotation2d()
         );
-        public static final Pose2d blueStartingPose = new Pose2d(
+        public static final Pose2d blueCloseSpeakerPose = new Pose2d(
             new Translation2d(1.35, 5.55),
             new Rotation2d()
         );
-        public static final Pose2d redSpeakerTarget = new Pose2d(
+        public static final Pose2d redProtectedPose = new Pose2d(
+            new Translation2d(13.7, 4.1),
+            new Rotation2d()
+        );
+        public static final Pose2d blueProtectedPose = new Pose2d(
+            new Translation2d(2.8, 4.1),
+            new Rotation2d()
+        );
+        public static final Pose2d redSpeakerPose = new Pose2d(
             new Translation2d(16.5, 5.5),
             new Rotation2d()
         );
-        public static final Pose2d blueSpeakerTarget = new Pose2d(
+        public static final Pose2d blueSpeakerPose = new Pose2d(
             new Translation2d(0, 5.55),
             new Rotation2d()
         );
-        
-
-        public static final double speakerTargetHeight = 2.4;
     }
 
     public static final class PathPlanner {
@@ -139,7 +144,7 @@ public final class Constants {
                 0.0, 
                 0.0
             ),
-            5.5,
+            4.5,
             .41,
             new ReplanningConfig()
         );
@@ -148,7 +153,7 @@ public final class Constants {
     public static final class Swerve {
         public static final int pigeonID = 13;
 
-        public static final double translationSensitivity = 0.7;
+        public static final double translationSensitivity = 1;
         public static final double rotationSensitivity = 1;
 
         public static final double rotationkP = 0.1;
@@ -159,8 +164,8 @@ public final class Constants {
         COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(22.875); //TODO: This must be tuned to specific robot
-        public static final double wheelBase = Units.inchesToMeters(22.875); //TODO: This must be tuned to specific robot
+        public static final double trackWidth = Units.inchesToMeters(22.75); //TODO: This must be tuned to specific robot
+        public static final double wheelBase = Units.inchesToMeters(22.75); //TODO: This must be tuned to specific robot
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
         /* Swerve Kinematics 
@@ -216,7 +221,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 5.5; //normally 5.5 TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 4.6; //normally 5.5 TODO: This must be tuned to specific robot
         /** Radians per Second */
         public static final double maxAngularVelocity = 6.0; //TODO: This must be tuned to specific robot
 

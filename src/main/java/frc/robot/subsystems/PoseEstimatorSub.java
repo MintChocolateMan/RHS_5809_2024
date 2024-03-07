@@ -73,6 +73,14 @@ public class PoseEstimatorSub extends SubsystemBase {
     public void setPoseTranslation(Pose2d pose) {
         poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(pose.getTranslation(), getPose().getRotation()));
     }
+
+    public void resetPoseToCloseSpeaker() {
+        setPoseTranslation(getCloseSpeakerPose());
+    }
+
+    public void resetPoseToProtected() {
+        setPoseTranslation(getProtectedPose());
+    }
     
     public Rotation2d getHeading() {
         return getPose().getRotation();
@@ -147,18 +155,6 @@ public class PoseEstimatorSub extends SubsystemBase {
                 estimatedPose.timestampSeconds);
                 visionCount += 1;
         }
-    }
-
-    public Command resetPoseToCloseSpeaker() {
-        return runOnce(() -> {
-            setPoseTranslation(getCloseSpeakerPose());
-        });
-    }
-
-    public Command resetPoseToProtected() {
-        return runOnce(() -> {
-            setPoseTranslation(getProtectedPose());
-        });
     }
 
     @Override //This method is called continuously
