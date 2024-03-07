@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
+//import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
 public class AimClose extends Command {
@@ -31,7 +31,6 @@ public class AimClose extends Command {
     @Override // Called once the command ends or is interrupted.
     public void end(boolean interrupted) {
         shooterSub.shooterMotorsOff();
-        actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
     }
 
     @Override // Returns true when the command should end.

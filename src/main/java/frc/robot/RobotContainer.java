@@ -33,8 +33,8 @@ public class RobotContainer {
     private final JoystickButton extendClimbers = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton zeroActuator = new JoystickButton(driver, XboxController.Button.kB.value);
-    private final JoystickButton setPoseCloseSpeaker;
-    private final JoystickButton setPoseProtected;
+    private final JoystickButton setPoseCloseSpeaker = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
+    private final JoystickButton setPoseProtected = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
     
     /*
     // JOYSTICK Buttons
@@ -100,13 +100,15 @@ public class RobotContainer {
 
         /* Operator Buttons */
         intake.whileTrue(new i_Intake(intakeSub));
-        autoShoot.onTrue(new AutoShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
+        autoShoot.whileTrue(new AutoShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
             () -> -driver.getRawAxis(translationAxis), 
             () -> -driver.getRawAxis(strafeAxis)
         ));
         extendClimbers.whileTrue(new p_ExtendClimbers(pneumaticSub));
         aimClose.whileTrue(new AimClose(actuatorSub, shooterSub));
         zeroActuator.whileTrue(new a_ZeroActuator(actuatorSub));
+        setPoseCloseSpeaker.onTrue(new InstantCommand(() -> poseEstimatorSub.resetPoseToCloseSpeaker()));
+        setPoseProtected.onTrue(new InstantCommand(() -> poseEstimatorSub.resetPoseToProtected()));
 
     }
 

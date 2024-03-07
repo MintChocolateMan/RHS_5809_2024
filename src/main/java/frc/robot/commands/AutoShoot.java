@@ -61,7 +61,7 @@ public class AutoShoot extends Command {
                 timer.start();
             }
 
-        if (timer.get() > 0.01) intakeSub.intakeMotorOn();
+        if (timer.get() != 0) intakeSub.intakeMotorOn();
     }
 
     @Override // Called once the command ends or is interrupted.
