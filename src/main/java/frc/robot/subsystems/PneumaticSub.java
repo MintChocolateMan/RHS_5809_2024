@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
@@ -16,7 +15,8 @@ public class PneumaticSub extends SubsystemBase {
     
     public PneumaticSub() { 
         pneumaticHub = new PneumaticHub(Constants.PneumaticSub.pneumaticHubID);
-        
+        pneumaticHub.clearStickyFaults();
+
         leftClimber = pneumaticHub.makeDoubleSolenoid(Constants.PneumaticSub.leftClimberForwardID, Constants.PneumaticSub.leftClimberReverseID);
         rightClimber = pneumaticHub.makeDoubleSolenoid(Constants.PneumaticSub.rightClimberForwardID, Constants.PneumaticSub.rightClimberReverseID);
 

@@ -31,12 +31,13 @@ public class AutoShoot extends Command {
         this.intakeSub = intakeSub;
 
         //Add subsystem requirements
-        addRequirements(swerveSub, shooterSub, actuatorSub);
+        addRequirements(swerveSub, shooterSub, actuatorSub, intakeSub);
 
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
 
         timer = new Timer();
+        timer.reset();
         timer.stop();
     }
 
@@ -73,7 +74,7 @@ public class AutoShoot extends Command {
 
     @Override // Returns true when the command should end.
     public boolean isFinished() {
-        if (timer.hasElapsed(.5)) return true;
+        if (timer.hasElapsed(1)) return true;
         return false;
     }
 }

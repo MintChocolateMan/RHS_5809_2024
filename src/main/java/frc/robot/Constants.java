@@ -17,7 +17,6 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.lib.util.COTSTalonFXSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
@@ -37,7 +36,7 @@ public final class Constants {
             0,
             0
         );
-        public static final double intakePIDGoal = -2;
+        public static final double intakePIDGoal = -1;
     }
 
     public static final class ShooterSub {
@@ -55,7 +54,7 @@ public final class Constants {
         public static final int leftClimberForwardID = 5;
         public static final int leftClimberReverseID = 12;
         public static final int rightClimberForwardID = 3;
-        public static final int rightClimberReverseID = 15;
+        public static final int rightClimberReverseID = 10;
     }
 
     public static final class ActuatorSub {
@@ -63,7 +62,7 @@ public final class Constants {
         public static final boolean actuatorMotorInverted = false;
 
         public static final PIDController actuatorPID = new PIDController(
-            0.01,
+            0.018,
             0,
             0
         );
@@ -98,9 +97,9 @@ public final class Constants {
 
         public static final Transform3d robotToShooterCam = new Transform3d(
             new Translation3d(
-                0.035,
-                .1,
-                .2
+                0.35,
+                0.1,
+                0.2
             ), new Rotation3d(
                 0.0,
                 30.0,
@@ -126,7 +125,7 @@ public final class Constants {
         );
         
 
-        public static final double speakerTargetHeight = 2.25;
+        public static final double speakerTargetHeight = 2.4;
     }
 
     public static final class PathPlanner {
@@ -152,7 +151,7 @@ public final class Constants {
         public static final double translationSensitivity = 0.7;
         public static final double rotationSensitivity = 1;
 
-        public static final double rotationkP = 0.005;
+        public static final double rotationkP = 0.1;
         public static final double rotationkI = 0;
         public static final double rotationkD = 0;
 
