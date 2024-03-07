@@ -3,7 +3,8 @@
   "robotLength": 0.86,
   "holonomicMode": true,
   "pathFolders": [
-    "4 Peice Auto",
+    "Speaker Close Auto",
+    "Speaker Far Auto",
     "Tests"
   ],
   "autoFolders": [

@@ -37,7 +37,7 @@ public class PoseEstimatorSub extends SubsystemBase {
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
 
-        shooterCam = new PhotonCamera(Constants.PoseEstimatorSub.shooterCamName);
+        //shooterCam = new PhotonCamera(Constants.PoseEstimatorSub.shooterCamName);
 
         photonPoseEstimator = new PhotonPoseEstimator(
             AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(),
@@ -131,10 +131,25 @@ public class PoseEstimatorSub extends SubsystemBase {
     }
     
     public double getTargetYaw() {
-        return (180 / Math.PI) * Math.atan(
-            (getPose().getY() - getSpeakerPose().getY()) / 
-            (getPose().getX() - getSpeakerPose().getX())
-            );
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+            if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+                return ((180 / Math.PI) * Math.atan(
+                    (getPose().getY() - getSpeakerPose().getY()) / 
+                    (getPose().getX() - getSpeakerPose().getX())
+                    )) + 180;
+            } else {
+                return  (180 / Math.PI) * Math.atan(
+                    (getPose().getY() - getSpeakerPose().getY()) / 
+                    (getPose().getX() - getSpeakerPose().getX())
+                    );
+            }
+        } else {
+            return  (180 / Math.PI) * Math.atan(
+                    (getPose().getY() - getSpeakerPose().getY()) / 
+                    (getPose().getX() - getSpeakerPose().getX())
+                    );
+        }
     }
 
     public double getTargetPitch() {
@@ -169,9 +184,9 @@ public class PoseEstimatorSub extends SubsystemBase {
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
         //SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
 
-        //SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
-        //SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
-        //SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
+        SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
+        SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
+        SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
 
         SmartDashboard.putNumber("visionCount", visionCount);
     }

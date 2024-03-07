@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.5,
-        "y": 5.55
+        "x": 1.4,
+        "y": 7.3
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9,
-        "y": 5.55
+        "x": 1.5999999999999999,
+        "y": 7.3
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +20,8 @@
         "y": 7.0
       },
       "prevControl": {
-        "x": 2.0,
-        "y": 6.5
+        "x": 1.8,
+        "y": 7.0
       },
       "nextControl": null,
       "isLocked": false,
@@ -43,7 +43,10 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Speaker Close Auto",
-  "previewStartingState": null,
+  "folder": "Speaker Far Auto",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
   "useDefaultConstraints": true
 }

@@ -5,6 +5,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -59,8 +60,12 @@ public class RobotContainer {
     private final ActuatorSub actuatorSub = new ActuatorSub();
     private final PneumaticSub pneumaticSub = new PneumaticSub();
 
+
+
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+
+        //PortForwarder.add(5800, "photonvision.local", 5800);
 
         //Set Default Commands
         swerveSub.setDefaultCommand(
@@ -81,7 +86,7 @@ public class RobotContainer {
             () -> 0, 
             () -> 0
         ));
-        autoChooser = AutoBuilder.buildAutoChooser("Close to Speaker"); 
+        autoChooser = AutoBuilder.buildAutoChooser("Speaker Close Auto"); 
         SmartDashboard.putData("Auto Chooser:", autoChooser);
 
         // Configure the button bindings
