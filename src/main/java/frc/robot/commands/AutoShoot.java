@@ -31,13 +31,12 @@ public class AutoShoot extends Command {
         this.intakeSub = intakeSub;
 
         //Add subsystem requirements
-        addRequirements(swerveSub, shooterSub, actuatorSub, intakeSub);
+        addRequirements(swerveSub, shooterSub, actuatorSub);
 
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
 
         timer = new Timer();
-        timer.reset();
         timer.stop();
     }
 
@@ -51,12 +50,12 @@ public class AutoShoot extends Command {
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
         
-        actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch());
+        actuatorSub.setDesiredAngle(poseEstimatorSub.getSpeakerTargetPitch());
 
         if (
             swerveSub.driveWithRotationGoal(
                 new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
-                poseEstimatorSub.getTargetYaw()
+                poseEstimatorSub.getSpeakerTargetYaw()
             ) == true && 
             actuatorSub.onTarget() == true) {
                 timer.start();
@@ -74,7 +73,7 @@ public class AutoShoot extends Command {
 
     @Override // Returns true when the command should end.
     public boolean isFinished() {
-        if (timer.hasElapsed(1)) return true;
+        if (timer.hasElapsed(.5)) return true;
         return false;
     }
 }

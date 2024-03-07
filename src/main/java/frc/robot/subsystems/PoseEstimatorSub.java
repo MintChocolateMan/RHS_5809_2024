@@ -83,39 +83,26 @@ public class PoseEstimatorSub extends SubsystemBase {
     }
 
     public Pose2d getStartingPose() {
-        var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()) {
-            if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-                return Constants.PoseEstimatorSub.redStartingPose;
-            } else {
+        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+            return Constants.PoseEstimatorSub.redStartingPose;
+        } else {
                 return Constants.PoseEstimatorSub.blueStartingPose;
-            }
         }
-        else return Constants.PoseEstimatorSub.blueStartingPose;
     }
 
     public Pose2d getSpeakerTargetPose() {
-        var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()) {
-            if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-                return Constants.PoseEstimatorSub.redSpeakerTarget;
-            } else {
-                return Constants.PoseEstimatorSub.blueSpeakerTarget;
-            }
+        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+            return Constants.PoseEstimatorSub.redSpeakerTarget;
+        } else {
+            return Constants.PoseEstimatorSub.blueSpeakerTarget;
         }
-        else return Constants.PoseEstimatorSub.blueSpeakerTarget;
     }
     
-    public double getTargetYaw() {
-        return (180 / Math.PI) * Math.atan(
-            (getPose().getY() - getSpeakerTargetPose().getY()) / 
-            (getPose().getX() - getSpeakerTargetPose().getX())
-            
-        );
-        //return PhotonUtils.getYawToPose(getPose(), getSpeakerTargetPose()).getDegrees();
+    public double getSpeakerTargetYaw() {
+        return PhotonUtils.getYawToPose(getPose(), getSpeakerTargetPose()).getDegrees();
     }
 
-    public double getTargetPitch() {
+    public double getSpeakerTargetPitch() {
         return Math.atan(
             Constants.PoseEstimatorSub.speakerTargetHeight / 
             PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose())
@@ -141,8 +128,7 @@ public class PoseEstimatorSub extends SubsystemBase {
         update();
 
         SmartDashboard.putNumber("targetDistance", PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose()));
-        SmartDashboard.putNumber("targetPitch", getTargetPitch());
-        SmartDashboard.putNumber("targetYaw", getTargetYaw());
+        SmartDashboard.putNumber("targetPitch", getSpeakerTargetPitch());
 
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
         //SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
