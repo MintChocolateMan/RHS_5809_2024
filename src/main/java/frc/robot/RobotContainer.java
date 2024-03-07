@@ -33,6 +33,8 @@ public class RobotContainer {
     private final JoystickButton extendClimbers = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton zeroActuator = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton setPoseCloseSpeaker;
+    private final JoystickButton setPoseProtected;
     
     /*
     // JOYSTICK Buttons
@@ -74,7 +76,7 @@ public class RobotContainer {
 
         /* Register Commands with PathPlanner */
         NamedCommands.registerCommand("i_Intake", new i_Intake(intakeSub));
-        NamedCommands.registerCommand("AutoAim", new AutoShoot(
+        NamedCommands.registerCommand("AutoShoot", new AutoShoot(
             poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub, 
             () -> 0, 
             () -> 0

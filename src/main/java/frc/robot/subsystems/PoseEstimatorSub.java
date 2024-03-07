@@ -5,10 +5,10 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
 import java.util.Optional;
 
@@ -54,7 +54,7 @@ public class PoseEstimatorSub extends SubsystemBase {
             Constants.Swerve.swerveKinematics,
             getGyroYaw(),
             swerveSub.getModulePositions(),
-            getStartingPose() //getStartingPose()
+            getCloseSpeakerPose()
         );
     }
 
@@ -69,6 +69,10 @@ public class PoseEstimatorSub extends SubsystemBase {
     public void setPose(Pose2d pose) {
         poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), pose);
     }
+
+    public void setPoseTranslation(Pose2d pose) {
+        poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(pose.getTranslation(), getPose().getRotation()));
+    }
     
     public Rotation2d getHeading() {
         return getPose().getRotation();
@@ -82,44 +86,54 @@ public class PoseEstimatorSub extends SubsystemBase {
         poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
     }
 
-    public Pose2d getStartingPose() {
+    public Pose2d getCloseSpeakerPose() {
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
             if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-                return Constants.PoseEstimatorSub.redStartingPose;
+                return Constants.PoseEstimatorSub.redCloseSpeakerPose;
             } else {
-                return Constants.PoseEstimatorSub.blueStartingPose;
+                return Constants.PoseEstimatorSub.blueCloseSpeakerPose;
             }
         }
-        else return Constants.PoseEstimatorSub.blueStartingPose;
+        else return Constants.PoseEstimatorSub.blueCloseSpeakerPose;
     }
 
-    public Pose2d getSpeakerTargetPose() {
+    public Pose2d getProtectedPose() {
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
             if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-                return Constants.PoseEstimatorSub.redSpeakerTarget;
+                return Constants.PoseEstimatorSub.redProtectedPose;
             } else {
-                return Constants.PoseEstimatorSub.blueSpeakerTarget;
+                return Constants.PoseEstimatorSub.blueProtectedPose;
             }
         }
-        else return Constants.PoseEstimatorSub.blueSpeakerTarget;
+        else return Constants.PoseEstimatorSub.blueProtectedPose;
+    }
+
+    public Pose2d getSpeakerPose() {
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+            if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+                return Constants.PoseEstimatorSub.redSpeakerPose;
+            } else {
+                return Constants.PoseEstimatorSub.blueSpeakerPose;
+            }
+        }
+        else return Constants.PoseEstimatorSub.blueSpeakerPose;
     }
     
     public double getTargetYaw() {
         return (180 / Math.PI) * Math.atan(
-            (getPose().getY() - getSpeakerTargetPose().getY()) / 
-            (getPose().getX() - getSpeakerTargetPose().getX())
-            
-        );
-        //return PhotonUtils.getYawToPose(getPose(), getSpeakerTargetPose()).getDegrees();
+            (getPose().getY() - getSpeakerPose().getY()) / 
+            (getPose().getX() - getSpeakerPose().getX())
+            );
     }
 
-    public double getSpeakerTargetPitch() {
-        return Math.atan(
+    public double getTargetPitch() {
+        return (180 / Math.PI) * Math.atan(
             Constants.PoseEstimatorSub.speakerTargetHeight / 
-            PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose())
-            ) * 180 / Math.PI;
+            PhotonUtils.getDistanceToPose(getPose(), getSpeakerPose())
+            );
     }
 
     public void update() {
@@ -132,24 +146,38 @@ public class PoseEstimatorSub extends SubsystemBase {
                 estimatedPose.estimatedPose.toPose2d(),
                 estimatedPose.timestampSeconds);
                 visionCount += 1;
-                SmartDashboard.putNumber("visionCount", visionCount);
         }
+    }
+
+    public Command resetPoseToCloseSpeaker() {
+        return runOnce(() -> {
+            setPoseTranslation(getCloseSpeakerPose());
+        });
+    }
+
+    public Command resetPoseToProtected() {
+        return runOnce(() -> {
+            setPoseTranslation(getProtectedPose());
+        });
     }
 
     @Override //This method is called continuously
     public void periodic() {
+
         update();
 
-        SmartDashboard.putNumber("targetDistance", PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose()));
-        SmartDashboard.putNumber("targetPitch", getTargetPitch());
-        SmartDashboard.putNumber("targetYaw", getTargetYaw());
+        //SmartDashboard.putNumber("targetDistance", PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose()));
+        //SmartDashboard.putNumber("targetPitch", getTargetPitch());
+        //SmartDashboard.putNumber("targetYaw", getTargetYaw());
 
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
         //SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
 
-        SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
-        SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
-        SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
+        //SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
+        //SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
+        //SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
+
+        SmartDashboard.putNumber("visionCount", visionCount);
     }
 
     @Override //This method is called continuously during simulation

@@ -77,7 +77,7 @@ public class SwerveSub extends SubsystemBase {;
         }
     }
 
-    public boolean driveWithRotationGoal(Translation2d translation, double goalAngle) {
+    public boolean driveWithRotationGoal(Translation2d translation) {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 ChassisSpeeds.fromFieldRelativeSpeeds(

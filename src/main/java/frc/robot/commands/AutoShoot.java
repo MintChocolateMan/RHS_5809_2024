@@ -37,8 +37,8 @@ public class AutoShoot extends Command {
         this.strafeSup = strafeSup;
 
         timer = new Timer();
-        timer.reset();
         timer.stop();
+        timer.reset();
     }
 
     @Override //Called when the command is initially scheduled.
@@ -51,25 +51,25 @@ public class AutoShoot extends Command {
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
         
-        actuatorSub.setDesiredAngle(poseEstimatorSub.getSpeakerTargetPitch());
+        actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch());
 
         if (
             swerveSub.driveWithRotationGoal(
-                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
-                poseEstimatorSub.getSpeakerTargetYaw()
+                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed)
             ) == true && 
             actuatorSub.onTarget() == true) {
                 timer.start();
             }
 
-        if (timer.get() != 0) intakeSub.intakeMotorOn();
+        if (timer.get() > 0.01) intakeSub.intakeMotorOn();
     }
 
     @Override // Called once the command ends or is interrupted.
     public void end(boolean interrupted) {
         shooterSub.shooterMotorsOff();
         intakeSub.intakeMotorOff();
-        actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
+        timer.stop();
+        timer.reset();
     }
 
     @Override // Returns true when the command should end.

@@ -99,7 +99,6 @@ public class ActuatorSub extends SubsystemBase {
             actuatorMotor.stopMotor();
         } else {
             actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(getActuatorAngle(), getDesiredAngle()));
-            //actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
         }
         }
     }
@@ -120,7 +119,7 @@ public class ActuatorSub extends SubsystemBase {
         SmartDashboard.putNumber("desiredAngle", getDesiredAngle());
         SmartDashboard.putNumber("currentAngle", getActuatorAngle());
         //SmartDashboard.putNumber("desiredToMotor", desiredAngleToMotorPosition());
-        SmartDashboard.putNumber("motorPosition", getMotorPosition());
+        //SmartDashboard.putNumber("motorPosition", getMotorPosition());
         
 
         //SmartDashboard.putNumber("UpPID", actuatorPID.calculate(getMotorPosition(), goalAngleToPIDRotations()));
