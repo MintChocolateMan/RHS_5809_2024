@@ -1,5 +1,7 @@
 package frc.lib.util;
 
+import com.ctre.phoenix.led.CANdleConfiguration;
+import com.ctre.phoenix.led.CANdle.LEDStripType;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 
@@ -10,6 +12,7 @@ public final class CTREConfigs {
     public TalonFXConfiguration swerveDriveFXConfig = new TalonFXConfiguration();
     public CANcoderConfiguration swerveCANcoderConfig = new CANcoderConfiguration();
     public TalonFXConfiguration actuatorFXConfig = new TalonFXConfiguration();
+    public CANdleConfiguration candleConfig = new CANdleConfiguration();
 
     public CTREConfigs(){
         /** Swerve CANCoder Configuration */
@@ -67,5 +70,10 @@ public final class CTREConfigs {
         actuatorFXConfig.CurrentLimits.SupplyCurrentLimit = Constants.ActuatorSub.actuatorCurrentLimit;
         actuatorFXConfig.CurrentLimits.SupplyCurrentThreshold = Constants.ActuatorSub.actuatorCurrentThreshold;
         actuatorFXConfig.CurrentLimits.SupplyTimeThreshold = Constants.ActuatorSub.actuatorCurrentThresholdTime;
+
+        //CANdle configs
+        candleConfig.brightnessScalar = Constants.CandleSub.brightness;
+        candleConfig.statusLedOffWhenActive = true;
+        candleConfig.stripType = LEDStripType.RGB;
     }
 }

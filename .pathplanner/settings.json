@@ -3,14 +3,16 @@
   "robotLength": 0.86,
   "holonomicMode": true,
   "pathFolders": [
+    "Close Speaker Manual",
+    "New Folder",
     "Speaker Close Auto",
     "Speaker Far Auto",
-    "Tests"
+    "SAS"
   ],
   "autoFolders": [
     "Tests"
   ],
-  "defaultMaxVel": 4.5,
+  "defaultMaxVel": 5.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,

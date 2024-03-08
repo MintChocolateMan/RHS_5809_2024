@@ -30,6 +30,7 @@ public class AimClose extends Command {
 
     @Override // Called once the command ends or is interrupted.
     public void end(boolean interrupted) {
+        actuatorSub.setDesiredAngle(40);
         shooterSub.shooterMotorsOff();
     }
 

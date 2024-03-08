@@ -5,7 +5,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -13,16 +13,26 @@ public class IntakeSub extends SubsystemBase {
 
     private TalonFX intakeMotor;
     private DigitalInput lineBreaker;
+
+    private CandleSub candleSub;
     
-    public IntakeSub() { 
+    public IntakeSub(CandleSub candleSub) { 
         intakeMotor = new TalonFX(Constants.IntakeSub.intakeMotorID);
         intakeMotor.setInverted(Constants.IntakeSub.intakeMotorReversed);
         intakeMotor.setPosition(Constants.IntakeSub.intakePIDGoal);
         lineBreaker = new DigitalInput(Constants.IntakeSub.lineBreakerID);
+
+        this.candleSub = candleSub;
     }
 
     public boolean getNoteLoaded() {
         return lineBreaker.get();
+    }
+
+    public void updateLEDs() {
+        if (getNoteLoaded()) {
+            candleSub.setLEDsGreen();
+        } else candleSub.setLEDsAlliance();
     }
 
     public void intakeMotorOn() {
@@ -51,7 +61,9 @@ public class IntakeSub extends SubsystemBase {
 
     @Override 
     public void periodic() {
-        //SmartDashboard.putBoolean("NOTE LOADED", getNoteLoaded());
+        updateLEDs();
+
+        SmartDashboard.putBoolean("NOTE LOADED", !getNoteLoaded());
     }
 
     @Override 

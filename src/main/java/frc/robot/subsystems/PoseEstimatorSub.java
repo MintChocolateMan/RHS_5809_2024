@@ -131,24 +131,20 @@ public class PoseEstimatorSub extends SubsystemBase {
     }
     
     public double getTargetYaw() {
+        double targetYaw = (180 / Math.PI) * Math.atan(
+            (getPose().getY() - getSpeakerPose().getY()) / 
+            (getPose().getX() - getSpeakerPose().getX())
+            );
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
             if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-                return ((180 / Math.PI) * Math.atan(
-                    (getPose().getY() - getSpeakerPose().getY()) / 
-                    (getPose().getX() - getSpeakerPose().getX())
-                    )) + 180;
+                if (targetYaw >= 0) return targetYaw;
+                else return targetYaw;
             } else {
-                return  (180 / Math.PI) * Math.atan(
-                    (getPose().getY() - getSpeakerPose().getY()) / 
-                    (getPose().getX() - getSpeakerPose().getX())
-                    );
+                return targetYaw;
             }
         } else {
-            return  (180 / Math.PI) * Math.atan(
-                    (getPose().getY() - getSpeakerPose().getY()) / 
-                    (getPose().getX() - getSpeakerPose().getX())
-                    );
+            return  targetYaw;
         }
     }
 
@@ -179,8 +175,8 @@ public class PoseEstimatorSub extends SubsystemBase {
 
         //SmartDashboard.putNumber("targetDistance", PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose()));
         //SmartDashboard.putNumber("targetPitch", getTargetPitch());
-        //SmartDashboard.putNumber("targetYaw", getTargetYaw());
-
+        SmartDashboard.putNumber("targetYaw", getTargetYaw());
+        SmartDashboard.putNumber("heading", getHeading().getDegrees());
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
         //SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
 

@@ -5,6 +5,9 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cameraserver.CameraServerShared;
+import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -14,12 +17,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 //import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //import frc.robot.backups.*;
+import frc.robot.autoCommands.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
     /* Auto Chooser */
     private final SendableChooser<Command> autoChooser;
+
     
     
     // XBOX Controller Buttons
@@ -28,14 +33,14 @@ public class RobotContainer {
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton intake = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-    private final JoystickButton autoShoot = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton extendClimbers = new JoystickButton(driver, XboxController.Button.kRightStick.value);
-    private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton autoShoot = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton extendClimbers = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton zeroActuator = new JoystickButton(driver, XboxController.Button.kB.value);
-    private final JoystickButton setPoseCloseSpeaker = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
-    private final JoystickButton setPoseProtected = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
+    //private final JoystickButton setPoseCloseSpeaker = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
+    //private final JoystickButton setPoseProtected = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
     
     /*
     // JOYSTICK Buttons
@@ -54,8 +59,9 @@ public class RobotContainer {
 
     /* Subsystems */
     private final PoseEstimatorSub poseEstimatorSub = new PoseEstimatorSub();
+    private final CandleSub candleSub = new CandleSub();
     private final SwerveSub swerveSub = new SwerveSub(poseEstimatorSub);
-    private final IntakeSub intakeSub = new IntakeSub();
+    private final IntakeSub intakeSub = new IntakeSub(candleSub);
     private final ShooterSub shooterSub = new ShooterSub();
     private final ActuatorSub actuatorSub = new ActuatorSub();
     private final PneumaticSub pneumaticSub = new PneumaticSub();
@@ -65,7 +71,7 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
 
-        //PortForwarder.add(5800, "photonvision.local", 5800);
+        PortForwarder.add(5800, "photonvision.local", 5800);
 
         //Set Default Commands
         swerveSub.setDefaultCommand(
@@ -86,7 +92,13 @@ public class RobotContainer {
             () -> 0, 
             () -> 0
         ));
-        autoChooser = AutoBuilder.buildAutoChooser("Speaker Close Auto"); 
+
+        /* Register Manual Commands with PathPlanner */
+        NamedCommands.registerCommand("SpeakerAim", new SpeakerAim(actuatorSub, shooterSub));
+        NamedCommands.registerCommand("CenterNoteAim", new CenterNoteAim(actuatorSub, shooterSub));
+        NamedCommands.registerCommand("LRNoteAim", new LRNoteAim(actuatorSub, shooterSub));
+
+        autoChooser = AutoBuilder.buildAutoChooser("Close Speaker Manual"); 
         SmartDashboard.putData("Auto Chooser:", autoChooser);
 
         // Configure the button bindings
@@ -112,8 +124,8 @@ public class RobotContainer {
         extendClimbers.whileTrue(new p_ExtendClimbers(pneumaticSub));
         aimClose.whileTrue(new AimClose(actuatorSub, shooterSub));
         zeroActuator.whileTrue(new a_ZeroActuator(actuatorSub));
-        setPoseCloseSpeaker.onTrue(new InstantCommand(() -> poseEstimatorSub.resetPoseToCloseSpeaker()));
-        setPoseProtected.onTrue(new InstantCommand(() -> poseEstimatorSub.resetPoseToProtected()));
+        //setPoseCloseSpeaker.onTrue(new InstantCommand(() -> poseEstimatorSub.resetPoseToCloseSpeaker()));
+        //setPoseProtected.onTrue(new InstantCommand(() -> poseEstimatorSub.resetPoseToProtected()));
 
     }
 

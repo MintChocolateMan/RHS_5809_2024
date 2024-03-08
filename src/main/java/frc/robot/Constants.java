@@ -29,14 +29,14 @@ public final class Constants {
         public static final double intakeMotorSpeed = .8;
         public static final double intakeMotorReverseSpeed = .1;
         public static final boolean intakeMotorReversed = true;
-        public static final int lineBreakerID = 1;
+        public static final int lineBreakerID = 0;
 
         public static final PIDController intakePID = new PIDController(
             0.05,
             0,
             0
         );
-        public static final double intakePIDGoal = -1;
+        public static final double intakePIDGoal = -2;
     }
 
     public static final class ShooterSub {
@@ -62,7 +62,7 @@ public final class Constants {
         public static final boolean actuatorMotorInverted = false;
 
         public static final PIDController actuatorPID = new PIDController(
-            0.018,
+            0.019,
             0,
             0
         );
@@ -108,11 +108,11 @@ public final class Constants {
         public static final double speakerTargetHeight = 2.25;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(
-            new Translation2d(15.15, 5.5),
+            new Translation2d(15, 5.55),
             new Rotation2d()
         );
         public static final Pose2d blueCloseSpeakerPose = new Pose2d(
-            new Translation2d(1.35, 5.55),
+            new Translation2d(1.5, 5.55),
             new Rotation2d()
         );
         public static final Pose2d redProtectedPose = new Pose2d(
@@ -131,6 +131,11 @@ public final class Constants {
             new Translation2d(0, 5.55),
             new Rotation2d()
         );
+    }
+
+    public static final class CandleSub {
+        public static final int candleID = 22;
+        public static final double brightness = 1;
     }
 
     public static final class PathPlanner {
@@ -221,9 +226,9 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 4.6; //normally 5.5 TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 5.0; //normally 5.5 TODO: This must be tuned to specific robot
         /** Radians per Second */
-        public static final double maxAngularVelocity = 6.0; //TODO: This must be tuned to specific robot
+        public static final double maxAngularVelocity = 8.0; //TODO: This must be tuned to specific robot
 
         /* Neutral Modes */
         public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Coast;
