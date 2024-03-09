@@ -6,23 +6,18 @@ import frc.robot.subsystems.*;
 public class SpeakerAim extends Command {
   
     private final ActuatorSub actuatorSub;
-    private final ShooterSub shooterSub;
 
-    public SpeakerAim(ActuatorSub actuatorSub, ShooterSub shooterSub) {
+    public SpeakerAim(ActuatorSub actuatorSub) {
         this.actuatorSub = actuatorSub;
-        this.shooterSub = shooterSub;
-        addRequirements(shooterSub);
     }
 
     @Override 
     public void initialize() {
-        shooterSub.shooterMotorsOn();
-        actuatorSub.setDesiredAngle(64);
+        actuatorSub.setDesiredAngle(58);
     }
 
     @Override
     public void end(boolean interrupted) {
-        actuatorSub.setDesiredAngle(40);
-        shooterSub.shooterMotorsOff();
+        actuatorSub.setDesiredAngle(50);
     }
 }

@@ -35,9 +35,10 @@ public class RobotContainer {
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton intake = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-    private final JoystickButton autoShoot = new JoystickButton(driver, XboxController.Button.kA.value);
+    //private final JoystickButton autoShoot = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton extendClimbers = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton aimStage = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton zeroActuator = new JoystickButton(driver, XboxController.Button.kB.value);
     //private final JoystickButton setPoseCloseSpeaker = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
     //private final JoystickButton setPoseProtected = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
@@ -94,9 +95,14 @@ public class RobotContainer {
         ));
 
         /* Register Manual Commands with PathPlanner */
-        NamedCommands.registerCommand("SpeakerAim", new SpeakerAim(actuatorSub, shooterSub));
-        NamedCommands.registerCommand("CenterNoteAim", new CenterNoteAim(actuatorSub, shooterSub));
-        NamedCommands.registerCommand("LRNoteAim", new LRNoteAim(actuatorSub, shooterSub));
+        NamedCommands.registerCommand("SpeakerAim", new SpeakerAim(actuatorSub));
+        NamedCommands.registerCommand("CenterNoteAim", new CenterNoteAim(actuatorSub));
+        NamedCommands.registerCommand("LRNoteAim", new LRNoteAim(actuatorSub));
+        NamedCommands.registerCommand("ShootAuto", new ShootAuto(shooterSub));
+        NamedCommands.registerCommand("SuckBack", new SuckBack(intakeSub));
+        NamedCommands.registerCommand("SourceAim", new SourceAim(actuatorSub));
+       
+        
 
         autoChooser = AutoBuilder.buildAutoChooser("Close Speaker Manual"); 
         SmartDashboard.putData("Auto Chooser:", autoChooser);
@@ -117,12 +123,20 @@ public class RobotContainer {
 
         /* Operator Buttons */
         intake.whileTrue(new i_Intake(intakeSub));
-        autoShoot.whileTrue(new AutoShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
+        /*autoShoot.whileTrue(new AutoShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
             () -> -driver.getRawAxis(translationAxis), 
             () -> -driver.getRawAxis(strafeAxis)
-        ));
+        ));*/
         extendClimbers.whileTrue(new p_ExtendClimbers(pneumaticSub));
+        /*extendClimbers.whileTrue(new d_Swerve(
+                swerveSub, 
+                () -> -driver.getRawAxis(translationAxis), 
+                () -> -driver.getRawAxis(strafeAxis), 
+                () -> -driver.getRawAxis(rotationAxis), 
+                () -> false
+            ));*/
         aimClose.whileTrue(new AimClose(actuatorSub, shooterSub));
+        aimStage.whileTrue(new AimStage(actuatorSub, shooterSub));
         zeroActuator.whileTrue(new a_ZeroActuator(actuatorSub));
         //setPoseCloseSpeaker.onTrue(new InstantCommand(() -> poseEstimatorSub.resetPoseToCloseSpeaker()));
         //setPoseProtected.onTrue(new InstantCommand(() -> poseEstimatorSub.resetPoseToProtected()));

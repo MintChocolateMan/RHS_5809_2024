@@ -3,21 +3,21 @@ package frc.robot.autoCommands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class CenterNoteAim extends Command {
+public class SourceAim extends Command {
   
     private final ActuatorSub actuatorSub;
 
-    public CenterNoteAim(ActuatorSub actuatorSub) {
+    public SourceAim(ActuatorSub actuatorSub) {
         this.actuatorSub = actuatorSub;
     }
 
     @Override 
     public void initialize() {
-        actuatorSub.setDesiredAngle(42);
+        actuatorSub.setDesiredAngle(45);
     }
 
     @Override
     public void end(boolean interrupted) {
-        actuatorSub.setDesiredAngle(44);
+        actuatorSub.setDesiredAngle(45);
     }
 }

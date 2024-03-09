@@ -27,7 +27,7 @@ public final class Constants {
     public static final class IntakeSub {
         public static final int intakeMotorID = 10;
         public static final double intakeMotorSpeed = .8;
-        public static final double intakeMotorReverseSpeed = .1;
+        public static final double intakeMotorReverseSpeed = .2;
         public static final boolean intakeMotorReversed = true;
         public static final int lineBreakerID = 0;
 
@@ -62,7 +62,7 @@ public final class Constants {
         public static final boolean actuatorMotorInverted = false;
 
         public static final PIDController actuatorPID = new PIDController(
-            0.019,
+            0.017,
             0,
             0
         );
@@ -226,9 +226,9 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 5.0; //normally 5.5 TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 4.6; //normally 5.5 TODO: This must be tuned to specific robot
         /** Radians per Second */
-        public static final double maxAngularVelocity = 8.0; //TODO: This must be tuned to specific robot
+        public static final double maxAngularVelocity = 6.0; //TODO: This must be tuned to specific robot
 
         /* Neutral Modes */
         public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Coast;

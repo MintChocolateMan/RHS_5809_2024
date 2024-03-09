@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.8,
-        "y": 7.0
+        "x": 7.5,
+        "y": 2.45
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3,
-        "y": 7.0
+        "x": 8.5,
+        "y": 2.45
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.0,
-        "y": 4.65
+        "x": 8.5,
+        "y": 2.45
       },
       "prevControl": {
-        "x": 2.0,
-        "y": 6.650000000000001
+        "x": 8.3,
+        "y": 2.45
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,21 +32,21 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
+    "maxVelocity": 2.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -30.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Close Speaker Manual",
+  "folder": "Source Auto",
   "previewStartingState": {
-    "rotation": 30.0,
+    "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

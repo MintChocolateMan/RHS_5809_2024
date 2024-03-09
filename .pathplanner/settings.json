@@ -4,10 +4,11 @@
   "holonomicMode": true,
   "pathFolders": [
     "Close Speaker Manual",
-    "New Folder",
+    "Source Auto",
+    "New New Folder",
+    "SAS",
     "Speaker Close Auto",
-    "Speaker Far Auto",
-    "SAS"
+    "Speaker Far Auto"
   ],
   "autoFolders": [
     "Tests"
