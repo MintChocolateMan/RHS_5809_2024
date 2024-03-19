@@ -30,9 +30,9 @@ public class IntakeSub extends SubsystemBase {
     }
 
     public void updateLEDs() {
-        if (getNoteLoaded()) {
+        if (getNoteLoaded() == true) {
             candleSub.setLEDsGreen();
-        } else candleSub.setLEDsAlliance();
+        } else candleSub.setLEDsCyan();
     }
 
     public void intakeMotorOn() {

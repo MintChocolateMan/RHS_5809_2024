@@ -2,15 +2,27 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.65,
-      "y": 4.35
+      "x": 0.5,
+      "y": 2.1
     },
-    "rotation": -60.0
+    "rotation": -90.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "HailMaryAim"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SA Start to Hail Mary Shot"
+          }
+        },
         {
           "type": "race",
           "data": {
@@ -18,7 +30,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "SpeakerAim"
+                  "name": "HailMaryAim"
                 }
               },
               {
@@ -93,13 +105,26 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "SourceAim"
+                  "name": "SuckBack"
                 }
               },
               {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
                 "type": "named",
                 "data": {
-                  "name": "ShootAuto"
+                  "name": "SourceAim"
                 }
               },
               {
@@ -109,7 +134,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.0
+                        "waitTime": 1.5
                       }
                     },
                     {
@@ -124,7 +149,26 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.5
+                  "waitTime": 2.5
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.5
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
+                      }
+                    }
+                  ]
                 }
               }
             ]

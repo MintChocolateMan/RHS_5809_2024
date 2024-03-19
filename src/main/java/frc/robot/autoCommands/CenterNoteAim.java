@@ -18,6 +18,6 @@ public class CenterNoteAim extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        actuatorSub.setDesiredAngle(44);
+        actuatorSub.setDesiredAngle(40);
     }
 }

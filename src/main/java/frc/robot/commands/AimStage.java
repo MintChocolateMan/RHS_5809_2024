@@ -22,7 +22,7 @@ public class AimStage extends Command {
     @Override //Called when the command is initially scheduled.
     public void initialize() {
         shooterSub.shooterMotorsOn();
-        actuatorSub.setDesiredAngle(46);
+        actuatorSub.setDesiredAngle(44);
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.

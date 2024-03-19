@@ -13,11 +13,11 @@ public class LRNoteAim extends Command {
 
     @Override 
     public void initialize() {
-        actuatorSub.setDesiredAngle(44);
+        actuatorSub.setDesiredAngle(40);
     }
 
     @Override
     public void end(boolean interrupted) {
-        actuatorSub.setDesiredAngle(44);
+        actuatorSub.setDesiredAngle(40);
     }
 }

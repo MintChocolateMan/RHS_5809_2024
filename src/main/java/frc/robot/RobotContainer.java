@@ -101,6 +101,9 @@ public class RobotContainer {
         NamedCommands.registerCommand("ShootAuto", new ShootAuto(shooterSub));
         NamedCommands.registerCommand("SuckBack", new SuckBack(intakeSub));
         NamedCommands.registerCommand("SourceAim", new SourceAim(actuatorSub));
+        NamedCommands.registerCommand("ReverseShooter", new ReverseShooterAuto(shooterSub));
+        NamedCommands.registerCommand("HailMaryAim", new HailMaryAim(actuatorSub));
+        
        
         
 

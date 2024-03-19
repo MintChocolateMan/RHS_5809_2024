@@ -151,13 +151,7 @@ public class PoseEstimatorSub extends SubsystemBase {
             return  targetYaw;
         }
     }
-
-    //--------------------------------------------
     
-
-    //-----------------------------------------------
-
-
     public double getTargetPitch() {
         return (180 / Math.PI) * Math.atan(
             Constants.PoseEstimatorSub.speakerTargetHeight / 

@@ -3,21 +3,21 @@ package frc.robot.autoCommands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class SourceAim extends Command {
+public class HailMaryAim extends Command {
   
     private final ActuatorSub actuatorSub;
 
-    public SourceAim(ActuatorSub actuatorSub) {
+    public HailMaryAim(ActuatorSub actuatorSub) {
         this.actuatorSub = actuatorSub;
     }
 
     @Override 
     public void initialize() {
-        actuatorSub.setDesiredAngle(48);
+        actuatorSub.setDesiredAngle(40);
     }
 
     @Override
     public void end(boolean interrupted) {
-        actuatorSub.setDesiredAngle(45);
+        actuatorSub.setDesiredAngle(40);
     }
 }

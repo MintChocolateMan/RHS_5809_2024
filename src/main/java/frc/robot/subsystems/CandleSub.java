@@ -18,7 +18,7 @@ public class CandleSub extends SubsystemBase {
         //Initialize motors and sensors
         candle = new CANdle(Constants.CandleSub.candleID);
         candle.configBrightnessScalar(Constants.CandleSub.brightness);
-        candle.configLEDType(LEDStripType.BRG);
+        candle.configLEDType(LEDStripType.GRB);
         candle.configStatusLedState(true);
         setLEDsCyan();
     }
