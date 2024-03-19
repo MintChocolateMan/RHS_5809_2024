@@ -4,6 +4,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -14,6 +15,9 @@ public class ActuatorSub extends SubsystemBase {
     //Declare motors, sensors, and variables
     TalonFX actuatorMotor;
 
+    PIDController actuatorPID;
+    
+
     double desiredAngle = 0; //Constants.ActuatorSub.defaultAngle;
     boolean zeroing = false;
 
@@ -23,6 +27,9 @@ public class ActuatorSub extends SubsystemBase {
         actuatorMotor.setNeutralMode(NeutralModeValue.Brake);
         actuatorMotor.getConfigurator().apply(Robot.ctreConfigs.actuatorFXConfig);
         actuatorMotor.setPosition(0);
+
+        actuatorPID = new PIDController(0, 0, 0);
+        
     }
 
     //Declare subsystem methods
@@ -71,6 +78,17 @@ public class ActuatorSub extends SubsystemBase {
             Constants.ActuatorSub.bottomAngle + Constants.ActuatorSub.shooterMinAngle);
     }
 
+    public double getActuatorP() {
+        return (
+            Constants.ActuatorSub.actuatorkP / 
+            (Math.cos(Math.PI / 180 * 
+            (90.0 + Constants.ActuatorSub.bottomAngle - (180 * Math.PI * Math.asin(
+            (Constants.ActuatorSub.shooterLength / (Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition())) *
+            Math.sin(Math.PI / 180.0 * (getActuatorAngle() - Constants.ActuatorSub.shooterMinAngle + Constants.ActuatorSub.bottomAngle))
+            )))))
+        );
+    }
+
     public boolean onTarget() {
         if (Math.abs(getActuatorAngle() - getDesiredAngle()) < Constants.ActuatorSub.maxError) return true;
         else return false;
@@ -94,12 +112,13 @@ public class ActuatorSub extends SubsystemBase {
 
     public void actuateToGoalAngle() {
         regulateDesiredAngle();
+        actuatorPID.setD(getActuatorP());
         if (!getZeroing()) {
             if (onTarget()) {
             actuatorMotor.stopMotor();
-        } else {
-            actuatorMotor.set(Constants.ActuatorSub.actuatorPID.calculate(getActuatorAngle(), getDesiredAngle()));
-        }
+            } else {
+            actuatorMotor.set(actuatorPID.calculate(getActuatorAngle(), getDesiredAngle()));
+            }
         }
     }
     
@@ -115,9 +134,11 @@ public class ActuatorSub extends SubsystemBase {
 
         actuateToGoalAngle();
 
+        SmartDashboard.putNumber("actuatorP", getActuatorP());
+
         //SmartDashboard.putNumber("actuatorMotorPosition", getMotorPosition());
-        //SmartDashboard.putNumber("desiredAngle", getDesiredAngle());
-        //SmartDashboard.putNumber("currentAngle", getActuatorAngle());
+        SmartDashboard.putNumber("desiredAngle", getDesiredAngle());
+        SmartDashboard.putNumber("currentAngle", getActuatorAngle());
         //SmartDashboard.putNumber("desiredToMotor", desiredAngleToMotorPosition());
         //SmartDashboard.putNumber("motorPosition", getMotorPosition());
         

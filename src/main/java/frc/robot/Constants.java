@@ -67,7 +67,9 @@ public final class Constants {
             0
         );
 
-        public static final double maxError = 3;
+        public static final double actuatorkP = 0.017;
+
+        public static final double maxError = 0.5;
 
         public static final double shooterLength = 6.5;
         public static final double bottomLength = 17.1;

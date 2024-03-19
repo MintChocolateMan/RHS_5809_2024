@@ -26,7 +26,7 @@ public class IntakeSub extends SubsystemBase {
     }
 
     public boolean getNoteLoaded() {
-        return lineBreaker.get();
+        return !lineBreaker.get();
     }
 
     public void updateLEDs() {
