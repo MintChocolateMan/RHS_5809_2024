@@ -67,7 +67,9 @@ public final class Constants {
             0
         );
 
-        public static final double actuatorkP = 0.017;
+        public static final double actuatorkP = 0.025;
+        public static final double actuatorkI = 0;
+        public static final double actuatorkD = 0.0004;
 
         public static final double maxError = 0.5;
 
@@ -86,7 +88,7 @@ public final class Constants {
 
         public static final double actuatorDownSpeed = .03;
 
-        public static final int actuatorCurrentLimit = 30;
+        public static final int actuatorCurrentLimit = 35;
         public static final int actuatorCurrentThreshold = 50;
         public static final double actuatorCurrentThresholdTime = 0.1;
         public static final boolean actuatorEnableCurrentLimit = true;

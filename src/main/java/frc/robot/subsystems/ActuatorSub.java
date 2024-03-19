@@ -29,7 +29,6 @@ public class ActuatorSub extends SubsystemBase {
         actuatorMotor.setPosition(0);
 
         actuatorPID = new PIDController(0, 0, 0);
-        
     }
 
     //Declare subsystem methods
@@ -79,13 +78,18 @@ public class ActuatorSub extends SubsystemBase {
     }
 
     public double getActuatorP() {
-        return (
-            Constants.ActuatorSub.actuatorkP / 
-            (Math.cos(Math.PI / 180 * 
-            (90.0 + Constants.ActuatorSub.bottomAngle - (180 * Math.PI * Math.asin(
-            (Constants.ActuatorSub.shooterLength / (Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition())) *
-            Math.sin(Math.PI / 180.0 * (getActuatorAngle() - Constants.ActuatorSub.shooterMinAngle + Constants.ActuatorSub.bottomAngle))
-            )))))
+        return 0.016 + (
+            Constants.ActuatorSub.actuatorkP *
+            (Math.cos(Math.PI / 180.0 * 
+            (90.0 - (Constants.ActuatorSub.bottomAngle + (180.0 * Math.PI * Math.asin(
+            (Constants.ActuatorSub.shooterLength / Math.sqrt(
+            Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.shooterLength + 
+            Constants.ActuatorSub.bottomLength * Constants.ActuatorSub.bottomLength - 2.0 *
+            Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.bottomLength * Math.cos(Math.PI / 180.0 * (
+            getActuatorAngle() - Constants.ActuatorSub.shooterMinAngle + Constants.ActuatorSub.bottomAngle
+            )))) * Math.sin(Math.PI / 180.0 * (
+            getActuatorAngle() - Constants.ActuatorSub.shooterMinAngle + Constants.ActuatorSub.bottomAngle
+            ))))))))
         );
     }
 
@@ -112,7 +116,7 @@ public class ActuatorSub extends SubsystemBase {
 
     public void actuateToGoalAngle() {
         regulateDesiredAngle();
-        actuatorPID.setD(getActuatorP());
+        actuatorPID.setP(.028);
         if (!getZeroing()) {
             if (onTarget()) {
             actuatorMotor.stopMotor();
