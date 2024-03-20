@@ -168,7 +168,8 @@ public class PoseEstimatorSub extends SubsystemBase {
             poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
             poseEstimator.addVisionMeasurement(
                 limelightMeasurement.pose,
-                 limelightMeasurement.timestampSeconds);
+                limelightMeasurement.timestampSeconds);
+            visionCount += 1;
         }
 
         /*Optional<EstimatedRobotPose> optionalEstimatedPose = photonPoseEstimator.update();
@@ -188,8 +189,8 @@ public class PoseEstimatorSub extends SubsystemBase {
 
         //SmartDashboard.putNumber("targetDistance", PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose()));
         //SmartDashboard.putNumber("targetPitch", getTargetPitch());
-        SmartDashboard.putNumber("targetYaw", getTargetYaw());
-        SmartDashboard.putNumber("heading", getHeading().getDegrees());
+        //SmartDashboard.putNumber("targetYaw", getTargetYaw());
+        //SmartDashboard.putNumber("heading", getHeading().getDegrees());
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
         //SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
 
@@ -197,7 +198,7 @@ public class PoseEstimatorSub extends SubsystemBase {
         SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
         SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
 
-        //SmartDashboard.putNumber("visionCount", visionCount);
+        SmartDashboard.putNumber("visionCount", visionCount);
     }
 
     @Override //This method is called continuously during simulation
