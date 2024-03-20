@@ -77,10 +77,10 @@ public class ActuatorSub extends SubsystemBase {
             Constants.ActuatorSub.bottomAngle + Constants.ActuatorSub.shooterMinAngle);
     }
 
-    public double getActuatorP() {
-        return 0.016 + (
-            Constants.ActuatorSub.actuatorkP *
-            (Math.cos(Math.PI / 180.0 * 
+    public double getGravityFeedForward() {
+        return (
+            Constants.ActuatorSub.actuatorkG *
+            (Math.cos(Math.PI / 360.0 * 
             (90.0 - (Constants.ActuatorSub.bottomAngle + (180.0 * Math.PI * Math.asin(
             (Constants.ActuatorSub.shooterLength / Math.sqrt(
             Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.shooterLength + 
@@ -116,12 +116,15 @@ public class ActuatorSub extends SubsystemBase {
 
     public void actuateToGoalAngle() {
         regulateDesiredAngle();
-        actuatorPID.setP(.028);
         if (!getZeroing()) {
-            if (onTarget()) {
-            actuatorMotor.stopMotor();
+            if (Constants.ActuatorSub.actuatorPID.calculate(getActuatorAngle(), getDesiredAngle() - 1) > 0) {
+                actuatorMotor.set(
+                    Constants.ActuatorSub.actuatorPID.calculate(getActuatorAngle(), getDesiredAngle() - 1) + 
+                    getGravityFeedForward() + Constants.ActuatorSub.actuatorkF);
             } else {
-            actuatorMotor.set(actuatorPID.calculate(getActuatorAngle(), getDesiredAngle()));
+                actuatorMotor.set(
+                    Constants.ActuatorSub.actuatorPID.calculate(getActuatorAngle(), getDesiredAngle() - 1) + 
+                    getGravityFeedForward() - Constants.ActuatorSub.actuatorkF);
             }
         }
     }
@@ -138,7 +141,7 @@ public class ActuatorSub extends SubsystemBase {
 
         actuateToGoalAngle();
 
-        SmartDashboard.putNumber("actuatorP", getActuatorP());
+        //SmartDashboard.putNumber("actuatorFF", getFeedForward());
 
         //SmartDashboard.putNumber("actuatorMotorPosition", getMotorPosition());
         SmartDashboard.putNumber("desiredAngle", getDesiredAngle());
