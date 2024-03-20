@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -18,17 +19,19 @@ public class ShooterSub extends SubsystemBase {
         bottomMotor.setNeutralMode(NeutralModeValue.Brake);
         topMotor.setInverted(Constants.ShooterSub.topMotorInverted);
         bottomMotor.setInverted(Constants.ShooterSub.bottomMotorInverted);
+        topMotor.getConfigurator().apply(Robot.ctreConfigs.shooterFXConfig);
+        topMotor.getConfigurator().apply(Robot.ctreConfigs.shooterFXConfig);
     }
 
     //Declare methods
     public void shooterMotorsOn() {
-        topMotor.set(Constants.ShooterSub.shootSpeed);
-        bottomMotor.set(Constants.ShooterSub.shootSpeed);
+        topMotor.setVoltage(Constants.ShooterSub.shootVoltage);
+        bottomMotor.setVoltage(Constants.ShooterSub.shootVoltage);
     }
 
     public void shooterMotorsReverse() {
-        topMotor.set(-Constants.ShooterSub.reverseSpeed);
-        bottomMotor.set(-Constants.ShooterSub.reverseSpeed);
+        topMotor.setVoltage(-Constants.ShooterSub.reverseVoltage);
+        bottomMotor.setVoltage(-Constants.ShooterSub.reverseVoltage);
     }
     
     public void shooterMotorsOff() {

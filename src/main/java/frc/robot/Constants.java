@@ -44,9 +44,14 @@ public final class Constants {
         public static final int bottomMotorID = 12; // AKA Right Motor
         public static final boolean topMotorInverted = true;
         public static final boolean bottomMotorInverted = true;
-        public static final double shootSpeed = 1;
-        public static final double reverseSpeed = .2;
+        public static final double shootVoltage = 12;
+        public static final double reverseVoltage = 3;
         public static final NeutralModeValue motorNeutralMode = NeutralModeValue.Brake;
+
+        public static final int shooterCurrentLimit = 35;
+        public static final int shooterCurrentThreshold = 50;
+        public static final double shooterCurrentThresholdTime = 0.1;
+        public static final boolean shooterEnableCurrentLimit = true;
     }
 
     public static final class PneumaticSub {
