@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 //import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //import frc.robot.backups.*;
@@ -29,13 +30,14 @@ public class RobotContainer {
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton zeroActuator = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton intake = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-    //private final JoystickButton autoShoot = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton autoShoot = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton scoreAmp = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton extendClimbers = new JoystickButton(driver, XboxController.Button.kX.value);
-    private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton aimStage = new JoystickButton(driver, XboxController.Button.kA.value);
-    private final JoystickButton zeroActuator = new JoystickButton(driver, XboxController.Button.kB.value);
+    //private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    //private final JoystickButton aimStage = new JoystickButton(driver, XboxController.Button.kA.value);
     //private final JoystickButton setPoseCloseSpeaker = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
     //private final JoystickButton setPoseProtected = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
     
@@ -116,14 +118,24 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> poseEstimatorSub.zeroHeading()));
+        zeroActuator.whileTrue(new a_ZeroActuator(actuatorSub));
 
         /* Operator Buttons */
         intake.whileTrue(new i_Intake(intakeSub));
-        /*autoShoot.whileTrue(new AutoShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
+        autoShoot.whileTrue(new AutoShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
             () -> -driver.getRawAxis(translationAxis), 
             () -> -driver.getRawAxis(strafeAxis)
-        ));*/
-        extendClimbers.whileTrue(new p_ExtendClimbers(pneumaticSub));
+        ));
+        scoreAmp.whileTrue(new SequentialCommandGroup(
+            new a_AimAmp(actuatorSub), 
+            AutoBuilder.pathfindThenFollowPath(
+                swerveSub.scoreAmp,
+                swerveSub.scoreAmpConstraints,
+                0 // Rotation delay distance in meters. This is how far the robot should travel before attempting to rotate.
+            ), 
+            new ShootAmp(actuatorSub, shooterSub, intakeSub)
+        ));
+        //extendClimbers.whileTrue(new a_AimAmp(actuatorSub, shooterSub));//new p_ExtendClimbers(pneumaticSub));
         /*extendClimbers.whileTrue(new d_Swerve(
                 swerveSub, 
                 () -> -driver.getRawAxis(translationAxis), 
@@ -131,9 +143,8 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(rotationAxis), 
                 () -> false
             ));*/
-        aimClose.whileTrue(new AimClose(actuatorSub, shooterSub));
-        aimStage.whileTrue(new AimStage(actuatorSub, shooterSub));
-        zeroActuator.whileTrue(new a_ZeroActuator(actuatorSub));
+        //aimClose.whileTrue(new AimClose(actuatorSub, shooterSub));
+        //aimStage.whileTrue(new AimStage(actuatorSub, shooterSub));
         //setPoseCloseSpeaker.onTrue(new InstantCommand(() -> poseEstimatorSub.resetPoseToCloseSpeaker()));
         //setPoseProtected.onTrue(new InstantCommand(() -> poseEstimatorSub.resetPoseToProtected()));
 

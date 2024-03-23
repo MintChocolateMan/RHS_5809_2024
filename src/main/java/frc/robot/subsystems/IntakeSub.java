@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
-
+import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -18,6 +18,7 @@ public class IntakeSub extends SubsystemBase {
     
     public IntakeSub(CandleSub candleSub) { 
         intakeMotor = new TalonFX(Constants.IntakeSub.intakeMotorID);
+        intakeMotor.getConfigurator().apply(Robot.ctreConfigs.intakeFXConfig);
         intakeMotor.setInverted(Constants.IntakeSub.intakeMotorReversed);
         intakeMotor.setPosition(Constants.IntakeSub.intakePIDGoal);
         lineBreaker = new DigitalInput(Constants.IntakeSub.lineBreakerID);

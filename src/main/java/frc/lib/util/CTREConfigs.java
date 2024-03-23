@@ -13,6 +13,7 @@ public final class CTREConfigs {
     public CANcoderConfiguration swerveCANcoderConfig = new CANcoderConfiguration();
     public TalonFXConfiguration actuatorFXConfig = new TalonFXConfiguration();
     public TalonFXConfiguration shooterFXConfig = new TalonFXConfiguration();
+    public TalonFXConfiguration intakeFXConfig = new TalonFXConfiguration();
     public CANdleConfiguration candleConfig = new CANdleConfiguration();
 
     public CTREConfigs(){
@@ -77,6 +78,12 @@ public final class CTREConfigs {
         shooterFXConfig.CurrentLimits.SupplyCurrentLimit = Constants.ShooterSub.shooterCurrentLimit;
         shooterFXConfig.CurrentLimits.SupplyCurrentThreshold = Constants.ShooterSub.shooterCurrentThreshold;
         shooterFXConfig.CurrentLimits.SupplyTimeThreshold = Constants.ShooterSub.shooterCurrentThresholdTime;
+
+        //intake motor current limiting shooterFXConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.ShooterSub.shooterEnableCurrentLimit;
+        intakeFXConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.IntakeSub.intakeEnableCurrentLimit;
+        intakeFXConfig.CurrentLimits.SupplyCurrentLimit = Constants.IntakeSub.intakeCurrentLimit;
+        intakeFXConfig.CurrentLimits.SupplyCurrentThreshold = Constants.IntakeSub.intakeCurrentThreshold;
+        intakeFXConfig.CurrentLimits.SupplyTimeThreshold = Constants.IntakeSub.intakeCurrentThresholdTime;
 
         //CANdle configs
         candleConfig.brightnessScalar = Constants.CandleSub.brightness;

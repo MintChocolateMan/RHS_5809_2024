@@ -2,12 +2,14 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
+import frc.robot.LimelightHelpers.LimelightResults;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,7 +22,6 @@ import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 */
-import org.photonvision.PhotonUtils;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -32,6 +33,8 @@ public class PoseEstimatorSub extends SubsystemBase {
     //PhotonPoseEstimator photonPoseEstimator;
     SwerveSub swerveSub;
 
+    Field2d field = new Field2d();
+
     //PhotonCamera shooterCam = new PhotonCamera(Constants.PoseEstimatorSub.shooterCamName);
 
     int visionCount = 0;
@@ -40,15 +43,6 @@ public class PoseEstimatorSub extends SubsystemBase {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
-
-        //shooterCam = new PhotonCamera(Constants.PoseEstimatorSub.shooterCamName);
-
-        /*photonPoseEstimator = new PhotonPoseEstimator(
-            AprilTagFields.k2024Crescendo.loadAprilTagLayoutField(),
-            PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-            shooterCam,
-            Constants.PoseEstimatorSub.robotToShooterCam
-        );*/
     }
 
     public void initialize(SwerveSub swerveSub) {
@@ -135,11 +129,12 @@ public class PoseEstimatorSub extends SubsystemBase {
     }
     
     public double getTargetYaw() {
-        double targetYaw = (180 / Math.PI) * Math.atan(
+        double targetYaw = (180 / Math.PI) * Math.atan( 1.0 *
             (getPose().getY() - getSpeakerPose().getY()) / 
             (getPose().getX() - getSpeakerPose().getX())
             );
-        var alliance = DriverStation.getAlliance();
+        return targetYaw;
+        /*var alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
             if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
                 if (targetYaw >= 0) return targetYaw;
@@ -149,28 +144,37 @@ public class PoseEstimatorSub extends SubsystemBase {
             }
         } else {
             return  targetYaw;
-        }
+        }*/
     }
     
     public double getTargetPitch() {
         return (180 / Math.PI) * Math.atan(
             Constants.PoseEstimatorSub.speakerTargetHeight / 
-            PhotonUtils.getDistanceToPose(getPose(), getSpeakerPose())
-            );
+            Math.sqrt(
+                Math.pow(getPose().getX() - getSpeakerPose().getX(), 2) +
+                Math.pow(getPose().getY() - getSpeakerPose().getY(), 2)
+            )
+        );
     }
 
     public void update() {
         poseEstimator.update(getGyroYaw(), swerveSub.getModulePositions());
 
         /* LimeLight Code Copied from website */
-        LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
-        if(limelightMeasurement.tagCount >= 2) {
+        LimelightHelpers.PoseEstimate limelightBotpose = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+        if(limelightBotpose.tagCount >= 2) {
             poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
             poseEstimator.addVisionMeasurement(
-                limelightMeasurement.pose,
-                limelightMeasurement.timestampSeconds);
-            visionCount += 1;
+                limelightBotpose.pose,
+                limelightBotpose.timestampSeconds);
+        } else if (LimelightHelpers.getTA("limelight") > 0.6) {
+            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.9,.9,9999999));
+            poseEstimator.addVisionMeasurement(
+                limelightBotpose.pose,
+                limelightBotpose.timestampSeconds);
         }
+
+        field.setRobotPose(getPose());
 
         /*Optional<EstimatedRobotPose> optionalEstimatedPose = photonPoseEstimator.update();
         if (optionalEstimatedPose.isPresent()) {
@@ -186,19 +190,22 @@ public class PoseEstimatorSub extends SubsystemBase {
     public void periodic() {
 
         update();
+        
+        SmartDashboard.putData("Field", field);
+
 
         //SmartDashboard.putNumber("targetDistance", PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose()));
-        //SmartDashboard.putNumber("targetPitch", getTargetPitch());
-        //SmartDashboard.putNumber("targetYaw", getTargetYaw());
+        SmartDashboard.putNumber("targetPitch", getTargetPitch());
+        SmartDashboard.putNumber("targetYaw", getTargetYaw());
         //SmartDashboard.putNumber("heading", getHeading().getDegrees());
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
         //SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
 
-        SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
-        SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
+        //SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
+        //SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
         SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
 
-        SmartDashboard.putNumber("visionCount", visionCount);
+        //SmartDashboard.putNumber("visionCount", visionCount);
     }
 
     @Override //This method is called continuously during simulation

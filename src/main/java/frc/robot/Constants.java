@@ -36,7 +36,12 @@ public final class Constants {
             0,
             0
         );
-        public static final double intakePIDGoal = -2;
+        public static final double intakePIDGoal = -1.5;
+
+        public static final int intakeCurrentLimit = 35;
+        public static final int intakeCurrentThreshold = 50;
+        public static final double intakeCurrentThresholdTime = 0.1;
+        public static final boolean intakeEnableCurrentLimit = true;
     }
 
     public static final class ShooterSub {
@@ -44,11 +49,12 @@ public final class Constants {
         public static final int bottomMotorID = 12; // AKA Right Motor
         public static final boolean topMotorInverted = true;
         public static final boolean bottomMotorInverted = true;
-        public static final double shootVoltage = 12;
+        public static final double shootVoltage = 11;
+        public static final double ampVoltage = 2.5;
         public static final double reverseVoltage = 3;
         public static final NeutralModeValue motorNeutralMode = NeutralModeValue.Brake;
 
-        public static final int shooterCurrentLimit = 35;
+        public static final int shooterCurrentLimit = 30;
         public static final int shooterCurrentThreshold = 50;
         public static final double shooterCurrentThresholdTime = 0.1;
         public static final boolean shooterEnableCurrentLimit = true;
@@ -74,7 +80,7 @@ public final class Constants {
         public static final double actuatorkF = 0.04;
         public static final double actuatorkG = 0.07;
 
-        public static final double maxError = 1;
+        public static final double maxError = 2;
 
         public static final double shooterLength = 6.5;
         public static final double bottomLength = 17.1;
@@ -88,6 +94,7 @@ public final class Constants {
         public static final double minDesiredAngle = 28;
 
         public static final double defaultAngle = 45;
+        public static final double ampAngle = 62;
 
         public static final double actuatorDownSpeed = .03;
 
@@ -98,21 +105,8 @@ public final class Constants {
     }
 
     public static final class PoseEstimatorSub {
-        public static final String shooterCamName = "shooterCam";
 
-        public static final Transform3d robotToShooterCam = new Transform3d(
-            new Translation3d(
-                0.35,
-                0.1,
-                0.2
-            ), new Rotation3d(
-                0.0,
-                30.0,
-                0.0
-            )
-        );
-
-        public static final double speakerTargetHeight = 2.25;
+        public static final double speakerTargetHeight = 2.5;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(
             new Translation2d(15, 5.55),
@@ -167,10 +161,14 @@ public final class Constants {
 
         public static final double translationSensitivity = 1;
         public static final double rotationSensitivity = 1;
+        public static final double maxError = 5;
 
-        public static final double rotationkP = 0.1;
-        public static final double rotationkI = 0;
-        public static final double rotationkD = 0;
+        
+        public static final PIDController swerveRotationPID = new PIDController(
+            0.05,
+            0,
+            .01
+        );
 
         public static final COTSTalonFXSwerveConstants chosenModule = 
         COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
@@ -233,7 +231,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 4.6; //normally 5.5 TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 2; // 4.6//normally 5.5 TODO: This must be tuned to specific robot
         /** Radians per Second */
         public static final double maxAngularVelocity = 6.0; //TODO: This must be tuned to specific robot
 
@@ -247,8 +245,8 @@ public final class Constants {
             public static final int driveMotorID = 3; 
             public static final int angleMotorID = 2; 
             public static final int canCoderID = 14; 
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(83);
-            public static final boolean driveInverted = true; //TODO change for which motors are upside down
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-96.5);
+            public static final boolean driveInverted = false; //TODO change for which motors are upside down
             public static final boolean angleInverted = false;  // currently reverse both front left motors and drive on front right
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveInverted, angleInverted);
@@ -259,8 +257,8 @@ public final class Constants {
             public static final int driveMotorID = 5; 
             public static final int angleMotorID = 4; 
             public static final int canCoderID = 15; 
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-150);
-            public static final boolean driveInverted = true;
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(31);
+            public static final boolean driveInverted = false;
             public static final boolean angleInverted = false;
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset, driveInverted, angleInverted);
@@ -271,7 +269,7 @@ public final class Constants {
             public static final int driveMotorID = 7; //9
             public static final int angleMotorID = 6; //8
             public static final int canCoderID = 16; //17
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(89);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(89.6);
             public static final boolean driveInverted = false;
             public static final boolean angleInverted = true;
             public static final SwerveModuleConstants constants = 
@@ -283,7 +281,7 @@ public final class Constants {
             public static final int driveMotorID = 9; 
             public static final int angleMotorID = 8; 
             public static final int canCoderID = 17; 
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-94);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-94.2);
             public static final boolean driveInverted = false;
             public static final boolean angleInverted = true;
             public static final SwerveModuleConstants constants = 

@@ -66,6 +66,7 @@ public class AutoShoot extends Command {
 
     @Override // Called once the command ends or is interrupted.
     public void end(boolean interrupted) {
+        actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
         shooterSub.shooterMotorsOff();
         intakeSub.intakeMotorOff();
         timer.stop();

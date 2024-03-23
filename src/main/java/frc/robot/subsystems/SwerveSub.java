@@ -5,12 +5,17 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.pathfinding.Pathfinding;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.util.SwerveModule;
 import frc.robot.Constants;
@@ -18,11 +23,9 @@ import frc.robot.Constants;
 public class SwerveSub extends SubsystemBase {;
     public SwerveModule[] mSwerveMods;
     PoseEstimatorSub poseEstimatorSub;
-    PIDController rotationPID = new PIDController(
-        Constants.Swerve.rotationkP,
-        Constants.Swerve.rotationkI,
-        Constants.Swerve.rotationkD
-    );
+
+    public PathPlannerPath scoreAmp;
+    public PathConstraints scoreAmpConstraints;
 
     public SwerveSub(PoseEstimatorSub poseEstimatorSub) {
         this.poseEstimatorSub = poseEstimatorSub;
@@ -54,6 +57,13 @@ public class SwerveSub extends SubsystemBase {;
                 },
                 this // Reference to this subsystem to set requirements
         );
+
+        scoreAmp = PathPlannerPath.fromPathFile("Score Amp");
+        scoreAmpConstraints = new PathConstraints(
+            2.0, 2.0,
+            Units.degreesToRadians(540), Units.degreesToRadians(720)
+        );
+
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -83,7 +93,7 @@ public class SwerveSub extends SubsystemBase {;
                 ChassisSpeeds.fromFieldRelativeSpeeds(
                                     translation.getX() * Constants.Swerve.translationSensitivity, 
                                     translation.getY() * Constants.Swerve.translationSensitivity, 
-                                    rotationPID.calculate(poseEstimatorSub.getPose().getRotation().getDegrees(), poseEstimatorSub.getTargetYaw()), 
+                                    Constants.Swerve.swerveRotationPID.calculate(poseEstimatorSub.getPose().getRotation().getDegrees(), poseEstimatorSub.getTargetYaw()), 
                                     poseEstimatorSub.getHeading()
                                 ));
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
@@ -92,7 +102,7 @@ public class SwerveSub extends SubsystemBase {;
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], true);
         }
 
-        if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() - poseEstimatorSub.getTargetYaw()) < 3) return true;
+        if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() - poseEstimatorSub.getTargetYaw()) < Constants.Swerve.maxError) return true;
         else return false;
     }
 
@@ -148,8 +158,6 @@ public class SwerveSub extends SubsystemBase {;
 
     @Override
     public void periodic(){
-        //SmartDashboard.putNumber("getheading", getHeading().getDegrees());
-
         /*for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());

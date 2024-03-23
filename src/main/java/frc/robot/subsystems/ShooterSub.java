@@ -15,18 +15,23 @@ public class ShooterSub extends SubsystemBase {
     public ShooterSub() {
         topMotor = new TalonFX(Constants.ShooterSub.topMotorID);
         bottomMotor = new TalonFX(Constants.ShooterSub.bottomMotorID);
+        topMotor.getConfigurator().apply(Robot.ctreConfigs.shooterFXConfig);
+        topMotor.getConfigurator().apply(Robot.ctreConfigs.shooterFXConfig);
         topMotor.setNeutralMode(NeutralModeValue.Brake);
         bottomMotor.setNeutralMode(NeutralModeValue.Brake);
         topMotor.setInverted(Constants.ShooterSub.topMotorInverted);
         bottomMotor.setInverted(Constants.ShooterSub.bottomMotorInverted);
-        topMotor.getConfigurator().apply(Robot.ctreConfigs.shooterFXConfig);
-        topMotor.getConfigurator().apply(Robot.ctreConfigs.shooterFXConfig);
     }
 
     //Declare methods
     public void shooterMotorsOn() {
         topMotor.setVoltage(Constants.ShooterSub.shootVoltage);
         bottomMotor.setVoltage(Constants.ShooterSub.shootVoltage);
+    }
+
+    public void shooterMotorsAmp() {
+        topMotor.setVoltage(2.5);//Constants.ShooterSub.ampVoltage);
+        bottomMotor.setVoltage(2.5);//Constants.ShooterSub.ampVoltage);
     }
 
     public void shooterMotorsReverse() {
