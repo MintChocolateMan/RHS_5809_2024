@@ -79,7 +79,7 @@ public class RobotContainer {
                 robotCentric
             )
         );
-        intakeSub.setDefaultCommand(new i_DefaultIntake(intakeSub));
+        //intakeSub.setDefaultCommand(new i_DefaultIntake(intakeSub));
 
         /* Register Commands with PathPlanner */
         NamedCommands.registerCommand("i_Intake", new i_Intake(intakeSub));
@@ -90,7 +90,7 @@ public class RobotContainer {
         ));
 
         /* Register Manual Commands with PathPlanner */
-        NamedCommands.registerCommand("SpeakerAim", new SpeakerAim(actuatorSub));
+        /*NamedCommands.registerCommand("SpeakerAim", new SpeakerAim(actuatorSub));
         NamedCommands.registerCommand("CenterNoteAim", new CenterNoteAim(actuatorSub));
         NamedCommands.registerCommand("LRNoteAim", new LRNoteAim(actuatorSub));
         NamedCommands.registerCommand("ShootAuto", new ShootAuto(shooterSub));
@@ -98,7 +98,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("SourceAim", new SourceAim(actuatorSub));
         NamedCommands.registerCommand("ReverseShooter", new ReverseShooterAuto(shooterSub));
         NamedCommands.registerCommand("HailMaryAim", new HailMaryAim(actuatorSub));
-        
+        */
        
         
 

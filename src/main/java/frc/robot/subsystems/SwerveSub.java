@@ -27,8 +27,13 @@ public class SwerveSub extends SubsystemBase {;
     public PathPlannerPath scoreAmp;
     public PathConstraints scoreAmpConstraints;
 
+    public PIDController swervePID;
+
     public SwerveSub(PoseEstimatorSub poseEstimatorSub) {
         this.poseEstimatorSub = poseEstimatorSub;
+
+        swervePID = Constants.Swerve.swerveRotationPID;
+        swervePID.enableContinuousInput(-180, 180);
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),

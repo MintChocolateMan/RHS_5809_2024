@@ -27,7 +27,9 @@ public class IntakeSub extends SubsystemBase {
     }
 
     public boolean getNoteLoaded() {
-        return !lineBreaker.get();
+        if (lineBreaker.get()) {
+            return false;
+        } else return true;
     }
 
     public void updateLEDs() {
@@ -64,7 +66,7 @@ public class IntakeSub extends SubsystemBase {
     public void periodic() {
         updateLEDs();
 
-        SmartDashboard.putBoolean("NOTE LOADED", !getNoteLoaded());
+        SmartDashboard.putBoolean("NOTE LOADED", getNoteLoaded());
     }
 
     @Override 

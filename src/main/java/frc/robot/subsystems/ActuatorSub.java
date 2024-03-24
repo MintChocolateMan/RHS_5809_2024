@@ -120,11 +120,11 @@ public class ActuatorSub extends SubsystemBase {
             if (Constants.ActuatorSub.actuatorPID.calculate(getActuatorAngle(), getDesiredAngle() - 1) > 0) {
                 actuatorMotor.set(
                     Constants.ActuatorSub.actuatorPID.calculate(getActuatorAngle(), getDesiredAngle() - 1) + 
-                    getGravityFeedForward() + Constants.ActuatorSub.actuatorkF);
+                    getGravityFeedForward() + Constants.ActuatorSub.actuatorUpkF);
             } else {
                 actuatorMotor.set(
                     Constants.ActuatorSub.actuatorPID.calculate(getActuatorAngle(), getDesiredAngle() - 1) + 
-                    getGravityFeedForward() - Constants.ActuatorSub.actuatorkF);
+                    getGravityFeedForward() - Constants.ActuatorSub.actuatorDownkF);
             }
         }
     }

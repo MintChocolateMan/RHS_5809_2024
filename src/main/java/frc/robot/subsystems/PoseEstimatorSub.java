@@ -133,7 +133,14 @@ public class PoseEstimatorSub extends SubsystemBase {
             (getPose().getY() - getSpeakerPose().getY()) / 
             (getPose().getX() - getSpeakerPose().getX())
             );
-        return targetYaw;
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
+            if (targetYaw > 0) targetYaw -= 180;
+            else targetYaw += 180;
+            return targetYaw;
+        } else {
+                return targetYaw;
+        }
         /*var alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
             if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
@@ -154,6 +161,9 @@ public class PoseEstimatorSub extends SubsystemBase {
                 Math.pow(getPose().getX() - getSpeakerPose().getX(), 2) +
                 Math.pow(getPose().getY() - getSpeakerPose().getY(), 2)
             )
+        ) + Constants.PoseEstimatorSub.shootkG * Math.sqrt(
+            Math.pow(getPose().getX() - getSpeakerPose().getX(), 2) +
+            Math.pow(getPose().getY() - getSpeakerPose().getY(), 2)
         );
     }
 
@@ -163,16 +173,16 @@ public class PoseEstimatorSub extends SubsystemBase {
         /* LimeLight Code Copied from website */
         LimelightHelpers.PoseEstimate limelightBotpose = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
         if(limelightBotpose.tagCount >= 2) {
-            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
+            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(12,12,9999999));
             poseEstimator.addVisionMeasurement(
                 limelightBotpose.pose,
                 limelightBotpose.timestampSeconds);
-        } else if (LimelightHelpers.getTA("limelight") > 0.6) {
-            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.9,.9,9999999));
+        } /*else if (LimelightHelpers.getTA("limelight") > 0.6) {
+            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5,.5,9999999));
             poseEstimator.addVisionMeasurement(
                 limelightBotpose.pose,
                 limelightBotpose.timestampSeconds);
-        }
+        }*/
 
         field.setRobotPose(getPose());
 

@@ -20,7 +20,8 @@ public class AutoShoot extends Command {
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
 
-    Timer timer;
+    Timer shooterTimer;
+    Timer intakeTimer;
 
     public AutoShoot(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
         //Initialize subsystems
@@ -36,14 +37,18 @@ public class AutoShoot extends Command {
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
 
-        timer = new Timer();
-        timer.stop();
-        timer.reset();
+        shooterTimer = new Timer();
+        shooterTimer.stop();
+        shooterTimer.reset();
+        intakeTimer = new Timer();
+        intakeTimer.stop();
+        intakeTimer.reset();
     }
 
     @Override //Called when the command is initially scheduled.
     public void initialize() {
         shooterSub.shooterMotorsOn();
+        shooterTimer.start();
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.
@@ -56,12 +61,13 @@ public class AutoShoot extends Command {
         if (
             swerveSub.driveWithRotationGoal(
                 new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed)
-            ) == true && 
-            actuatorSub.onTarget() == true) {
-                timer.start();
+                ) == true && 
+            actuatorSub.onTarget() == true &&
+            shooterTimer.hasElapsed(.3)) {
+                intakeTimer.start();
             }
 
-        if (timer.get() != 0) intakeSub.intakeMotorOn();
+        if (intakeTimer.get() != 0) intakeSub.intakeMotorOn();
     }
 
     @Override // Called once the command ends or is interrupted.
@@ -69,13 +75,13 @@ public class AutoShoot extends Command {
         actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
         shooterSub.shooterMotorsOff();
         intakeSub.intakeMotorOff();
-        timer.stop();
-        timer.reset();
+        intakeTimer.stop();
+        intakeTimer.reset();
     }
 
     @Override // Returns true when the command should end.
     public boolean isFinished() {
-        if (timer.hasElapsed(1)) return true;
+        if (intakeTimer.hasElapsed(1)) return true;
         return false;
     }
 }

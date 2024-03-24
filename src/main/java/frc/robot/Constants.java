@@ -29,7 +29,7 @@ public final class Constants {
         public static final double intakeMotorSpeed = .8;
         public static final double intakeMotorReverseSpeed = .2;
         public static final boolean intakeMotorReversed = true;
-        public static final int lineBreakerID = 0;
+        public static final int lineBreakerID = 1;
 
         public static final PIDController intakePID = new PIDController(
             0.05,
@@ -77,10 +77,11 @@ public final class Constants {
             0,
             0
         );
-        public static final double actuatorkF = 0.04;
+        public static final double actuatorUpkF = 0.04;
+        public static final double actuatorDownkF = .05;
         public static final double actuatorkG = 0.07;
 
-        public static final double maxError = 2;
+        public static final double maxError = 3;
 
         public static final double shooterLength = 6.5;
         public static final double bottomLength = 17.1;
@@ -106,11 +107,12 @@ public final class Constants {
 
     public static final class PoseEstimatorSub {
 
-        public static final double speakerTargetHeight = 2.5;
+        public static final double speakerTargetHeight = 2.25;
+        public static final double shootkG = 1.25;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(
             new Translation2d(15, 5.55),
-            new Rotation2d()
+            new Rotation2d(Math.PI)
         );
         public static final Pose2d blueCloseSpeakerPose = new Pose2d(
             new Translation2d(1.5, 5.55),
@@ -118,7 +120,7 @@ public final class Constants {
         );
         public static final Pose2d redProtectedPose = new Pose2d(
             new Translation2d(13.7, 4.1),
-            new Rotation2d()
+            new Rotation2d(0)
         );
         public static final Pose2d blueProtectedPose = new Pose2d(
             new Translation2d(2.8, 4.1),
@@ -165,7 +167,7 @@ public final class Constants {
 
         
         public static final PIDController swerveRotationPID = new PIDController(
-            0.05,
+            0.1,
             0,
             .01
         );
