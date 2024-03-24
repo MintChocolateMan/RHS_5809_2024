@@ -1,33 +1,33 @@
-package frc.robot.commands;
+package frc.robot.backups;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class p_ExtendClimbers extends Command {
+public class i_DefaultIntake extends Command {
   
     //Declare subsystems
-    private final PneumaticSub pneumaticSub;
+    private final IntakeSub intakeSub;
 
-    public p_ExtendClimbers(PneumaticSub pneumaticSub) { //Command constructor
+    public i_DefaultIntake(IntakeSub intakeSub) { //Command constructor
         //Initialize subsystems
-        this.pneumaticSub = pneumaticSub;
+        this.intakeSub = intakeSub;
 
         //Add subsystem requirements
-        addRequirements(pneumaticSub);
+        addRequirements(intakeSub);
     }
 
     @Override //Called when the command is initially scheduled.
     public void initialize() {
-        pneumaticSub.climbersUp();
+        intakeSub.resetIntakeMotorPosition();
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.
-    public void execute() {}
+    public void execute() {
+        intakeSub.intakeMotorToPID();
+    }
 
     @Override // Called once the command ends or is interrupted.
-    public void end(boolean interrupted) {
-        pneumaticSub.climbersDown();
-    }
+    public void end(boolean interrupted) {}
 
     @Override // Returns true when the command should end.
     public boolean isFinished() {

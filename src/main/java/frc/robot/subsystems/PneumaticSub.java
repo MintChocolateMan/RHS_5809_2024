@@ -24,6 +24,11 @@ public class PneumaticSub extends SubsystemBase {
         rightClimber.set(Value.kOff);
     }
 
+    public void toggleClimbers() {
+        leftClimber.toggle();
+        rightClimber.toggle();
+    }
+
     public void climbersUp() {
         leftClimber.set(Value.kForward);
         rightClimber.set(Value.kForward);

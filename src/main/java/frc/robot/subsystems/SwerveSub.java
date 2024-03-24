@@ -7,15 +7,13 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.pathfinding.Pathfinding;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.util.SwerveModule;
 import frc.robot.Constants;
@@ -27,13 +25,13 @@ public class SwerveSub extends SubsystemBase {;
     public PathPlannerPath scoreAmp;
     public PathConstraints scoreAmpConstraints;
 
-    public PIDController swervePID;
+    public PIDController swerveRotationPID;
 
     public SwerveSub(PoseEstimatorSub poseEstimatorSub) {
         this.poseEstimatorSub = poseEstimatorSub;
 
-        swervePID = Constants.Swerve.swerveRotationPID;
-        swervePID.enableContinuousInput(-180, 180);
+        swerveRotationPID = Constants.Swerve.swerveRotationPID;
+        swerveRotationPID.enableContinuousInput(-180, 180);
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -98,7 +96,7 @@ public class SwerveSub extends SubsystemBase {;
                 ChassisSpeeds.fromFieldRelativeSpeeds(
                                     translation.getX() * Constants.Swerve.translationSensitivity, 
                                     translation.getY() * Constants.Swerve.translationSensitivity, 
-                                    Constants.Swerve.swerveRotationPID.calculate(poseEstimatorSub.getPose().getRotation().getDegrees(), poseEstimatorSub.getTargetYaw()), 
+                                    swerveRotationPID.calculate(poseEstimatorSub.getPose().getRotation().getDegrees(), poseEstimatorSub.getTargetYaw()), 
                                     poseEstimatorSub.getHeading()
                                 ));
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);

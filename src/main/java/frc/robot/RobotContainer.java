@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 //import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //import frc.robot.backups.*;
-import frc.robot.autoCommands.*;
+//import frc.robot.autoCommands.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -35,7 +35,7 @@ public class RobotContainer {
     private final JoystickButton intake = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     private final JoystickButton autoShoot = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton scoreAmp = new JoystickButton(driver, XboxController.Button.kA.value);
-    private final JoystickButton extendClimbers = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton toggleClimbers = new JoystickButton(driver, XboxController.Button.kX.value);
     //private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     //private final JoystickButton aimStage = new JoystickButton(driver, XboxController.Button.kA.value);
     //private final JoystickButton setPoseCloseSpeaker = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
@@ -64,6 +64,7 @@ public class RobotContainer {
     private final ShooterSub shooterSub = new ShooterSub();
     private final ActuatorSub actuatorSub = new ActuatorSub();
     private final PneumaticSub pneumaticSub = new PneumaticSub();
+    
 
 
 
@@ -119,8 +120,6 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> poseEstimatorSub.zeroHeading()));
         zeroActuator.whileTrue(new a_ZeroActuator(actuatorSub));
-
-        /* Operator Buttons */
         intake.whileTrue(new i_Intake(intakeSub));
         autoShoot.whileTrue(new AutoShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
             () -> -driver.getRawAxis(translationAxis), 
@@ -135,18 +134,9 @@ public class RobotContainer {
             ), 
             new ShootAmp(actuatorSub, shooterSub, intakeSub)
         ));
-        //extendClimbers.whileTrue(new a_AimAmp(actuatorSub, shooterSub));//new p_ExtendClimbers(pneumaticSub));
-        /*extendClimbers.whileTrue(new d_Swerve(
-                swerveSub, 
-                () -> -driver.getRawAxis(translationAxis), 
-                () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(rotationAxis), 
-                () -> false
-            ));*/
+        toggleClimbers.onTrue(new p_ToggleClimbers(pneumaticSub));
         //aimClose.whileTrue(new AimClose(actuatorSub, shooterSub));
         //aimStage.whileTrue(new AimStage(actuatorSub, shooterSub));
-        //setPoseCloseSpeaker.onTrue(new InstantCommand(() -> poseEstimatorSub.resetPoseToCloseSpeaker()));
-        //setPoseProtected.onTrue(new InstantCommand(() -> poseEstimatorSub.resetPoseToProtected()));
 
     }
 
