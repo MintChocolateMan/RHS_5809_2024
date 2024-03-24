@@ -1,0 +1,14 @@
+Tune Actuator to be accurate to 1 degree and be quick:
+    try squaring the gravity feedforward, so its stronger at the bottom and weaker at the top
+    try SYSID type stuff and find a curve of best fit
+Tune the vision stdDevs so that it is very accurate:
+    Trust less during auto and more during teleop maybe
+Make sure that everything works from both blue side and red side
+Tune swerve rotation PID so that it turns quickly
+Add gravity compensation to the getPitch method in PoseEstimatorSub
+Tune autos, ensure Choreo constants are accurate
+Tune amp scoring:
+    Add stop so that pose estimation is accurate, also tune stdDevs on vision
+    Potentially make less reliant on pose estimation and more reliant on a limelight crosshair
+CRAZY: Add full motion shooting:
+    make code that tests angles to .1 degree until it finds the most accurate one
