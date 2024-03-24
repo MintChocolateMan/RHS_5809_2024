@@ -33,7 +33,7 @@ public class i_Intake extends Command {
     @Override // Called every time the scheduler runs while the command is scheduled.
     public void execute() {
         if (intakeSub.getNoteLoaded() != startState && timer.get() == 0) timer.start();
-        if (timer.get() > 0.2) intakeSub.intakeMotorReverse();
+        if (timer.get() > 0.3) intakeSub.intakeMotorReverse();
     }
 
     @Override // Called once the command ends or is interrupted.
@@ -46,7 +46,7 @@ public class i_Intake extends Command {
 
     @Override // Returns true when the command should end.
     public boolean isFinished() {
-        if (timer.get() > 0.5) return true;
+        if (timer.get() > 0.6) return true;
         else return false;
     }
 }

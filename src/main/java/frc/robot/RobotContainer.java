@@ -32,7 +32,7 @@ public class RobotContainer {
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton zeroActuator = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kRightStick.value);
-    private final JoystickButton intake = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    private final JoystickButton autoIntake = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     private final JoystickButton autoShoot = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton scoreAmp = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton toggleClimbers = new JoystickButton(driver, XboxController.Button.kX.value);
@@ -83,12 +83,19 @@ public class RobotContainer {
         //intakeSub.setDefaultCommand(new i_DefaultIntake(intakeSub));
 
         /* Register Commands with PathPlanner */
-        NamedCommands.registerCommand("i_Intake", new i_Intake(intakeSub));
+        NamedCommands.registerCommand("AutoIntake", new AutoIntake(
+            intakeSub, swerveSub, poseEstimatorSub, 
+            () -> 0,
+            () -> 0,
+            () -> 0
+        ));
         NamedCommands.registerCommand("AutoShoot", new AutoShoot(
             poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub, 
             () -> 0, 
             () -> 0
         ));
+
+        NamedCommands.registerCommand("i_Intake", new i_Intake(intakeSub));
 
         /* Register Manual Commands with PathPlanner */
         /*NamedCommands.registerCommand("SpeakerAim", new SpeakerAim(actuatorSub));
@@ -120,7 +127,11 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> poseEstimatorSub.zeroHeading()));
         zeroActuator.whileTrue(new a_ZeroActuator(actuatorSub));
-        intake.whileTrue(new i_Intake(intakeSub));
+        autoIntake.whileTrue(new AutoIntake(intakeSub, swerveSub, poseEstimatorSub, 
+            () -> translationAxis, 
+            () -> strafeAxis, 
+            () -> rotationAxis
+        ));
         autoShoot.whileTrue(new AutoShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
             () -> -driver.getRawAxis(translationAxis), 
             () -> -driver.getRawAxis(strafeAxis)

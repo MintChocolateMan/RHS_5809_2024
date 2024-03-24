@@ -162,6 +162,7 @@ public final class Constants {
         public static final double rotationSensitivity = 1;
         public static final double maxError = 5;
 
+        public static final double maxIntakeError = 5;
         
         public static final PIDController swerveRotationPID = new PIDController(
             0.1,

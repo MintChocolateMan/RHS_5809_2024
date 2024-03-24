@@ -90,6 +90,24 @@ public class SwerveSub extends SubsystemBase {;
         }
     }
 
+    public boolean intakeDrive(Translation2d translation, double rotation) {
+        SwerveModuleState[] swerveModuleStates =
+            Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+                new ChassisSpeeds(
+                    translation.getX() * Constants.Swerve.translationSensitivity, 
+                    translation.getY() * Constants.Swerve.translationSensitivity, 
+                    swerveRotationPID.calculate(rotation, 0)
+                ));
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+
+        for(SwerveModule mod : mSwerveMods){
+            mod.setDesiredState(swerveModuleStates[mod.moduleNumber], true);
+        }
+
+        if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() - rotation) < Constants.Swerve.maxIntakeError) return true;
+        else return false;
+    }
+
     public boolean driveWithRotationGoal(Translation2d translation) {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(

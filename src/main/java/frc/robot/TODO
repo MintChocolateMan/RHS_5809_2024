@@ -1,3 +1,4 @@
+Add auto intake using google coral
 Tune Actuator to be accurate to 1 degree and be quick:
     try squaring the gravity feedforward, so its stronger at the bottom and weaker at the top
     try SYSID type stuff and find a curve of best fit

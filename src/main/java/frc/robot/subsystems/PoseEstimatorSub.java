@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.lib.util.LimelightHelpers;
+import frc.lib.util.LimelightHelpers.LimelightResults;
 import frc.robot.Constants;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -162,11 +163,15 @@ public class PoseEstimatorSub extends SubsystemBase {
         );
     }
 
+    public double getNoteYaw() {
+        return LimelightHelpers.getTX("intakeLimelight");
+    }
+
     public void update() {
         poseEstimator.update(getGyroYaw(), swerveSub.getModulePositions());
 
         /* LimeLight Code Copied from website */
-        LimelightHelpers.PoseEstimate limelightBotpose = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+        LimelightHelpers.PoseEstimate limelightBotpose = LimelightHelpers.getBotPoseEstimate_wpiBlue("shooterLimelight");
         if(limelightBotpose.tagCount >= 2) {
             poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(12,12,9999999));
             poseEstimator.addVisionMeasurement(
