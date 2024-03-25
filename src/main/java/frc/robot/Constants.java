@@ -35,6 +35,8 @@ public final class Constants {
         );
         public static final double intakePIDGoal = -1.5;
 
+        public static final double maxIntakeError = 5;
+
         public static final int intakeCurrentLimit = 35;
         public static final int intakeCurrentThreshold = 50;
         public static final double intakeCurrentThresholdTime = 0.1;

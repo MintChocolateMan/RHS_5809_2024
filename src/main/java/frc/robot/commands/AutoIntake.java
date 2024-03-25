@@ -67,7 +67,9 @@ public class AutoIntake extends Command {
                 true
             );
         } else {
-            swerveSub.intakeDrive(new Translation2d(0.2, 0), noteYaw);
+            if (Math.abs(noteYaw) <= Constants.IntakeSub.maxIntakeError) {
+                swerveSub.intakeDrive(new Translation2d(0.2, 0), noteYaw);
+            } else swerveSub.intakeDrive(new Translation2d(0, 0), noteYaw);
         }
         
         if (intakeSub.getNoteLoaded() != startState && timer.get() == 0) timer.start();
