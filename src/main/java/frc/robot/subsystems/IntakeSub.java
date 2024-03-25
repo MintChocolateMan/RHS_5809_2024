@@ -66,7 +66,7 @@ public class IntakeSub extends SubsystemBase {
     public void periodic() {
         updateLEDs();
 
-        SmartDashboard.putBoolean("NOTE LOADED", getNoteLoaded());
+        //SmartDashboard.putBoolean("NOTE LOADED", getNoteLoaded());
     }
 
     @Override 

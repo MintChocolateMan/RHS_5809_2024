@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import frc.lib.util.LimelightHelpers;
-import frc.lib.util.LimelightHelpers.LimelightResults;
 import frc.robot.Constants;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -211,15 +210,15 @@ public class PoseEstimatorSub extends SubsystemBase {
 
 
         //SmartDashboard.putNumber("targetDistance", PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose()));
-        SmartDashboard.putNumber("targetPitch", getTargetPitch());
-        SmartDashboard.putNumber("targetYaw", getTargetYaw());
+        //SmartDashboard.putNumber("targetPitch", getTargetPitch());
+        //SmartDashboard.putNumber("targetYaw", getTargetYaw());
         //SmartDashboard.putNumber("heading", getHeading().getDegrees());
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
         //SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
 
         //SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
         //SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
-        SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
+        //SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
 
         //SmartDashboard.putNumber("visionCount", visionCount);
     }

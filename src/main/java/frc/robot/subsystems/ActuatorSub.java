@@ -28,7 +28,8 @@ public class ActuatorSub extends SubsystemBase {
         actuatorMotor.getConfigurator().apply(Robot.ctreConfigs.actuatorFXConfig);
         actuatorMotor.setPosition(0);
 
-        actuatorPID = new PIDController(0, 0, 0);
+        actuatorPID = Constants.ActuatorSub.actuatorPID;
+        actuatorPID.setIZone(Constants.ActuatorSub.actuatorIZone);
     }
 
     //Declare subsystem methods
@@ -78,8 +79,8 @@ public class ActuatorSub extends SubsystemBase {
     }
 
     public double getGravityFeedForward() {
-        return (
-            Constants.ActuatorSub.actuatorkG *
+        return Math.pow(
+            Math.sqrt(Constants.ActuatorSub.actuatorkG) *
             (Math.cos(Math.PI / 360.0 * 
             (90.0 - (Constants.ActuatorSub.bottomAngle + (180.0 * Math.PI * Math.asin(
             (Constants.ActuatorSub.shooterLength / Math.sqrt(
@@ -89,8 +90,8 @@ public class ActuatorSub extends SubsystemBase {
             getActuatorAngle() - Constants.ActuatorSub.shooterMinAngle + Constants.ActuatorSub.bottomAngle
             )))) * Math.sin(Math.PI / 180.0 * (
             getActuatorAngle() - Constants.ActuatorSub.shooterMinAngle + Constants.ActuatorSub.bottomAngle
-            ))))))))
-        );
+            )))))))),
+        Constants.ActuatorSub.actuatorpG);
     }
 
     public boolean onTarget() {
@@ -117,13 +118,13 @@ public class ActuatorSub extends SubsystemBase {
     public void actuateToGoalAngle() {
         regulateDesiredAngle();
         if (!getZeroing()) {
-            if (Constants.ActuatorSub.actuatorPID.calculate(getActuatorAngle(), getDesiredAngle() - 1) > 0) {
+            if (Constants.ActuatorSub.actuatorPID.calculate(getActuatorAngle(), getDesiredAngle()) > 0) {
                 actuatorMotor.set(
-                    Constants.ActuatorSub.actuatorPID.calculate(getActuatorAngle(), getDesiredAngle() - 1) + 
-                    getGravityFeedForward() + Constants.ActuatorSub.actuatorUpkF);
+                    actuatorPID.calculate(getActuatorAngle(), getDesiredAngle()) + 
+                    getGravityFeedForward());
             } else {
                 actuatorMotor.set(
-                    Constants.ActuatorSub.actuatorPID.calculate(getActuatorAngle(), getDesiredAngle() - 1) + 
+                    actuatorPID.calculate(getActuatorAngle(), getDesiredAngle()) + 
                     getGravityFeedForward() - Constants.ActuatorSub.actuatorDownkF);
             }
         }

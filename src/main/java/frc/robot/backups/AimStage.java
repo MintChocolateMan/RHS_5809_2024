@@ -1,7 +1,7 @@
 package frc.robot.backups;
 
 import edu.wpi.first.wpilibj2.command.Command;
-//import frc.robot.Constants;
+import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
 public class AimStage extends Command {
@@ -21,8 +21,8 @@ public class AimStage extends Command {
 
     @Override //Called when the command is initially scheduled.
     public void initialize() {
-        shooterSub.shooterMotorsOn();
-        actuatorSub.setDesiredAngle(44);
+        //shooterSub.shooterMotorsOn();
+        actuatorSub.setDesiredAngle(40);
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.
@@ -30,7 +30,7 @@ public class AimStage extends Command {
 
     @Override // Called once the command ends or is interrupted.
     public void end(boolean interrupted) {
-        actuatorSub.setDesiredAngle(40);
+        actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
         shooterSub.shooterMotorsOff();
     }
 

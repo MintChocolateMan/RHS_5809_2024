@@ -70,13 +70,15 @@ public final class Constants {
         public static final boolean actuatorMotorInverted = false;
 
         public static final PIDController actuatorPID = new PIDController(
-            0.008,
-            0,
-            0
+            0.014,
+            0.03,
+            0.0002
         );
-        public static final double actuatorUpkF = 0.04;
-        public static final double actuatorDownkF = .05;
-        public static final double actuatorkG = 0.07;
+        public static final double actuatorIZone = 3;
+        public static final double actuatorUpkF = 0.05;
+        public static final double actuatorDownkF = 0;
+        public static final double actuatorkG = 0.12;
+        public static final double actuatorpG = 2.4;
 
         public static final double maxError = 3;
 
