@@ -21,7 +21,7 @@ public class AutoIntake extends Command {
     private DoubleSupplier rotationSup;
 
     private boolean noteSeen = false;
-    private double noteYaw = 0;
+    private double noteYaw;
     private boolean startState;
     private Timer timer;
 
@@ -50,8 +50,10 @@ public class AutoIntake extends Command {
 
     @Override // Called every time the scheduler runs while the command is scheduled.
     public void execute() {
-        noteYaw = poseEstimatorSub.getNoteYaw();
-        if (noteYaw != 0) noteSeen = true;
+        if (poseEstimatorSub.getValidNote()) {
+            noteSeen = true;
+            noteYaw = poseEstimatorSub.getNoteYaw();
+        }
 
         if (noteSeen == false) {
             double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);

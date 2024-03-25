@@ -163,6 +163,10 @@ public class PoseEstimatorSub extends SubsystemBase {
         );
     }
 
+    public boolean getValidNote() {
+        return LimelightHelpers.getTV("intakeLimelight");
+    }
+
     public double getNoteYaw() {
         return LimelightHelpers.getTX("intakeLimelight");
     }
