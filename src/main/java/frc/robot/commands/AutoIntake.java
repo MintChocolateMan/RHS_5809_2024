@@ -20,10 +20,11 @@ public class AutoIntake extends Command {
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
 
-    private boolean noteSeen = false;
+    double translation;
+    double rotation;
+
+    private boolean noteSeen;
     private double noteYaw;
-    private boolean startState;
-    private Timer timer;
 
     public AutoIntake(IntakeSub intakeSub, SwerveSub swerveSub, PoseEstimatorSub poseEstimatorSub, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup) { //Command constructor
         //Initialize subsystems
@@ -35,9 +36,8 @@ public class AutoIntake extends Command {
         this.strafeSup = strafeSup;
         this.rotationSup = rotationSup;
 
-        timer = new Timer();
-        timer.stop();
-        timer.reset();
+        noteSeen = false;
+        noteYaw = 0;
 
         //Add subsystem requirements
         addRequirements(intakeSub, swerveSub);
@@ -45,14 +45,15 @@ public class AutoIntake extends Command {
 
     @Override //Called when the command is initially scheduled.
     public void initialize() {
-        startState = intakeSub.getNoteLoaded();
+        intakeSub.intakeMotorOn();
+
+        noteSeen = false;
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.
     public void execute() {
-        if (poseEstimatorSub.getValidNote()) {
+        if (poseEstimatorSub.getValidNote() == true) {
             noteSeen = true;
-            noteYaw = poseEstimatorSub.getNoteYaw();
         }
 
         if (noteSeen == false) {
@@ -63,30 +64,35 @@ public class AutoIntake extends Command {
             swerveSub.drive(
                 new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
                 rotationVal * Constants.Swerve.maxAngularVelocity, 
-                false,
+                true,
                 true
             );
         } else {
-            if (Math.abs(noteYaw) <= Constants.IntakeSub.maxIntakeError) {
-                swerveSub.intakeDrive(new Translation2d(0.2, 0), noteYaw);
-            } else swerveSub.intakeDrive(new Translation2d(0, 0), noteYaw);
+            if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() - rotation) <= Constants.IntakeSub.maxIntakeError) {
+                translation = 1.5;
+            } else if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() - rotation) > Constants.IntakeSub.maxIntakeError) {
+                translation = 0;
+            }
+            if (poseEstimatorSub.getValidNote() == true) {
+                noteYaw = poseEstimatorSub.getNoteYaw();
+                rotation = poseEstimatorSub.getPose().getRotation().getDegrees() - noteYaw;
+            } else if (poseEstimatorSub.getValidNote() == false) {
+                rotation = rotation;
+            }
+
+            swerveSub.intakeDrive(new Translation2d(translation, 0), rotation);
         }
-        
-        if (intakeSub.getNoteLoaded() != startState && timer.get() == 0) timer.start();
-        if (timer.get() > 0.3) intakeSub.intakeMotorReverse();
     }
 
     @Override // Called once the command ends or is interrupted.
     public void end(boolean interrupted) {
         intakeSub.intakeMotorOff();
-
-        timer.stop();
-        timer.reset();
+        swerveSub.drive(new Translation2d(0, 0), 0, false, false);
     }
 
     @Override // Returns true when the command should end.
     public boolean isFinished() {
-        if (timer.get() > 0.6) return true;
+        if (intakeSub.getNoteLoaded() == true) return true;
         else return false;
     }
 }

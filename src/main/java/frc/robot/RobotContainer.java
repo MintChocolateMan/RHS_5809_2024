@@ -80,6 +80,8 @@ public class RobotContainer {
                 robotCentric
             )
         );
+        intakeSub.setDefaultCommand(new DefaultIntake(intakeSub));
+        //intakeSub.setDefualtCommand(new SuckBack(intakeSub, shooterSub));
 
         /* Register Commands with PathPlanner */
         NamedCommands.registerCommand("AutoIntake", new AutoIntake(
@@ -93,6 +95,7 @@ public class RobotContainer {
             () -> 0, 
             () -> 0
         ));
+        NamedCommands.registerCommand("SuckBack2", new SuckBack(intakeSub, shooterSub));
 
         NamedCommands.registerCommand("i_Intake", new i_Intake(intakeSub));
 
@@ -131,7 +134,13 @@ public class RobotContainer {
             () -> strafeAxis, 
             () -> rotationAxis
         ));*/
-        autoIntake.whileTrue(new i_Intake(intakeSub));
+        //autoIntake.whileTrue(new i_Intake(intakeSub));
+        autoIntake.whileTrue(new AutoIntake(
+            intakeSub, swerveSub, poseEstimatorSub, 
+            () -> -driver.getRawAxis(translationAxis),
+            () -> -driver.getRawAxis(strafeAxis),
+            () -> -driver.getRawAxis(rotationAxis)
+        ));
         autoShoot.whileTrue(new AutoShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
             () -> -driver.getRawAxis(translationAxis), 
             () -> -driver.getRawAxis(strafeAxis)

@@ -96,7 +96,7 @@ public class SwerveSub extends SubsystemBase {;
                 new ChassisSpeeds(
                     translation.getX() * Constants.Swerve.translationSensitivity, 
                     translation.getY() * Constants.Swerve.translationSensitivity, 
-                    swerveRotationPID.calculate(rotation, 0)
+                    swerveRotationPID.calculate(poseEstimatorSub.getPose().getRotation().getDegrees(), rotation)
                 ));
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 

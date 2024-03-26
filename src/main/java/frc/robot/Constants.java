@@ -35,7 +35,7 @@ public final class Constants {
         );
         public static final double intakePIDGoal = -1.5;
 
-        public static final double maxIntakeError = 5;
+        public static final double maxIntakeError = 10;
 
         public static final int intakeCurrentLimit = 35;
         public static final int intakeCurrentThreshold = 50;
@@ -82,7 +82,7 @@ public final class Constants {
         public static final double actuatorkG = 0.12;
         public static final double actuatorpG = 2.4;
 
-        public static final double maxError = 3;
+        public static final double maxError = 5;
 
         public static final double shooterLength = 6.5;
         public static final double bottomLength = 17.1;
@@ -95,7 +95,7 @@ public final class Constants {
         public static final double maxDesiredAngle = 62;
         public static final double minDesiredAngle = 28;
 
-        public static final double defaultAngle = 45;
+        public static final double defaultAngle = 42;
         public static final double ampAngle = 62;
 
         public static final double actuatorDownSpeed = .03;

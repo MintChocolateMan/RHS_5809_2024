@@ -32,6 +32,12 @@
         {
           "type": "named",
           "data": {
+            "name": "SuckBack"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "AutoShoot"
           }
         },
@@ -50,6 +56,12 @@
         {
           "type": "named",
           "data": {
+            "name": "SuckBack"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "AutoShoot"
           }
         },
@@ -63,6 +75,12 @@
           "type": "named",
           "data": {
             "name": "AutoIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SuckBack"
           }
         },
         {

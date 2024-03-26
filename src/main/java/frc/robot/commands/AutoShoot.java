@@ -63,7 +63,7 @@ public class AutoShoot extends Command {
                 new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed)
                 ) == true && 
             actuatorSub.onTarget() == true &&
-            shooterTimer.hasElapsed(.3)) {
+            shooterTimer.hasElapsed(.5)) {
                 intakeTimer.start();
             }
 
@@ -81,7 +81,7 @@ public class AutoShoot extends Command {
 
     @Override // Returns true when the command should end.
     public boolean isFinished() {
-        if (intakeTimer.hasElapsed(1)) return true;
+        if (intakeTimer.hasElapsed(.5)) return true;
         return false;
     }
 }

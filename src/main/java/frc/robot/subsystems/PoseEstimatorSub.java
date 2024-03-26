@@ -165,20 +165,20 @@ public class PoseEstimatorSub extends SubsystemBase {
     }
 
     public boolean getValidNote() {
-        return LimelightHelpers.getTV("intakeLimelight");
+        return LimelightHelpers.getTV("limelight-intake");
     }
 
     public double getNoteYaw() {
-        return LimelightHelpers.getTX("intakeLimelight");
+        return LimelightHelpers.getTX("limelight-intake");
     }
 
     public void update() {
         poseEstimator.update(getGyroYaw(), swerveSub.getModulePositions());
 
         /* LimeLight Code Copied from website */
-        LimelightHelpers.PoseEstimate limelightBotpose = LimelightHelpers.getBotPoseEstimate_wpiBlue("shooterLimelight");
+        LimelightHelpers.PoseEstimate limelightBotpose = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-shooter");
         if(limelightBotpose.tagCount >= 2) {
-            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(12,12,9999999));
+            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(20,20,9999999));
             poseEstimator.addVisionMeasurement(
                 limelightBotpose.pose,
                 limelightBotpose.timestampSeconds);
