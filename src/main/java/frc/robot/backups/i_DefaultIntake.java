@@ -1,5 +1,6 @@
 package frc.robot.backups;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
@@ -8,9 +9,19 @@ public class i_DefaultIntake extends Command {
     //Declare subsystems
     private final IntakeSub intakeSub;
 
+    private Timer timer;
+
+    private boolean intaked;
+
     public i_DefaultIntake(IntakeSub intakeSub) { //Command constructor
         //Initialize subsystems
         this.intakeSub = intakeSub;
+
+        timer = new Timer();
+        timer.stop();
+        timer.reset();
+
+        intaked = false;
 
         //Add subsystem requirements
         addRequirements(intakeSub);
@@ -18,16 +29,30 @@ public class i_DefaultIntake extends Command {
 
     @Override //Called when the command is initially scheduled.
     public void initialize() {
+        intakeSub.intakeMotorOn();
+        timer.start();
         intakeSub.resetIntakeMotorPosition();
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.
     public void execute() {
-        intakeSub.intakeMotorToPID();
+        if (timer.get() > .3) {
+            intaked = true;
+        }
+        if (intaked == true) {
+            intakeSub.intakeMotorToPID();
+        }
     }
 
     @Override // Called once the command ends or is interrupted.
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        intakeSub.intakeMotorOff();
+
+        timer.stop();
+        timer.reset();
+
+        intaked = false;
+    }
 
     @Override // Returns true when the command should end.
     public boolean isFinished() {

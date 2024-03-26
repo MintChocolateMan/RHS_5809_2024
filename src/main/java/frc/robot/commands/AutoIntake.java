@@ -88,6 +88,9 @@ public class AutoIntake extends Command {
     public void end(boolean interrupted) {
         intakeSub.intakeMotorOff();
         swerveSub.drive(new Translation2d(0, 0), 0, false, false);
+
+        noteSeen = false;
+        noteYaw = 0;
     }
 
     @Override // Returns true when the command should end.
