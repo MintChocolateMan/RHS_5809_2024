@@ -27,6 +27,7 @@ public class SwerveSub extends SubsystemBase {;
 
     public PIDController swerveRotationPID;
     public PIDController swerveTranslationPID;
+    public PIDController swerveStrafePID;
 
     public SwerveSub(PoseEstimatorSub poseEstimatorSub) {
         this.poseEstimatorSub = poseEstimatorSub;
@@ -35,6 +36,7 @@ public class SwerveSub extends SubsystemBase {;
         swerveRotationPID.enableContinuousInput(-180, 180);
 
         swerveTranslationPID = Constants.Swerve.swerveTranslationPID;
+        swerveStrafePID = Constants.Swerve.swerveStraftPID;
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -146,8 +148,11 @@ public class SwerveSub extends SubsystemBase {;
 
         if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() + 90) < 5 &&
             Math.abs(poseEstimatorSub.getAmpTX()) < 3 &&
-            Math.abs(poseEstimatorSub.getAmpTY()) < 2 &&
-            poseEstimatorSub.getValidAmp() == true
+            Math.abs(poseEstimatorSub.getAmpTY()) < 4 &&
+            poseEstimatorSub.getValidAmp() == true &&
+            getRobotRelativeSpeeds().vxMetersPerSecond < 1 &&
+            getRobotRelativeSpeeds().vyMetersPerSecond < 1 &&
+            getRobotRelativeSpeeds().omegaRadiansPerSecond < 0.1
         ) return true;
         else return false;
     }

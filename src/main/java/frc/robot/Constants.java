@@ -180,6 +180,12 @@ public final class Constants {
             0
         );
 
+        public static final PIDController swerveStraftPID = new PIDController(
+            0.25,
+            0, 
+            0.5
+        );
+
         public static final COTSTalonFXSwerveConstants chosenModule = 
         COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
 

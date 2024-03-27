@@ -6,7 +6,11 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,14 +29,9 @@ public class PoseEstimatorSub extends SubsystemBase {
 
     public Pigeon2 gyro;
     public SwerveDrivePoseEstimator poseEstimator;
-    //PhotonPoseEstimator photonPoseEstimator;
     SwerveSub swerveSub;
 
     Field2d field = new Field2d();
-
-    //PhotonCamera shooterCam = new PhotonCamera(Constants.PoseEstimatorSub.shooterCamName);
-
-    int visionCount = 0;
     
     public PoseEstimatorSub() { 
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -208,27 +207,17 @@ public class PoseEstimatorSub extends SubsystemBase {
         /* LimeLight Code Copied from website */
         LimelightHelpers.PoseEstimate limelightBotpose = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-shooter");
         if(limelightBotpose.tagCount >= 2) {
-            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(20,20,9999999));
+            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.2,.2,9999999));
             poseEstimator.addVisionMeasurement(
                 limelightBotpose.pose,
-                limelightBotpose.timestampSeconds);
-        } /*else if (LimelightHelpers.getTA("limelight") > 0.6) {
-            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5,.5,9999999));
-            poseEstimator.addVisionMeasurement(
-                limelightBotpose.pose,
-                limelightBotpose.timestampSeconds);
-        }*/
+                Timer.getFPGATimestamp() -
+                    (LimelightHelpers.getLatency_Pipeline("limelight-shooter") / 1000) -
+                    (LimelightHelpers.getLatency_Capture("limelight-shooter") / 1000)
+            );
+                //limelightBotpose.timestampSeconds);
+        }
 
         field.setRobotPose(getPose());
-
-        /*Optional<EstimatedRobotPose> optionalEstimatedPose = photonPoseEstimator.update();
-        if (optionalEstimatedPose.isPresent()) {
-            EstimatedRobotPose estimatedPose = optionalEstimatedPose.get();
-            poseEstimator.addVisionMeasurement(
-                estimatedPose.estimatedPose.toPose2d(),
-                estimatedPose.timestampSeconds);
-                visionCount += 1;
-        }*/
     }
 
     @Override //This method is called continuously

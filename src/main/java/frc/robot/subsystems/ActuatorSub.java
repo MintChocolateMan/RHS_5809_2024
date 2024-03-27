@@ -30,6 +30,7 @@ public class ActuatorSub extends SubsystemBase {
 
         actuatorPID = Constants.ActuatorSub.actuatorPID;
         actuatorPID.setIZone(Constants.ActuatorSub.actuatorIZone);
+        actuatorPID.setIntegratorRange(-.3, .3);
     }
 
     //Declare subsystem methods
