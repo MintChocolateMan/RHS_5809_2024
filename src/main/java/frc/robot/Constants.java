@@ -33,7 +33,7 @@ public final class Constants {
             0,
             0
         );
-        public static final double intakePIDGoal = -1.5;
+        public static final double intakePIDGoal = -2;
 
         public static final double maxIntakeError = 10;
 
@@ -172,6 +172,12 @@ public final class Constants {
             0.1,
             0,
             .01
+        );
+
+        public static final PIDController swerveTranslationPID = new PIDController(
+            0.1,
+            0, 
+            0
         );
 
         public static final COTSTalonFXSwerveConstants chosenModule = 

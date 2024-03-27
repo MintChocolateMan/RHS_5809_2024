@@ -34,7 +34,8 @@ public class RobotContainer {
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton autoIntake = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     private final JoystickButton autoShoot = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton scoreAmp = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton autoAmp = new JoystickButton(driver, XboxController.Button.kA.value);
+    //private final JoystickButton scoreAmp = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton toggleClimbers = new JoystickButton(driver, XboxController.Button.kX.value);
     //private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     //private final JoystickButton aimStage = new JoystickButton(driver, XboxController.Button.kX.value);
@@ -80,7 +81,7 @@ public class RobotContainer {
                 robotCentric
             )
         );
-        intakeSub.setDefaultCommand(new DefaultIntake(intakeSub));
+        intakeSub.setDefaultCommand(new i_DefaultIntake(intakeSub));
         //intakeSub.setDefualtCommand(new SuckBack(intakeSub, shooterSub));
 
         /* Register Commands with PathPlanner */
@@ -145,7 +146,11 @@ public class RobotContainer {
             () -> -driver.getRawAxis(translationAxis), 
             () -> -driver.getRawAxis(strafeAxis)
         ));
-        scoreAmp.whileTrue(new SequentialCommandGroup(
+        autoAmp.whileTrue(new AutoAmp(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub, 
+            () -> -driver.getRawAxis(translationAxis),
+            () -> -driver.getRawAxis(strafeAxis)
+        ));
+        /*scoreAmp.whileTrue(new SequentialCommandGroup(
             new a_AimAmp(actuatorSub), 
             AutoBuilder.pathfindThenFollowPath(
                 swerveSub.scoreAmp,
@@ -153,7 +158,7 @@ public class RobotContainer {
                 0 // Rotation delay distance in meters. This is how far the robot should travel before attempting to rotate.
             ), 
             new ShootAmp(actuatorSub, shooterSub, intakeSub)
-        ));
+        ));*/
         toggleClimbers.onTrue(new p_ToggleClimbers(pneumaticSub));
         //aimClose.whileTrue(new AimClose(actuatorSub, shooterSub));
         //aimStage.whileTrue(new AimStage(actuatorSub, shooterSub));

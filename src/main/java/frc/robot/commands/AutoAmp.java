@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
-public class AutoShoot extends Command {
+public class AutoAmp extends Command {
   
     //Declare subsystems
     private final PoseEstimatorSub poseEstimatorSub;
@@ -17,13 +17,14 @@ public class AutoShoot extends Command {
     private final ShooterSub shooterSub;
     private final ActuatorSub actuatorSub;
     private final IntakeSub intakeSub;
+
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
 
     Timer shooterTimer;
     Timer intakeTimer;
 
-    public AutoShoot(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
+    public AutoAmp(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
         //Initialize subsystems
         this.swerveSub = swerveSub;
         this.poseEstimatorSub = poseEstimatorSub;
@@ -47,7 +48,8 @@ public class AutoShoot extends Command {
 
     @Override //Called when the command is initially scheduled.
     public void initialize() {
-        shooterSub.shooterMotorsOn();
+        actuatorSub.setDesiredAngle(62);
+        shooterSub.shooterMotorsAmp();
         shooterTimer.start();
     }
 
@@ -55,18 +57,15 @@ public class AutoShoot extends Command {
     public void execute() {
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
-        
-        actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch());
 
-        if (
-            swerveSub.driveWithRotationGoal(
-                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
-                poseEstimatorSub.getTargetYaw()
-                ) == true && 
-            actuatorSub.onTarget() == true &&
-            shooterTimer.hasElapsed(.5)) {
-                intakeTimer.start();
-            }
+        if (poseEstimatorSub.getValidAmp() == true) {
+            if (actuatorSub.onTarget() == true &&
+                swerveSub.ampDrive() == true &&
+                shooterTimer.get() > .3
+            ) intakeTimer.start();
+        } else swerveSub.driveWithRotationGoal(
+            new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 90
+        );
 
         if (intakeTimer.get() != 0) intakeSub.intakeMotorOn();
     }

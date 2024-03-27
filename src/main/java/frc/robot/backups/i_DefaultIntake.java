@@ -12,6 +12,7 @@ public class i_DefaultIntake extends Command {
     private Timer timer;
 
     private boolean intaked;
+    private boolean reset;
 
     public i_DefaultIntake(IntakeSub intakeSub) { //Command constructor
         //Initialize subsystems
@@ -22,6 +23,7 @@ public class i_DefaultIntake extends Command {
         timer.reset();
 
         intaked = false;
+        reset = false;
 
         //Add subsystem requirements
         addRequirements(intakeSub);
@@ -31,7 +33,6 @@ public class i_DefaultIntake extends Command {
     public void initialize() {
         intakeSub.intakeMotorOn();
         timer.start();
-        intakeSub.resetIntakeMotorPosition();
     }
 
     @Override // Called every time the scheduler runs while the command is scheduled.
@@ -39,7 +40,11 @@ public class i_DefaultIntake extends Command {
         if (timer.get() > .3) {
             intaked = true;
         }
-        if (intaked == true) {
+        if (intaked == true && reset == false) {
+            intakeSub.resetIntakeMotorPosition();
+            reset = true;
+        }
+        if (intaked == true && reset == true) {
             intakeSub.intakeMotorToPID();
         }
     }
@@ -52,6 +57,7 @@ public class i_DefaultIntake extends Command {
         timer.reset();
 
         intaked = false;
+        reset = false;
     }
 
     @Override // Returns true when the command should end.

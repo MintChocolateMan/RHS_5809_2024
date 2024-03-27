@@ -30,9 +30,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "SuckBack"
+            "waitTime": 0.5
           }
         },
         {
@@ -54,9 +54,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "SuckBack"
+            "waitTime": 0.5
           }
         },
         {
@@ -78,9 +78,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "SuckBack"
+            "waitTime": 0.5
           }
         },
         {

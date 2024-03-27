@@ -81,12 +81,29 @@ public class PoseEstimatorSub extends SubsystemBase {
         return getPose().getRotation();
     }
 
+    public Rotation2d getHeadingFieldOriented() {
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent() == false) return getPose().getRotation();
+        if (alliance.get() == DriverStation.Alliance.Blue) {
+            return getPose().getRotation();
+        } else {
+            if (getPose().getRotation().getDegrees() <= 0) {
+                return new Rotation2d(getPose().getRotation().getRadians() + Math.PI);
+            } else return new Rotation2d(getPose().getRotation().getRadians() - Math.PI);
+        }
+    }
+
     public void setHeading(Rotation2d heading) {
         poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
     }
 
     public void zeroHeading() {
-        poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent() == true && alliance.get() == DriverStation.Alliance.Red) {
+            poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d(Math.PI)));
+        } else {
+            poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
+        }
     }
 
     public Pose2d getCloseSpeakerPose() {
@@ -123,6 +140,19 @@ public class PoseEstimatorSub extends SubsystemBase {
             }
         }
         else return Constants.PoseEstimatorSub.blueSpeakerPose;
+    }
+
+    public boolean getValidAmp() {
+        if (LimelightHelpers.getTV("limelight-amp") == true) return true;
+        else return false;
+    }
+
+    public double getAmpTY() {
+        return LimelightHelpers.getTY("limelight-amp");
+    }
+    
+    public double getAmpTX() {
+        return LimelightHelpers.getTX("limelight-amp");
     }
     
     public double getTargetYaw() {

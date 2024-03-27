@@ -26,12 +26,15 @@ public class SwerveSub extends SubsystemBase {;
     public PathConstraints scoreAmpConstraints;
 
     public PIDController swerveRotationPID;
+    public PIDController swerveTranslationPID;
 
     public SwerveSub(PoseEstimatorSub poseEstimatorSub) {
         this.poseEstimatorSub = poseEstimatorSub;
 
         swerveRotationPID = Constants.Swerve.swerveRotationPID;
         swerveRotationPID.enableContinuousInput(-180, 180);
+
+        swerveTranslationPID = Constants.Swerve.swerveTranslationPID;
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -76,7 +79,7 @@ public class SwerveSub extends SubsystemBase {;
                                     translation.getX() * Constants.Swerve.translationSensitivity, 
                                     translation.getY() * Constants.Swerve.translationSensitivity, 
                                     rotation * Constants.Swerve.rotationSensitivity, 
-                                    poseEstimatorSub.getHeading()
+                                    poseEstimatorSub.getHeadingFieldOriented()
                                 )
                                 : new ChassisSpeeds(
                                     translation.getX() * Constants.Swerve.translationSensitivity, 
@@ -108,14 +111,14 @@ public class SwerveSub extends SubsystemBase {;
         else return false;
     }
 
-    public boolean driveWithRotationGoal(Translation2d translation) {
+    public boolean driveWithRotationGoal(Translation2d translation, double rotation) {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 ChassisSpeeds.fromFieldRelativeSpeeds(
                                     translation.getX() * Constants.Swerve.translationSensitivity, 
                                     translation.getY() * Constants.Swerve.translationSensitivity, 
-                                    swerveRotationPID.calculate(poseEstimatorSub.getPose().getRotation().getDegrees(), poseEstimatorSub.getTargetYaw()), 
-                                    poseEstimatorSub.getHeading()
+                                    swerveRotationPID.calculate(poseEstimatorSub.getPose().getRotation().getDegrees(), rotation), 
+                                    poseEstimatorSub.getHeadingFieldOriented()
                                 ));
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
@@ -124,6 +127,27 @@ public class SwerveSub extends SubsystemBase {;
         }
 
         if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() - poseEstimatorSub.getTargetYaw()) < Constants.Swerve.maxError) return true;
+        else return false;
+    }
+
+    public boolean ampDrive() {
+        SwerveModuleState[] swerveModuleStates =
+            Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+                new ChassisSpeeds(
+                    swerveTranslationPID.calculate(poseEstimatorSub.getAmpTY(), 0), 
+                    swerveTranslationPID.calculate(poseEstimatorSub.getAmpTX(), 0), 
+                    swerveRotationPID.calculate(poseEstimatorSub.getPose().getRotation().getDegrees(), 90)
+                ));
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+
+        for(SwerveModule mod : mSwerveMods){
+            mod.setDesiredState(swerveModuleStates[mod.moduleNumber], true);
+        }
+
+        if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() - 90) < 5 &&
+            Math.abs(poseEstimatorSub.getAmpTX()) < 4 &&
+            Math.abs(poseEstimatorSub.getAmpTY()) < 4
+        ) return true;
         else return false;
     }
 
