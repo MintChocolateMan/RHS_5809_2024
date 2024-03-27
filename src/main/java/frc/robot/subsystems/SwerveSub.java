@@ -134,9 +134,9 @@ public class SwerveSub extends SubsystemBase {;
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 new ChassisSpeeds(
-                    swerveTranslationPID.calculate(poseEstimatorSub.getAmpTY(), 0), 
-                    swerveTranslationPID.calculate(poseEstimatorSub.getAmpTX(), 0), 
-                    swerveRotationPID.calculate(poseEstimatorSub.getPose().getRotation().getDegrees(), 90)
+                    -swerveTranslationPID.calculate(poseEstimatorSub.getAmpTY(), 0), 
+                    -swerveTranslationPID.calculate(poseEstimatorSub.getAmpTX(), 0), 
+                    swerveRotationPID.calculate(poseEstimatorSub.getPose().getRotation().getDegrees(), -90)
                 ));
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
@@ -144,9 +144,10 @@ public class SwerveSub extends SubsystemBase {;
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], true);
         }
 
-        if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() - 90) < 5 &&
-            Math.abs(poseEstimatorSub.getAmpTX()) < 4 &&
-            Math.abs(poseEstimatorSub.getAmpTY()) < 4
+        if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() + 90) < 5 &&
+            Math.abs(poseEstimatorSub.getAmpTX()) < 3 &&
+            Math.abs(poseEstimatorSub.getAmpTY()) < 2 &&
+            poseEstimatorSub.getValidAmp() == true
         ) return true;
         else return false;
     }

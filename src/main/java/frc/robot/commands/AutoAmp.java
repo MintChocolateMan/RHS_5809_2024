@@ -21,6 +21,8 @@ public class AutoAmp extends Command {
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
 
+    private boolean ampSeen;
+
     Timer shooterTimer;
     Timer intakeTimer;
 
@@ -37,6 +39,8 @@ public class AutoAmp extends Command {
 
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
+
+        ampSeen = false;
 
         shooterTimer = new Timer();
         shooterTimer.stop();
@@ -58,16 +62,22 @@ public class AutoAmp extends Command {
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
 
-        if (poseEstimatorSub.getValidAmp() == true) {
+        if (ampSeen == false) {
+            swerveSub.driveWithRotationGoal(
+                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), -90);
+        } else {
             if (actuatorSub.onTarget() == true &&
                 swerveSub.ampDrive() == true &&
                 shooterTimer.get() > .3
             ) intakeTimer.start();
-        } else swerveSub.driveWithRotationGoal(
-            new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 90
-        );
+        }
+
+        if (poseEstimatorSub.getValidAmp() == true) {
+            ampSeen = true;
+        }
 
         if (intakeTimer.get() != 0) intakeSub.intakeMotorOn();
+        else intakeSub.intakeMotorToPID();
     }
 
     @Override // Called once the command ends or is interrupted.
@@ -79,6 +89,8 @@ public class AutoAmp extends Command {
         shooterTimer.reset();
         intakeTimer.stop();
         intakeTimer.reset();
+
+        ampSeen = false;
     }
 
     @Override // Returns true when the command should end.

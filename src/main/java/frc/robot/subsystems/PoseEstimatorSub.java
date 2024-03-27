@@ -242,7 +242,7 @@ public class PoseEstimatorSub extends SubsystemBase {
         //SmartDashboard.putNumber("targetDistance", PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose()));
         //SmartDashboard.putNumber("targetPitch", getTargetPitch());
         //SmartDashboard.putNumber("targetYaw", getTargetYaw());
-        //SmartDashboard.putNumber("heading", getHeading().getDegrees());
+        SmartDashboard.putNumber("heading", getHeading().getDegrees());
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
         //SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
 
