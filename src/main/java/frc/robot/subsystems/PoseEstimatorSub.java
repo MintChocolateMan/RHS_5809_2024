@@ -15,13 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-/*
-import org.photonvision.EstimatedRobotPose;
-import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonPoseEstimator;
-import org.photonvision.PhotonPoseEstimator.PoseStrategy;
-*/
-
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 
@@ -31,12 +24,16 @@ public class PoseEstimatorSub extends SubsystemBase {
     public SwerveDrivePoseEstimator poseEstimator;
     SwerveSub swerveSub;
 
+    double visionStdDevs;
+
     Field2d field = new Field2d();
     
     public PoseEstimatorSub() { 
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
+
+        visionStdDevs = 1;
     }
 
     public void initialize(SwerveSub swerveSub) {
@@ -46,8 +43,8 @@ public class PoseEstimatorSub extends SubsystemBase {
             Constants.Swerve.swerveKinematics,
             getGyroYaw(),
             swerveSub.getModulePositions(),
-            getCloseSpeakerPose()
-            //,VecBuilder.fill(.5, .5, 9999999),
+            getCloseSpeakerPose()//,
+            //VecBuilder.fill(.1, .1, .1),
             //VecBuilder.fill(.5, .5, 9999999)
         );
     }
@@ -78,6 +75,14 @@ public class PoseEstimatorSub extends SubsystemBase {
     
     public Rotation2d getHeading() {
         return getPose().getRotation();
+    }
+
+    public double getVisionStdDevs() {
+        return visionStdDevs;
+    }
+
+    public void setVisionStdDevs(double visionStdDevs) {
+        this.visionStdDevs = visionStdDevs;
     }
 
     public Rotation2d getHeadingFieldOriented() {
@@ -187,10 +192,10 @@ public class PoseEstimatorSub extends SubsystemBase {
                 Math.pow(getPose().getX() - getSpeakerPose().getX(), 2) +
                 Math.pow(getPose().getY() - getSpeakerPose().getY(), 2)
             )
-        ) + Constants.PoseEstimatorSub.shootkG * Math.sqrt(
+        /*) + Constants.PoseEstimatorSub.shootkG * Math.sqrt(
             Math.pow(getPose().getX() - getSpeakerPose().getX(), 2) +
             Math.pow(getPose().getY() - getSpeakerPose().getY(), 2)
-        );
+        */);
     }
 
     public boolean getValidNote() {
@@ -207,7 +212,7 @@ public class PoseEstimatorSub extends SubsystemBase {
         /* LimeLight Code Copied from website */
         LimelightHelpers.PoseEstimate limelightBotpose = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-shooter");
         if(limelightBotpose.tagCount >= 2) {
-            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.2,.2,9999999));
+            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(getVisionStdDevs(),getVisionStdDevs(),9999999));
             poseEstimator.addVisionMeasurement(
                 limelightBotpose.pose,
                 Timer.getFPGATimestamp() -

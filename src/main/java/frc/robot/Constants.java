@@ -72,17 +72,17 @@ public final class Constants {
         public static final boolean actuatorMotorInverted = false;
 
         public static final PIDController actuatorPID = new PIDController(
-            0.014,
-            0.03,
-            0.0002
+            0.017,
+            0,
+            0.0003
         );
-        public static final double actuatorIZone = 3;
+        public static final double actuatorIZone = 5;
         public static final double actuatorUpkF = 0.05;
         public static final double actuatorDownkF = 0;
-        public static final double actuatorkG = 0.12;
-        public static final double actuatorpG = 2.4;
+        public static final double actuatorkG = 0.01;
+        public static final double actuatorpG = 1;
 
-        public static final double maxError = 5;
+        public static final double maxError = 2;
 
         public static final double shooterLength = 6.5;
         public static final double bottomLength = 17.1;
@@ -108,7 +108,10 @@ public final class Constants {
 
     public static final class PoseEstimatorSub {
 
-        public static final double speakerTargetHeight = 2.25;
+        public static final double autoVisionStdDevs = 12;
+        public static final double teleopVisionStdDevs = .05; //.05
+
+        public static final double speakerTargetHeight = 2;
         public static final double shootkG = 1.25;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(
@@ -128,11 +131,11 @@ public final class Constants {
             new Rotation2d()
         );
         public static final Pose2d redSpeakerPose = new Pose2d(
-            new Translation2d(16.5, 5.5),
+            new Translation2d(16.3, 5.5),
             new Rotation2d()
         );
         public static final Pose2d blueSpeakerPose = new Pose2d(
-            new Translation2d(0, 5.55),
+            new Translation2d(.2, 5.55),
             new Rotation2d()
         );
     }
@@ -180,7 +183,7 @@ public final class Constants {
             0
         );
 
-        public static final PIDController swerveStraftPID = new PIDController(
+        public static final PIDController swerveStrafePID = new PIDController(
             0.25,
             0, 
             0.5

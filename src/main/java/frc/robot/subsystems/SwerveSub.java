@@ -36,7 +36,7 @@ public class SwerveSub extends SubsystemBase {;
         swerveRotationPID.enableContinuousInput(-180, 180);
 
         swerveTranslationPID = Constants.Swerve.swerveTranslationPID;
-        swerveStrafePID = Constants.Swerve.swerveStraftPID;
+        swerveStrafePID = Constants.Swerve.swerveStrafePID;
 
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
@@ -137,7 +137,7 @@ public class SwerveSub extends SubsystemBase {;
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 new ChassisSpeeds(
                     -swerveTranslationPID.calculate(poseEstimatorSub.getAmpTY(), 0), 
-                    -swerveTranslationPID.calculate(poseEstimatorSub.getAmpTX(), 0), 
+                    -swerveStrafePID.calculate(poseEstimatorSub.getAmpTX(), 0), 
                     swerveRotationPID.calculate(poseEstimatorSub.getPose().getRotation().getDegrees(), -90)
                 ));
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
@@ -151,8 +151,7 @@ public class SwerveSub extends SubsystemBase {;
             Math.abs(poseEstimatorSub.getAmpTY()) < 4 &&
             poseEstimatorSub.getValidAmp() == true &&
             getRobotRelativeSpeeds().vxMetersPerSecond < 1 &&
-            getRobotRelativeSpeeds().vyMetersPerSecond < 1 &&
-            getRobotRelativeSpeeds().omegaRadiansPerSecond < 0.1
+            getRobotRelativeSpeeds().vyMetersPerSecond < 1
         ) return true;
         else return false;
     }

@@ -30,7 +30,7 @@ public class ActuatorSub extends SubsystemBase {
 
         actuatorPID = Constants.ActuatorSub.actuatorPID;
         actuatorPID.setIZone(Constants.ActuatorSub.actuatorIZone);
-        actuatorPID.setIntegratorRange(-.3, .3);
+        actuatorPID.setIntegratorRange(-.1, .1);
     }
 
     //Declare subsystem methods
@@ -82,7 +82,7 @@ public class ActuatorSub extends SubsystemBase {
     public double getGravityFeedForward() {
         return Math.pow(
             Math.sqrt(Constants.ActuatorSub.actuatorkG) *
-            (Math.cos(Math.PI / 360.0 * 
+            (Math.cos(Math.PI / 180 * 
             (90.0 - (Constants.ActuatorSub.bottomAngle + (180.0 * Math.PI * Math.asin(
             (Constants.ActuatorSub.shooterLength / Math.sqrt(
             Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.shooterLength + 
