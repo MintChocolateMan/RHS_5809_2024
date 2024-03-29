@@ -66,7 +66,7 @@ public class AutoAmp extends Command {
             swerveSub.driveWithRotationGoal(
                 new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), -90);
         } else {
-            if (actuatorSub.onTarget() == true &&
+            if (/*actuatorSub.onTarget() == true &&*/
                 swerveSub.ampDrive() == true &&
                 shooterTimer.get() > .3
             ) intakeTimer.start();
@@ -85,7 +85,7 @@ public class AutoAmp extends Command {
         actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
         shooterSub.shooterMotorsOff();
         intakeSub.intakeMotorOff();
-        
+
         shooterTimer.stop();
         shooterTimer.reset();
         intakeTimer.stop();

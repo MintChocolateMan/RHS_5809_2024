@@ -53,6 +53,8 @@ public final class Constants {
         public static final double reverseVoltage = 3;
         public static final NeutralModeValue motorNeutralMode = NeutralModeValue.Brake;
 
+        public static final double initialVelocity = 10;
+
         public static final int shooterCurrentLimit = 30;
         public static final int shooterCurrentThreshold = 50;
         public static final double shooterCurrentThresholdTime = 0.1;
@@ -111,7 +113,7 @@ public final class Constants {
         public static final double autoVisionStdDevs = 12;
         public static final double teleopVisionStdDevs = .05; //.05
 
-        public static final double speakerTargetHeight = 2;
+        public static final double speakerTargetHeight = 1.9;
         public static final double shootkG = 1.25;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(
@@ -174,19 +176,19 @@ public final class Constants {
         public static final PIDController swerveRotationPID = new PIDController(
             0.1,
             0,
-            .01
+            .015
         );
 
         public static final PIDController swerveTranslationPID = new PIDController(
-            0.1,
+            0.05,
             0, 
             0
         );
 
         public static final PIDController swerveStrafePID = new PIDController(
-            0.25,
+            0.1,
             0, 
-            0.5
+            0.1
         );
 
         public static final COTSTalonFXSwerveConstants chosenModule = 

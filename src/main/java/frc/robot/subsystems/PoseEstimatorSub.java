@@ -184,18 +184,38 @@ public class PoseEstimatorSub extends SubsystemBase {
             return  targetYaw;
         }*/
     }
+
+    /*public double getTargetPitch() {
+        double currentValue;
+        double bestValue = 99999999;
+        for (double i = 30; i < 62; i += .25) {
+            currentValue = ((((Constants.ShooterSub.initialVelocity * Math.sin(i * Math.PI / 180) *
+                Math.sqrt(
+                Math.pow(getPose().getX() - getSpeakerPose().getX(), 2) +
+                Math.pow(getPose().getY() - getSpeakerPose().getY(), 2) + .2
+                )) / (Constants.ShooterSub.initialVelocity * Math.cos(i * Math.PI / 180) )) + 
+                (
+                (-9.8 / 2) *Math.pow(((
+                Math.pow(getPose().getX() - getSpeakerPose().getX(), 2) +
+                Math.pow(getPose().getY() - getSpeakerPose().getY(), 2) + .2
+                ) / (Constants.ShooterSub.initialVelocity * Math.cos(i * Math.PI / 180))), 2))
+                ) - Constants.PoseEstimatorSub.speakerTargetHeight);
+            if (currentValue < bestValue) bestValue = currentValue;
+        }
+        return bestValue;
+    }*/
     
     public double getTargetPitch() {
         return (180 / Math.PI) * Math.atan(
             Constants.PoseEstimatorSub.speakerTargetHeight / 
             Math.sqrt(
                 Math.pow(getPose().getX() - getSpeakerPose().getX(), 2) +
-                Math.pow(getPose().getY() - getSpeakerPose().getY(), 2)
+                Math.pow(getPose().getY() - getSpeakerPose().getY(), 2) + .2
             )
-        /*) + Constants.PoseEstimatorSub.shootkG * Math.sqrt(
-            Math.pow(getPose().getX() - getSpeakerPose().getX(), 2) +
-            Math.pow(getPose().getY() - getSpeakerPose().getY(), 2)
-        */);
+        //) + Constants.PoseEstimatorSub.shootkG * Math.sqrt(
+           // Math.pow(getPose().getX() - getSpeakerPose().getX(), 2) +
+           // Math.pow(getPose().getY() - getSpeakerPose().getY(), 2)
+        );
     }
 
     public boolean getValidNote() {
