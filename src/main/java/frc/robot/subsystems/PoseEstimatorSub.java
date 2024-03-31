@@ -6,9 +6,6 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -21,7 +18,9 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 public class PoseEstimatorSub extends SubsystemBase {
 
     public Pigeon2 gyro;
+
     public SwerveDrivePoseEstimator poseEstimator;
+
     SwerveSub swerveSub;
 
     double visionStdDevs;
@@ -43,9 +42,7 @@ public class PoseEstimatorSub extends SubsystemBase {
             Constants.Swerve.swerveKinematics,
             getGyroYaw(),
             swerveSub.getModulePositions(),
-            getCloseSpeakerPose()//,
-            //VecBuilder.fill(.1, .1, .1),
-            //VecBuilder.fill(.5, .5, 9999999)
+            getCloseSpeakerPose()
         );
     }
 
@@ -77,14 +74,6 @@ public class PoseEstimatorSub extends SubsystemBase {
         return getPose().getRotation();
     }
 
-    public double getVisionStdDevs() {
-        return visionStdDevs;
-    }
-
-    public void setVisionStdDevs(double visionStdDevs) {
-        this.visionStdDevs = visionStdDevs;
-    }
-
     public Rotation2d getHeadingFieldOriented() {
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent() == false) return getPose().getRotation();
@@ -108,6 +97,14 @@ public class PoseEstimatorSub extends SubsystemBase {
         } else {
             poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
         }
+    }
+
+    public double getVisionStdDevs() {
+        return visionStdDevs;
+    }
+
+    public void setVisionStdDevs(double visionStdDevs) {
+        this.visionStdDevs = visionStdDevs;
     }
 
     public Pose2d getCloseSpeakerPose() {
@@ -158,6 +155,14 @@ public class PoseEstimatorSub extends SubsystemBase {
     public double getAmpTX() {
         return LimelightHelpers.getTX("limelight-amp");
     }
+
+    public boolean getValidNote() {
+        return LimelightHelpers.getTV("limelight-intake");
+    }
+
+    public double getNoteYaw() {
+        return LimelightHelpers.getTX("limelight-intake");
+    }
     
     public double getTargetYaw() {
         double targetYaw = (180 / Math.PI) * Math.atan( 1.0 *
@@ -172,37 +177,29 @@ public class PoseEstimatorSub extends SubsystemBase {
         } else {
                 return targetYaw;
         }
-        /*var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()) {
-            if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-                if (targetYaw >= 0) return targetYaw;
-                else return targetYaw;
-            } else {
-                return targetYaw;
-            }
-        } else {
-            return  targetYaw;
-        }*/
     }
 
     /*public double getTargetPitch() {
+        double bestAngle = 28;
         double currentValue;
-        double bestValue = 99999999;
-        for (double i = 30; i < 62; i += .25) {
+        double bestValue = 420;
+        for (double i = 28; i < 62; i += .25) {
             currentValue = ((((Constants.ShooterSub.initialVelocity * Math.sin(i * Math.PI / 180) *
                 Math.sqrt(
                 Math.pow(getPose().getX() - getSpeakerPose().getX(), 2) +
                 Math.pow(getPose().getY() - getSpeakerPose().getY(), 2) + .2
                 )) / (Constants.ShooterSub.initialVelocity * Math.cos(i * Math.PI / 180) )) + 
-                (
-                (-9.8 / 2) *Math.pow(((
+                ((-9.8 / 2) *Math.pow(((
                 Math.pow(getPose().getX() - getSpeakerPose().getX(), 2) +
                 Math.pow(getPose().getY() - getSpeakerPose().getY(), 2) + .2
                 ) / (Constants.ShooterSub.initialVelocity * Math.cos(i * Math.PI / 180))), 2))
                 ) - Constants.PoseEstimatorSub.speakerTargetHeight);
-            if (currentValue < bestValue) bestValue = currentValue;
+            if (currentValue < bestValue) {
+                bestValue = currentValue;
+                bestAngle = i;
+            }
         }
-        return bestValue;
+        return bestAngle;
     }*/
     
     public double getTargetPitch() {
@@ -216,14 +213,6 @@ public class PoseEstimatorSub extends SubsystemBase {
            // Math.pow(getPose().getX() - getSpeakerPose().getX(), 2) +
            // Math.pow(getPose().getY() - getSpeakerPose().getY(), 2)
         );
-    }
-
-    public boolean getValidNote() {
-        return LimelightHelpers.getTV("limelight-intake");
-    }
-
-    public double getNoteYaw() {
-        return LimelightHelpers.getTX("limelight-intake");
     }
 
     public void update() {
@@ -245,7 +234,7 @@ public class PoseEstimatorSub extends SubsystemBase {
         field.setRobotPose(getPose());
     }
 
-    @Override //This method is called continuously
+    @Override 
     public void periodic() {
 
         update();
@@ -258,15 +247,12 @@ public class PoseEstimatorSub extends SubsystemBase {
         //SmartDashboard.putNumber("targetYaw", getTargetYaw());
         SmartDashboard.putNumber("heading", getHeading().getDegrees());
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
-        //SmartDashboard.putNumber("estimatorPositions", swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond);
 
         //SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());
         //SmartDashboard.putNumber("poseY", getPose().getTranslation().getY());
         //SmartDashboard.putNumber("poseRotation", getPose().getRotation().getDegrees());
-
-        //SmartDashboard.putNumber("visionCount", visionCount);
     }
 
-    @Override //This method is called continuously during simulation
+    @Override 
     public void simulationPeriodic() {}
 }

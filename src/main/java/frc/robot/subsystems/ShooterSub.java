@@ -30,8 +30,8 @@ public class ShooterSub extends SubsystemBase {
     }
 
     public void shooterMotorsAmp() {
-        topMotor.setVoltage(2.5);//Constants.ShooterSub.ampVoltage);
-        bottomMotor.setVoltage(2.5);//Constants.ShooterSub.ampVoltage);
+        topMotor.setVoltage(Constants.ShooterSub.ampVoltage);
+        bottomMotor.setVoltage(Constants.ShooterSub.ampVoltage);
     }
 
     public void shooterMotorsReverse() {

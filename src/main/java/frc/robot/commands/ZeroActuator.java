@@ -3,12 +3,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class a_ZeroActuator extends Command {
+public class ZeroActuator extends Command {
   
     //Declare subsystems
     private final ActuatorSub actuatorSub;
 
-    public a_ZeroActuator(ActuatorSub actuatorSub) { //Command constructor
+    public ZeroActuator(ActuatorSub actuatorSub) { //Command constructor
         //Initialize subsystems
         this.actuatorSub = actuatorSub;
 

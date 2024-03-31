@@ -6,36 +6,59 @@ import frc.robot.subsystems.*;
 
 public class DefaultIntake extends Command {
   
-    //Declare subsystems
     private final IntakeSub intakeSub;
 
-    private boolean startState;
     private Timer timer;
 
-    public DefaultIntake(IntakeSub intakeSub) { //Command constructor
-        //Initialize subsystems
+    private boolean intaked;
+    private boolean reset;
+
+    public DefaultIntake(IntakeSub intakeSub) { 
+
         this.intakeSub = intakeSub;
 
-        //Add subsystem requirements
+        timer = new Timer();
+        timer.stop();
+        timer.reset();
+
+        intaked = false;
+        reset = false;
+
         addRequirements(intakeSub);
     }
 
-    @Override //Called when the command is initially scheduled.
-    public void initialize() {}
-
-    @Override // Called every time the scheduler runs while the command is scheduled.
-    public void execute() {
-        if (intakeSub.getNoteLoaded() == true) {
-            intakeSub.intakeMotorReverse();
-        } else intakeSub.intakeMotorOff();
+    @Override 
+    public void initialize() {
+        intakeSub.intakeMotorOn();
+        timer.start();
     }
 
-    @Override // Called once the command ends or is interrupted.
+    @Override 
+    public void execute() {
+        if (timer.get() > .3) {
+            intaked = true;
+        }
+        if (intaked == true && reset == false) {
+            intakeSub.resetIntakeMotorPosition();
+            reset = true;
+        }
+        if (intaked == true && reset == true) {
+            intakeSub.intakeMotorToPID();
+        }
+    }
+
+    @Override 
     public void end(boolean interrupted) {
         intakeSub.intakeMotorOff();
+
+        timer.stop();
+        timer.reset();
+
+        intaked = false;
+        reset = false;
     }
 
-    @Override // Returns true when the command should end.
+    @Override 
     public boolean isFinished() {
         return false;
     }

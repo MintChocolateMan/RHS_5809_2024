@@ -5,15 +5,16 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.GenericHID;
 //import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+//import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 //import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.backups.*;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+//import frc.robot.backups.*;
 //import frc.robot.autoCommands.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -21,26 +22,24 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
     /* Auto Chooser */
     private final SendableChooser<Command> autoChooser;
-
     
-    
-    // XBOX Controller Buttons
+    // XBox Controller Buttons
     private final XboxController driver = new XboxController(0);
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
-    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton zeroActuator = new JoystickButton(driver, XboxController.Button.kB.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kRightStick.value);
+    private final POVButton climbersUp = new POVButton(driver, 0);
+    private final POVButton climbersDown = new POVButton(driver, 180);
+    private final POVButton zeroGyro = new POVButton(driver, 270);
+    private final POVButton zeroActuator = new POVButton(driver, 90);
     private final JoystickButton autoIntake = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     private final JoystickButton autoShoot = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final Trigger aimClose = new Trigger(() -> { if(driver.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5) return true; else return false; });
+    private final Trigger intake = new Trigger(() -> { if(driver.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.5) return true; else return false; });
     private final JoystickButton autoAmp = new JoystickButton(driver, XboxController.Button.kA.value);
-    //private final JoystickButton scoreAmp = new JoystickButton(driver, XboxController.Button.kA.value);
-    private final JoystickButton toggleClimbers = new JoystickButton(driver, XboxController.Button.kX.value);
-    //private final JoystickButton aimClose = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    //private final JoystickButton aimStage = new JoystickButton(driver, XboxController.Button.kX.value);
-    //private final JoystickButton setPoseCloseSpeaker = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
-    //private final JoystickButton setPoseProtected = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
+    private final JoystickButton aimStage = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton aimFerry = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     
     /*
     // JOYSTICK Buttons
@@ -73,7 +72,7 @@ public class RobotContainer {
     public RobotContainer() {
         //Set Default Commands
         swerveSub.setDefaultCommand(
-            new d_Swerve(
+            new TeleopSwerve(
                 swerveSub, 
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
@@ -81,10 +80,9 @@ public class RobotContainer {
                 robotCentric
             )
         );
-        intakeSub.setDefaultCommand(new i_DefaultIntake(intakeSub));
-        //intakeSub.setDefualtCommand(new SuckBack(intakeSub, shooterSub));
+        intakeSub.setDefaultCommand(new DefaultIntake(intakeSub));
 
-        /* Register Commands with PathPlanner */
+        //Register Commands with PathPlanner
         NamedCommands.registerCommand("AutoIntake", new AutoIntake(
             intakeSub, swerveSub, poseEstimatorSub, 
             () -> 0,
@@ -96,9 +94,12 @@ public class RobotContainer {
             () -> 0, 
             () -> 0
         ));
-        NamedCommands.registerCommand("SuckBack2", new SuckBack(intakeSub, shooterSub));
+       
+        autoChooser = AutoBuilder.buildAutoChooser("Close Speaker Manual"); 
+        SmartDashboard.putData("Auto Chooser:", autoChooser);
 
-        NamedCommands.registerCommand("i_Intake", new i_Intake(intakeSub));
+        // Configure the button bindings
+        configureButtonBindings();
 
         /* Register Manual Commands with PathPlanner */
         /*NamedCommands.registerCommand("SpeakerAim", new SpeakerAim(actuatorSub));
@@ -109,33 +110,17 @@ public class RobotContainer {
         NamedCommands.registerCommand("SourceAim", new SourceAim(actuatorSub));
         NamedCommands.registerCommand("ReverseShooter", new ReverseShooterAuto(shooterSub));
         NamedCommands.registerCommand("HailMaryAim", new HailMaryAim(actuatorSub));
+        NamedCommands.registerCommand("SuckBack2", new SuckBack2(intakeSub, shooterSub));
+        NamedCommands.registerCommand("i_Intake", new Intake(intakeSub));
         */
-       
-        
-
-        autoChooser = AutoBuilder.buildAutoChooser("Close Speaker Manual"); 
-        SmartDashboard.putData("Auto Chooser:", autoChooser);
-
-        // Configure the button bindings
-        configureButtonBindings();
     }
 
-    /**
-     * Use this method to define your button->command mappings. Buttons can be created by
-     * instantiating a {@link GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-     * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-     */
     private void configureButtonBindings() {
-        /* Driver Buttons */
+        
+        climbersUp.onTrue(new ClimbersUp(pneumaticSub));
+        climbersDown.onTrue(new ClimbersDown(pneumaticSub));
         zeroGyro.onTrue(new InstantCommand(() -> poseEstimatorSub.zeroHeading()));
-        zeroActuator.whileTrue(new a_ZeroActuator(actuatorSub));
-        /*autoIntake.whileTrue(new AutoIntake(intakeSub, swerveSub, poseEstimatorSub, 
-            () -> translationAxis, 
-            () -> strafeAxis, 
-            () -> rotationAxis
-        ));*/
-        //autoIntake.whileTrue(new i_Intake(intakeSub));
+        zeroActuator.whileTrue(new ZeroActuator(actuatorSub));
         autoIntake.whileTrue(new AutoIntake(
             intakeSub, swerveSub, poseEstimatorSub, 
             () -> -driver.getRawAxis(translationAxis),
@@ -146,10 +131,15 @@ public class RobotContainer {
             () -> -driver.getRawAxis(translationAxis), 
             () -> -driver.getRawAxis(strafeAxis)
         ));
+        aimClose.whileTrue(new AimClose(actuatorSub, shooterSub));
+        intake.whileTrue(new Intake(intakeSub));
         autoAmp.whileTrue(new AutoAmp(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub, 
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis)
         ));
+        aimStage.whileTrue(new AimStage(actuatorSub, shooterSub));
+
+        //unused code for pathplanning amp score
         /*scoreAmp.whileTrue(new SequentialCommandGroup(
             new a_AimAmp(actuatorSub), 
             AutoBuilder.pathfindThenFollowPath(
@@ -159,10 +149,6 @@ public class RobotContainer {
             ), 
             new ShootAmp(actuatorSub, shooterSub, intakeSub)
         ));*/
-        toggleClimbers.onTrue(new p_ToggleClimbers(pneumaticSub));
-        //aimClose.whileTrue(new AimClose(actuatorSub, shooterSub));
-        //aimStage.whileTrue(new AimStage(actuatorSub, shooterSub));
-
     }
 
     public void setVisionStdDevs(double visionStdDevs) {

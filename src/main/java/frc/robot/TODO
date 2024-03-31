@@ -1,3 +1,23 @@
+TOTO Priorities:
+    Tune new actuator code
+    Implement chainging vision stdDevs
+    Make autos accurate
+    Implement final controls //
+    Perfect auto intake
+    Perfect auto amp, add setPose to end of amp score
+    Add velocity PID to shooter for consistent amp and speaker shooting
+    Add gravity compensation on shooting
+
+
+
+
+
+
+
+
+
+
+
 Add auto intake using google coral
 Tune the vision stdDevs so that it is very accurate:
     Trust less during auto and more during teleop maybe
@@ -16,6 +36,11 @@ CRAZY: Add full motion shooting:
 Tune Actuator to be accurate to 1 degree and be quick:
     try squaring the gravity feedforward, so its stronger at the bottom and weaker at the top
     try SYSID type stuff and find a curve of best fit
+
+Add velocity PID to shooter
+Add correct code for gravity compensation on shooting
+Add code to change the vision StdDevs when shooting/auto
+FINALLY look as SYSID and custom feedforward for the actuator so it is good
 
 FINAL CONTROLS:
 triggers:

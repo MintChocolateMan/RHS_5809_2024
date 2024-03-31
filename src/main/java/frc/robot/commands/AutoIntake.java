@@ -4,7 +4,6 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
@@ -27,7 +26,7 @@ public class AutoIntake extends Command {
     private double noteYaw;
 
     public AutoIntake(IntakeSub intakeSub, SwerveSub swerveSub, PoseEstimatorSub poseEstimatorSub, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup) { //Command constructor
-        //Initialize subsystems
+
         this.intakeSub = intakeSub;
         this.swerveSub = swerveSub;
         this.poseEstimatorSub = poseEstimatorSub;
@@ -39,7 +38,6 @@ public class AutoIntake extends Command {
         noteSeen = false;
         noteYaw = 0;
 
-        //Add subsystem requirements
         addRequirements(intakeSub, swerveSub);
     }
 
@@ -71,13 +69,11 @@ public class AutoIntake extends Command {
             if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() - rotation) <= Constants.IntakeSub.maxIntakeError) {
                 translation = 1.5;
             } else if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() - rotation) > Constants.IntakeSub.maxIntakeError) {
-                translation = 0;
+                translation = 0.5;
             }
             if (poseEstimatorSub.getValidNote() == true) {
                 noteYaw = poseEstimatorSub.getNoteYaw();
                 rotation = poseEstimatorSub.getPose().getRotation().getDegrees() - noteYaw;
-            } else if (poseEstimatorSub.getValidNote() == false) {
-                rotation = rotation;
             }
 
             swerveSub.intakeDrive(new Translation2d(translation, 0), rotation);
