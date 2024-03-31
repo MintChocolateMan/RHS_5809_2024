@@ -1,3 +1,34 @@
+With Robot Priorities:
+    Tune new actuator code
+    Tune stdDevs on vision
+    Make autos accurate
+    Perfect auto intake
+    Perfect auto amp
+
+Implementation Priorities:
+    Implement final controls 
+    Implement stage shot
+    implement variable vision stdDevs
+    Clean up code in general
+    add setPose to end of amp and stage shot maybe
+    add velocity PID / feedforward to shooter for better consistency
+    add gravity compensation on shooting
+    ball out and add full motion shots
+
+FINAL CONTROLS:
+    Right Trigger: Intake
+    Left Trigger: Aim Close
+    Right Bumper: Auto Intake
+    Left Bumper: Auto Shoot
+    A Button: Auto Amp
+    X Button: Aim Stage
+    Y Button: Aim Ferry
+    DPad Up: Climbers Up
+    Dpad Down: Climbers Down
+    Dpad Left: Zero Gyro
+    Dpad Right: Zero Actuator
+
+Other TODO: 
 Add auto intake using google coral
 Tune the vision stdDevs so that it is very accurate:
     Trust less during auto and more during teleop maybe
@@ -17,18 +48,7 @@ Tune Actuator to be accurate to 1 degree and be quick:
     try squaring the gravity feedforward, so its stronger at the bottom and weaker at the top
     try SYSID type stuff and find a curve of best fit
 
-FINAL CONTROLS:
-triggers:
-    auto intake
-    reg intake
-    auto shoot
-    close shoot
-buttons:
-    amp score
-    stage score
-    ferry note button
-d-pad:
-    climbers up
-    climbers down
-    reset gyro
-    reset actuator
+Add velocity PID to shooter
+Add correct code for gravity compensation on shooting
+Add code to change the vision StdDevs when shooting/auto
+FINALLY look as SYSID and custom feedforward for the actuator so it is good

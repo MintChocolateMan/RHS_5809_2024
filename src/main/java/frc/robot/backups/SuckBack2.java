@@ -1,19 +1,18 @@
-package frc.robot.commands;
+package frc.robot.backups;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class SuckBack extends Command {
+public class SuckBack2 extends Command {
   
     //Declare subsystems
     private final IntakeSub intakeSub;
     private final ShooterSub shooterSub;
 
-    private boolean startState;
     private Timer timer;
 
-    public SuckBack(IntakeSub intakeSub, ShooterSub shooterSub) { //Command constructor
+    public SuckBack2(IntakeSub intakeSub, ShooterSub shooterSub) { //Command constructor
         //Initialize subsystems
         this.intakeSub = intakeSub;
         this.shooterSub = shooterSub;
