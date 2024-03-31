@@ -48,7 +48,18 @@ Tune Actuator to be accurate to 1 degree and be quick:
     try squaring the gravity feedforward, so its stronger at the bottom and weaker at the top
     try SYSID type stuff and find a curve of best fit
 
-Add velocity PID to shooter
-Add correct code for gravity compensation on shooting
-Add code to change the vision StdDevs when shooting/auto
-FINALLY look as SYSID and custom feedforward for the actuator so it is good
+FINAL CONTROLS:
+triggers:
+    auto intake
+    reg intake
+    auto shoot
+    close shoot
+buttons:
+    amp score
+    stage score
+    ferry note button
+d-pad:
+    climbers up
+    climbers down
+    reset gyro
+    reset actuator
