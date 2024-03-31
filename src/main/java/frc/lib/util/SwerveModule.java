@@ -1,6 +1,6 @@
 package frc.lib.util;
 
-import com.ctre.phoenix6.configs.CANcoderConfiguration;
+//import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
@@ -12,7 +12,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.lib.math.Conversions;
-import frc.lib.util.CTREConfigs;
+//import frc.lib.util.CTREConfigs;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
