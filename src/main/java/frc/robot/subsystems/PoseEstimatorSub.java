@@ -131,16 +131,28 @@ public class PoseEstimatorSub extends SubsystemBase {
         else return Constants.PoseEstimatorSub.blueProtectedPose;
     }
 
-    public Pose2d getSpeakerPose() {
+    public Pose2d getSpeakerPoseYaw() {
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
             if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-                return Constants.PoseEstimatorSub.redSpeakerPose;
+                return Constants.PoseEstimatorSub.redSpeakerPoseYaw;
             } else {
-                return Constants.PoseEstimatorSub.blueSpeakerPose;
+                return Constants.PoseEstimatorSub.blueSpeakerPoseYaw;
             }
         }
-        else return Constants.PoseEstimatorSub.blueSpeakerPose;
+        else return Constants.PoseEstimatorSub.blueSpeakerPoseYaw;
+    }
+
+    public Pose2d getSpeakerPoseDistance() {
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+            if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+                return Constants.PoseEstimatorSub.redSpeakerPoseDistance;
+            } else {
+                return Constants.PoseEstimatorSub.blueSpeakerPoseDistance;
+            }
+        }
+        else return Constants.PoseEstimatorSub.blueSpeakerPoseYaw;
     }
 
     public boolean getValidAmp() {
@@ -166,8 +178,8 @@ public class PoseEstimatorSub extends SubsystemBase {
     
     public double getTargetYaw() {
         double targetYaw = (180 / Math.PI) * Math.atan( 1.0 *
-            (getPose().getY() - getSpeakerPose().getY()) / 
-            (getPose().getX() - getSpeakerPose().getX())
+            (getPose().getY() - getSpeakerPoseYaw().getY()) / 
+            (getPose().getX() - getSpeakerPoseYaw().getX())
             );
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
@@ -181,7 +193,7 @@ public class PoseEstimatorSub extends SubsystemBase {
 
     /*public double getTargetPitch() {
         double bestAngle = 28;
-        double currentValue;
+        double currentValue = 420;
         double bestValue = 420;
         for (double i = 28; i < 62; i += .25) {
             currentValue = ((((Constants.ShooterSub.initialVelocity * Math.sin(i * Math.PI / 180) *
@@ -201,18 +213,52 @@ public class PoseEstimatorSub extends SubsystemBase {
         }
         return bestAngle;
     }*/
+
+    // NEW calculations for gravity shot
+    /*public double getTargetPitch() {
+        double bestAngle = 28;
+        double bestDiff = 1000;
+        double currDiff = 1000;
+        for (int i = 28; i <= 62; i += 2) {
+            currDiff = (
+                (
+                    Constants.ShooterSub.initialVelocity * Math.sin(Math.PI / 180 * i)
+                ) / (
+                    Constants.ShooterSub.initialVelocity * Math.cos(Math.PI / 180 * i)
+                ) * Math.sqrt(
+                Math.pow(getPose().getX() - getSpeakerPoseDistance().getX(), 2) +
+                Math.pow(getPose().getY() - getSpeakerPoseDistance().getY(), 2) + .2
+                ) - (
+                    0.5 * 9.8 * Math.pow((
+                        (
+                            Math.sqrt(
+                                Math.pow(getPose().getX() - getSpeakerPoseDistance().getX(), 2) +
+                                Math.pow(getPose().getY() - getSpeakerPoseDistance().getY(), 2) + .2
+                            )
+                        ) / (
+                            Constants.ShooterSub.initialVelocity * Math.cos(Math.PI / 180 * i)
+                        )
+                    ), 2)
+                ) - Constants.PoseEstimatorSub.speakerTargetHeight
+            );
+            if (Math.abs(currDiff) < bestDiff) {
+                bestDiff = currDiff;
+                bestAngle = i;
+            }
+        }
+        return bestAngle;
+    }*/
     
     public double getTargetPitch() {
         return (180 / Math.PI) * Math.atan(
             Constants.PoseEstimatorSub.speakerTargetHeight / 
             Math.sqrt(
-                Math.pow(getPose().getX() - getSpeakerPose().getX(), 2) +
-                Math.pow(getPose().getY() - getSpeakerPose().getY(), 2) + .2
-            )
-        //) + Constants.PoseEstimatorSub.shootkG * Math.sqrt(
-           // Math.pow(getPose().getX() - getSpeakerPose().getX(), 2) +
-           // Math.pow(getPose().getY() - getSpeakerPose().getY(), 2)
-        );
+                Math.pow(getPose().getX() - getSpeakerPoseDistance().getX(), 2) +
+                Math.pow(getPose().getY() - getSpeakerPoseDistance().getY(), 2) + .2
+            )) + Constants.PoseEstimatorSub.shootkG * Math.sqrt(
+                Math.pow(getPose().getX() - getSpeakerPoseDistance().getX(), 2) +
+                Math.pow(getPose().getY() - getSpeakerPoseDistance().getY(), 2)
+            );
     }
 
     public void update() {
@@ -221,7 +267,7 @@ public class PoseEstimatorSub extends SubsystemBase {
         /* LimeLight Code Copied from website */
         LimelightHelpers.PoseEstimate limelightBotpose = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-shooter");
         if(limelightBotpose.tagCount >= 2) {
-            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(getVisionStdDevs(),getVisionStdDevs(),9999999));
+            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(getVisionStdDevs(), getVisionStdDevs(),9999999));
             poseEstimator.addVisionMeasurement(
                 limelightBotpose.pose,
                 Timer.getFPGATimestamp() -
@@ -243,9 +289,10 @@ public class PoseEstimatorSub extends SubsystemBase {
 
 
         //SmartDashboard.putNumber("targetDistance", PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose()));
-        //SmartDashboard.putNumber("targetPitch", getTargetPitch());
+        SmartDashboard.putNumber("targetPitch", getTargetPitch());
+        SmartDashboard.putNumber("stdDevs", getVisionStdDevs());
         //SmartDashboard.putNumber("targetYaw", getTargetYaw());
-        SmartDashboard.putNumber("heading", getHeading().getDegrees());
+        //SmartDashboard.putNumber("heading", getHeading().getDegrees());
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());
 
         //SmartDashboard.putNumber("poseX", getPose().getTranslation().getX());

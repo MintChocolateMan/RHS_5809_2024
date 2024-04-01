@@ -24,6 +24,7 @@ public class AutoAmp extends Command {
 
     Timer shooterTimer;
     Timer intakeTimer;
+    Timer targetTimer;
 
     public AutoAmp(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
 
@@ -46,6 +47,9 @@ public class AutoAmp extends Command {
         intakeTimer = new Timer();
         intakeTimer.stop();
         intakeTimer.reset();
+        targetTimer = new Timer();
+        targetTimer.stop();
+        targetTimer.reset();
     }
 
     @Override
@@ -67,12 +71,16 @@ public class AutoAmp extends Command {
             if (actuatorSub.onTarget() == true &&
                 swerveSub.ampDrive() == true &&
                 shooterTimer.get() > .3
-            ) intakeTimer.start();
+            ) targetTimer.start();
+            else {
+                targetTimer.stop();
+                targetTimer.reset();
+            }
         }
 
-        if (poseEstimatorSub.getValidAmp() == true) {
-            ampSeen = true;
-        }
+        if (poseEstimatorSub.getValidAmp() == true) ampSeen = true;
+
+        if (targetTimer.get() > 0.3) intakeTimer.start();
 
         if (intakeTimer.get() != 0) intakeSub.intakeMotorOn();
         else intakeSub.intakeMotorToPID();
@@ -89,6 +97,8 @@ public class AutoAmp extends Command {
         shooterTimer.reset();
         intakeTimer.stop();
         intakeTimer.reset();
+        targetTimer.stop();
+        targetTimer.reset();
 
         ampSeen = false;
     }

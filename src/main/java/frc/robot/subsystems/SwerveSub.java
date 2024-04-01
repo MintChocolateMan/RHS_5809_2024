@@ -147,7 +147,7 @@ public class SwerveSub extends SubsystemBase {;
         }
 
         if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() + 90) < 5 &&
-            Math.abs(poseEstimatorSub.getAmpTX()) < 3 &&
+            Math.abs(poseEstimatorSub.getAmpTX()) < 2 &&
             Math.abs(poseEstimatorSub.getAmpTY()) < 4 &&
             poseEstimatorSub.getValidAmp() == true &&
             getRobotRelativeSpeeds().vxMetersPerSecond < .25 &&

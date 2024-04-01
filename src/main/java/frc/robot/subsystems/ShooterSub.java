@@ -23,7 +23,6 @@ public class ShooterSub extends SubsystemBase {
         bottomMotor.setInverted(Constants.ShooterSub.bottomMotorInverted);
     }
 
-    //Declare methods
     public void shooterMotorsOn() {
         topMotor.setVoltage(Constants.ShooterSub.shootVoltage);
         bottomMotor.setVoltage(Constants.ShooterSub.shootVoltage);

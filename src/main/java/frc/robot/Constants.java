@@ -73,15 +73,17 @@ public final class Constants {
         public static final int actuatorMotorID = 19;
         public static final boolean actuatorMotorInverted = false;
 
-        public static final double maxV = 0;
-        public static final double maxA = 0;
-        public static final double kP = 0;
-        public static final double kI = 0;
+        public static final double maxV = 8;
+        public static final double maxA = 15;
+        public static final double kP = 1.2;
+        public static final double kI = .05;
         public static final double kD = 0;
         public static final double kS = 0;
         public static final double kV = 0;
         public static final double kA = 0;
-        public static final double kG = 0;
+        public static final double kG = 0.45;
+        public static final double kIZone = 5;
+        public static final double kIMax = .3;
 
         public static final double shooterLength = 6.5;
         public static final double bottomLength = 17.1;
@@ -100,7 +102,7 @@ public final class Constants {
         public static final double defaultAngle = 42;
 
         public static final double closeAngle = 62;
-        public static final double stageAngle = 42;
+        public static final double stageAngle = 38;
         public static final double ampAngle = 62;
         public static final double ferryAngle = 55;
 
@@ -127,10 +129,10 @@ public final class Constants {
     public static final class PoseEstimatorSub {
 
         public static final double autoVisionStdDevs = 12;
-        public static final double teleopVisionStdDevs = .05; //.05
+        public static final double teleopVisionStdDevs = .03; //.05
 
-        public static final double speakerTargetHeight = 1.9;
-        public static final double shootkG = 1.25;
+        public static final double speakerTargetHeight = 2;//2.1 is real height
+        public static final double shootkG = 1;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(
             new Translation2d(15, 5.55),
@@ -148,12 +150,20 @@ public final class Constants {
             new Translation2d(2.8, 4.1),
             new Rotation2d()
         );
-        public static final Pose2d redSpeakerPose = new Pose2d(
-            new Translation2d(16.3, 5.5),
+        public static final Pose2d redSpeakerPoseYaw = new Pose2d(
+            new Translation2d(16.3, 5.55),
             new Rotation2d()
         );
-        public static final Pose2d blueSpeakerPose = new Pose2d(
+        public static final Pose2d blueSpeakerPoseYaw = new Pose2d(
             new Translation2d(.2, 5.55),
+            new Rotation2d()
+        );
+        public static final Pose2d redSpeakerPoseDistance = new Pose2d(
+            new Translation2d(16.5, 5.55),
+            new Rotation2d()
+        );
+        public static final Pose2d blueSpeakerPoseDistance = new Pose2d(
+            new Translation2d(0, 5.55),
             new Rotation2d()
         );
     }
@@ -198,13 +208,13 @@ public final class Constants {
         public static final PIDController swerveTranslationPID = new PIDController(
             0.05,
             0, 
-            0
+            0.1
         );
 
         public static final PIDController swerveStrafePID = new PIDController(
-            0.1,
+            0.05,
             0, 
-            0.1
+            0
         );
 
         public static final COTSTalonFXSwerveConstants chosenModule = 

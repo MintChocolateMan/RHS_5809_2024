@@ -30,9 +30,9 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.5
+            "name": "AutoDefaultIntake"
           }
         },
         {
@@ -54,9 +54,9 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.5
+            "name": "AutoDefaultIntake"
           }
         },
         {
@@ -78,9 +78,9 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.5
+            "name": "AutoDefaultIntake"
           }
         },
         {

@@ -94,6 +94,7 @@ public class RobotContainer {
             () -> 0, 
             () -> 0
         ));
+        NamedCommands.registerCommand("AutoDefaultIntake", new AutoDefaultIntake(intakeSub));
        
         autoChooser = AutoBuilder.buildAutoChooser("Close Speaker Manual"); 
         SmartDashboard.putData("Auto Chooser:", autoChooser);
