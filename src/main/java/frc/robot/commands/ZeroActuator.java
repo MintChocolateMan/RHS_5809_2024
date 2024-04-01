@@ -5,28 +5,26 @@ import frc.robot.subsystems.*;
 
 public class ZeroActuator extends Command {
   
-    //Declare subsystems
     private final ActuatorSub actuatorSub;
 
     public ZeroActuator(ActuatorSub actuatorSub) { //Command constructor
-        //Initialize subsystems
+ 
         this.actuatorSub = actuatorSub;
 
-        //Add subsystem requirements
         addRequirements(actuatorSub);
     }
 
-    @Override //Called when the command is initially scheduled.
+    @Override 
     public void initialize() {
         actuatorSub.setZeroing(true);
         actuatorSub.actuatorMotorDown();
 
     }
 
-    @Override // Called every time the scheduler runs while the command is scheduled.
+    @Override 
     public void execute() {}
 
-    @Override // Called once the command ends or is interrupted.
+    @Override
     public void end(boolean interrupted) {
         actuatorSub.actuatorMotorOff();
         actuatorSub.setMotorPosition(0);
@@ -34,7 +32,7 @@ public class ZeroActuator extends Command {
         actuatorSub.setZeroing(false);
     }
 
-    @Override // Returns true when the command should end.
+    @Override 
     public boolean isFinished() {
         return false;
     }

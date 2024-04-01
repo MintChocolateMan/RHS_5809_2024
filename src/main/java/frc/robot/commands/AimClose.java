@@ -20,7 +20,7 @@ public class AimClose extends Command {
     @Override 
     public void initialize() {
         shooterSub.shooterMotorsOn();
-        actuatorSub.setDesiredAngle(62);
+        actuatorSub.setDesiredAngle(Constants.ActuatorSub.closeAngle);
     }
 
     @Override 

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
-public class AimStage extends Command {
+public class AimFerry extends Command {
   
     private final SwerveSub swerveSub;
     private final ShooterSub shooterSub;
@@ -18,7 +18,7 @@ public class AimStage extends Command {
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
 
-    public AimStage(SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
+    public AimFerry(SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
 
         this.swerveSub = swerveSub;
         this.shooterSub = shooterSub;
@@ -44,10 +44,10 @@ public class AimStage extends Command {
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
             swerveSub.driveWithRotationGoal(
-                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), -150);
+                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), -135);
         } else {
             swerveSub.driveWithRotationGoal(
-                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), -30);
+                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), -45);
         }
     }
 

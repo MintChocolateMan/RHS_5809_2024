@@ -10,7 +10,6 @@ import frc.robot.subsystems.*;
 
 public class AutoIntake extends Command {
   
-    //Declare subsystems
     private final IntakeSub intakeSub;
     private final SwerveSub swerveSub;
     private final PoseEstimatorSub poseEstimatorSub;
@@ -41,14 +40,14 @@ public class AutoIntake extends Command {
         addRequirements(intakeSub, swerveSub);
     }
 
-    @Override //Called when the command is initially scheduled.
+    @Override
     public void initialize() {
         intakeSub.intakeMotorOn();
 
         noteSeen = false;
     }
 
-    @Override // Called every time the scheduler runs while the command is scheduled.
+    @Override 
     public void execute() {
         if (poseEstimatorSub.getValidNote() == true) {
             noteSeen = true;
@@ -80,7 +79,7 @@ public class AutoIntake extends Command {
         }
     }
 
-    @Override // Called once the command ends or is interrupted.
+    @Override 
     public void end(boolean interrupted) {
         intakeSub.intakeMotorOff();
         swerveSub.drive(new Translation2d(0, 0), 0, false, false);
@@ -89,7 +88,7 @@ public class AutoIntake extends Command {
         noteYaw = 0;
     }
 
-    @Override // Returns true when the command should end.
+    @Override 
     public boolean isFinished() {
         if (intakeSub.getNoteLoaded() == true) return true;
         else return false;

@@ -83,6 +83,7 @@ public class AutoAmp extends Command {
         actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
         shooterSub.shooterMotorsOff();
         intakeSub.intakeMotorOff();
+        swerveSub.drive(new Translation2d(0, 0), 0, false, false);
 
         shooterTimer.stop();
         shooterTimer.reset();

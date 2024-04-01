@@ -4,7 +4,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -21,9 +21,9 @@ public class ActuatorSub extends SubsystemBase {
      * 2. start tuning kP until it gets to position well as well as adjust maxV and maxA so that it doesn't overshoot
      * 3. 
      */
-    private final TrapezoidProfile.Constraints actuatorControllerConstraints = new TrapezoidProfile.Constraints(10, 5);
-    private final ProfiledPIDController actuatorController = new ProfiledPIDController(0, 0, 0, actuatorControllerConstraints, 0.02);
-    private final ArmFeedforward actuatorFeedforward = new ArmFeedforward(0, 0, 0, 0);
+    private final TrapezoidProfile.Constraints actuatorControllerConstraints = new TrapezoidProfile.Constraints(Constants.ActuatorSub.maxV, Constants.ActuatorSub.maxA);
+    private final ProfiledPIDController actuatorController = new ProfiledPIDController(Constants.ActuatorSub.kP, Constants.ActuatorSub.kI, Constants.ActuatorSub.kD, actuatorControllerConstraints, 0.02);
+    private final SimpleMotorFeedforward actuatorFeedforward = new SimpleMotorFeedforward(Constants.ActuatorSub.kS, Constants.ActuatorSub.kV, Constants.ActuatorSub.kA);
     
 
     private double desiredAngle = 0;
@@ -37,7 +37,6 @@ public class ActuatorSub extends SubsystemBase {
         actuatorMotor.setPosition(0);
     }
 
-    //Declare subsystem methods
     public void setDesiredAngle(double desiredAngle) {
         this.desiredAngle = desiredAngle;
     }
@@ -62,17 +61,17 @@ public class ActuatorSub extends SubsystemBase {
         return actuatorMotor.getRotorPosition().getValueAsDouble();
     }
 
-    public boolean onTarget() {
-        if (Math.abs(getActuatorAngle() - getDesiredAngle()) < Constants.ActuatorSub.maxError) return true;
-        else return false;
-    }
-
     public void actuatorMotorDown() {
-        actuatorMotor.set(-Constants.ActuatorSub.actuatorDownSpeed);
+        actuatorMotor.setVoltage(-Constants.ActuatorSub.actuatorDownSpeed * 12);
     }
 
     public void actuatorMotorOff() {
         actuatorMotor.set(0);
+    }
+
+    public boolean onTarget() {
+        if (Math.abs(getAngleFromMotorPosition(getMotorPosition()) - getDesiredAngle()) < Constants.ActuatorSub.maxError) return true;
+        else return false;
     }
 
     public void regulateDesiredAngle() {
@@ -83,32 +82,61 @@ public class ActuatorSub extends SubsystemBase {
         }
     }
 
-    public double getActuatorAngle() {
-        return (((180 / Math.PI) * 
-            Math.acos((((Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition())) * 
-            ((Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition())) - 
-            (Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.shooterLength) - 
-            (Constants.ActuatorSub.bottomLength * Constants.ActuatorSub.bottomLength)) / 
-            (-2.0 * Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.bottomLength))) - 
-            Constants.ActuatorSub.bottomAngle + Constants.ActuatorSub.shooterMinAngle);
+    public double getMotorPositionFromAngle(double angle) {
+        return (
+            (
+                Math.sqrt(
+                    Math.pow(Constants.ActuatorSub.bottomLength, 2) + Math.pow(Constants.ActuatorSub.shooterLength, 2) -
+                    2 * Constants.ActuatorSub.bottomLength * Constants.ActuatorSub.shooterLength * Math.cos(Math.PI / 180 * (
+                        angle - Constants.ActuatorSub.shooterMinAngle + Constants.ActuatorSub.bottomAngle
+                    ))
+                ) - Constants.ActuatorSub.actuatorMinLength
+            ) / (
+                Constants.ActuatorSub.actuatorRate
+            )
+        );
     }
 
-    public double setpointToFeedforwardAngle(double angle) {
-        return Math.asin(Constants.ActuatorSub.bottomLength * Math.sin((
-            angle - Constants.ActuatorSub.shooterMinAngle + Constants.ActuatorSub.bottomAngle) * Math.PI / 180.0) / 
-            (Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition())) - 
-            (Math.PI / 180.0 * (90.0 - angle + Constants.ActuatorSub.shooterMinAngle));
+    public double getAngleFromMotorPosition(double motorPosition) {
+        return ( 
+            Constants.ActuatorSub.shooterMinAngle - Constants.ActuatorSub.bottomAngle + (180 / Math.PI * Math.acos(
+                (
+                    Math.pow((
+                        Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * motorPosition
+                    ), 2) - Math.pow(Constants.ActuatorSub.shooterLength, 2) - Math.pow(Constants.ActuatorSub.bottomLength, 2)
+                ) / (
+                    -2 * Constants.ActuatorSub.shooterLength * Constants.ActuatorSub.bottomLength
+                )
+            ))
+        );
+    }
+
+    public double getGravityFeedforward(double angle) {
+        return Constants.ActuatorSub.kG * (
+            (
+                Constants.ActuatorSub.shooterMass * Constants.ActuatorSub.shooterCenterOfMass * 9.8 * Math.sin(
+                    Math.PI / 180 * (angle - Constants.ActuatorSub.shooterMinAngle) 
+                )
+            ) / (
+                Constants.ActuatorSub.shooterLength * Math.sin(Math.PI / 180 * (
+                    180 - (180 * Math.PI * Math.asin(
+                        Constants.ActuatorSub.bottomLength / (Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition()) * Math.sin( Math.PI / 180 * (
+                            angle - Constants.ActuatorSub.shooterMinAngle + Constants.ActuatorSub.bottomAngle
+                        ))
+                    ))
+                ))
+            )
+        );
     }
 
     public void actuateToGoalAngle() {
         regulateDesiredAngle();
-        actuatorController.setGoal(getDesiredAngle());
+        actuatorController.setGoal(getMotorPositionFromAngle(getDesiredAngle()));
         
         actuatorMotor.setVoltage(
-            actuatorController.calculate(getActuatorAngle()) +
-            actuatorFeedforward.calculate(
-                setpointToFeedforwardAngle(actuatorController.getSetpoint().position), 
-                actuatorController.getSetpoint().velocity)
+            actuatorController.calculate(getMotorPosition()) +
+            actuatorFeedforward.calculate(actuatorController.getSetpoint().velocity) +
+            getGravityFeedforward(getAngleFromMotorPosition(actuatorController.getSetpoint().position))
         );
     }
 
@@ -119,6 +147,6 @@ public class ActuatorSub extends SubsystemBase {
         }
 
         SmartDashboard.putNumber("desiredAngle", getDesiredAngle());
-        SmartDashboard.putNumber("currentAngle", getActuatorAngle());
+        //SmartDashboard.putNumber("currentAngle", getActuatorAngle());
     }
 }

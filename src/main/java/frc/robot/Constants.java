@@ -73,6 +73,45 @@ public final class Constants {
         public static final int actuatorMotorID = 19;
         public static final boolean actuatorMotorInverted = false;
 
+        public static final double maxV = 0;
+        public static final double maxA = 0;
+        public static final double kP = 0;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kS = 0;
+        public static final double kV = 0;
+        public static final double kA = 0;
+        public static final double kG = 0;
+
+        public static final double shooterLength = 6.5;
+        public static final double bottomLength = 17.1;
+        public static final double actuatorMinLength = 10.8;
+        public static final double shooterMinAngle = 22.8;
+        public static final double bottomAngle = 6.9;
+        public static final double shooterMass = 3.5;
+        public static final double shooterCenterOfMass = .25;
+        public static final double actuatorRate = .3846;
+
+        public static final double maxError = 2;
+
+        public static final double maxDesiredAngle = 62;
+        public static final double minDesiredAngle = 28;
+
+        public static final double defaultAngle = 42;
+
+        public static final double closeAngle = 62;
+        public static final double stageAngle = 42;
+        public static final double ampAngle = 62;
+        public static final double ferryAngle = 55;
+
+        public static final double actuatorDownSpeed = .03;
+
+        public static final int actuatorCurrentLimit = 30;
+        public static final int actuatorCurrentThreshold = 50;
+        public static final double actuatorCurrentThresholdTime = 0.1;
+        public static final boolean actuatorEnableCurrentLimit = true;
+
+        //Old method of control
         public static final PIDController actuatorPID = new PIDController(
             0.017,
             0,
@@ -83,29 +122,6 @@ public final class Constants {
         public static final double actuatorDownkF = 0;
         public static final double actuatorkG = 0.01;
         public static final double actuatorpG = 1;
-
-        public static final double maxError = 2;
-
-        public static final double shooterLength = 6.5;
-        public static final double bottomLength = 17.1;
-        public static final double actuatorMinLength = 10.8;
-        public static final double shooterMinAngle = 22.8;
-        public static final double bottomAngle = 6.9;
-        
-        public static final double actuatorRate = .3846;
-
-        public static final double maxDesiredAngle = 62;
-        public static final double minDesiredAngle = 28;
-
-        public static final double defaultAngle = 42;
-        public static final double ampAngle = 62;
-
-        public static final double actuatorDownSpeed = .03;
-
-        public static final int actuatorCurrentLimit = 30;
-        public static final int actuatorCurrentThreshold = 50;
-        public static final double actuatorCurrentThresholdTime = 0.1;
-        public static final boolean actuatorEnableCurrentLimit = true;
     }
 
     public static final class PoseEstimatorSub {

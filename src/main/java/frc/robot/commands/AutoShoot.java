@@ -11,7 +11,6 @@ import frc.robot.subsystems.*;
 
 public class AutoShoot extends Command {
   
-    //Declare subsystems
     private final PoseEstimatorSub poseEstimatorSub;
     private final SwerveSub swerveSub;
     private final ShooterSub shooterSub;
@@ -24,14 +23,13 @@ public class AutoShoot extends Command {
     Timer intakeTimer;
 
     public AutoShoot(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
-        //Initialize subsystems
+    
         this.swerveSub = swerveSub;
         this.poseEstimatorSub = poseEstimatorSub;
         this.shooterSub = shooterSub;
         this.actuatorSub = actuatorSub;
         this.intakeSub = intakeSub;
 
-        //Add subsystem requirements
         addRequirements(swerveSub, shooterSub, actuatorSub, intakeSub);
 
         this.translationSup = translationSup;
@@ -45,13 +43,13 @@ public class AutoShoot extends Command {
         intakeTimer.reset();
     }
 
-    @Override //Called when the command is initially scheduled.
+    @Override 
     public void initialize() {
         shooterSub.shooterMotorsOn();
         shooterTimer.start();
     }
 
-    @Override // Called every time the scheduler runs while the command is scheduled.
+    @Override 
     public void execute() {
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
@@ -71,18 +69,19 @@ public class AutoShoot extends Command {
         if (intakeTimer.get() != 0) intakeSub.intakeMotorOn();
     }
 
-    @Override // Called once the command ends or is interrupted.
+    @Override 
     public void end(boolean interrupted) {
         actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
         shooterSub.shooterMotorsOff();
         intakeSub.intakeMotorOff();
+        swerveSub.drive(new Translation2d(0, 0), 0, false, false);
         shooterTimer.stop();
         shooterTimer.reset();
         intakeTimer.stop();
         intakeTimer.reset();
     }
 
-    @Override // Returns true when the command should end.
+    @Override 
     public boolean isFinished() {
         if (intakeTimer.hasElapsed(.5)) return true;
         return false;

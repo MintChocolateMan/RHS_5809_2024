@@ -28,6 +28,7 @@ public class RobotContainer {
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
+    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final POVButton climbersUp = new POVButton(driver, 0);
     private final POVButton climbersDown = new POVButton(driver, 180);
     private final POVButton zeroGyro = new POVButton(driver, 270);
@@ -39,7 +40,6 @@ public class RobotContainer {
     private final JoystickButton autoAmp = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton aimStage = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton aimFerry = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     
     /*
     // JOYSTICK Buttons
@@ -137,7 +137,14 @@ public class RobotContainer {
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis)
         ));
-        aimStage.whileTrue(new AimStage(actuatorSub, shooterSub));
+        aimStage.whileTrue(new AimStage(swerveSub, shooterSub, actuatorSub,
+            () -> -driver.getRawAxis(translationAxis),
+            () -> -driver.getRawAxis(strafeAxis)
+        ));
+        aimFerry.whileTrue(new AimFerry(swerveSub, shooterSub, actuatorSub,
+            () -> -driver.getRawAxis(translationAxis),
+            () -> -driver.getRawAxis(strafeAxis)
+        ));
 
         //unused code for pathplanning amp score
         /*scoreAmp.whileTrue(new SequentialCommandGroup(
