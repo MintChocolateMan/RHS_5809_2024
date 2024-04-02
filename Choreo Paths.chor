@@ -1,5 +1,5 @@
 {
-    "version": "v0.3",
+    "version": "v0.3.1",
     "robotConfiguration": {
         "mass": 64.20958006934634,
         "rotationalInertia": 7.8007229717258895,
@@ -2172,21 +2172,8 @@
             "defaultControlIntervalCount": 40,
             "usesDefaultFieldObstacles": true,
             "circleObstacles": [],
-            "eventMarkers": [
-                {
-                    "name": "Marker",
-                    "target": 3,
-                    "targetTimestamp": 2.5195553772389854,
-                    "offset": 0,
-                    "command": {
-                        "type": "named",
-                        "data": {
-                            "name": ""
-                        }
-                    }
-                }
-            ],
-            "isTrajectoryStale": true
+            "eventMarkers": [],
+            "isTrajectoryStale": false
         },
         "Optimized Front Speaker Auto": {
             "waypoints": [
@@ -4372,21 +4359,8 @@
             "defaultControlIntervalCount": 40,
             "usesDefaultFieldObstacles": true,
             "circleObstacles": [],
-            "eventMarkers": [
-                {
-                    "name": "aIntake",
-                    "target": 3,
-                    "targetTimestamp": null,
-                    "offset": 0,
-                    "command": {
-                        "type": "named",
-                        "data": {
-                            "name": "aIntake"
-                        }
-                    }
-                }
-            ],
-            "isTrajectoryStale": true
+            "eventMarkers": [],
+            "isTrajectoryStale": false
         }
     },
     "splitTrajectoriesAtStopPoints": true,

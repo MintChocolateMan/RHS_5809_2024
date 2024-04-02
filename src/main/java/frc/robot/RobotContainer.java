@@ -100,9 +100,9 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("FSsetPoseStageNote", new FSsetPoseStageNote(poseEstimatorSub));
         NamedCommands.registerCommand("FSsetPoseCenterNote", new FSsetPoseCenterNote(poseEstimatorSub));
-        NamedCommands.registerCommand("FSsetPoseSAmpNote", new FSsetPoseAmpNote(poseEstimatorSub));
+        NamedCommands.registerCommand("FSsetPoseAmpNote", new FSsetPoseAmpNote(poseEstimatorSub));
        
-        autoChooser = AutoBuilder.buildAutoChooser("Optimized Front Speaker"); 
+        autoChooser = AutoBuilder.buildAutoChooser("Front Speaker Auto"); 
         SmartDashboard.putData("Auto Chooser:", autoChooser);
 
         // Configure the button bindings
