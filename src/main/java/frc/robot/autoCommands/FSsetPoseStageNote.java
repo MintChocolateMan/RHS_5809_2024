@@ -15,6 +15,7 @@ public class FSsetPoseStageNote extends Command {
   
         this.poseEstimatorSub = poseEstimatorSub;
 
+        addRequirements(poseEstimatorSub);
     }
 
     @Override 

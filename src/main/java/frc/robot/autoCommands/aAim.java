@@ -15,7 +15,7 @@ public class aAim extends Command {
         this.shooterSub = shooterSub;
         this.poseEstimatorSub = poseEstimatorSub;
 
-        addRequirements(actuatorSub);
+        addRequirements(shooterSub);
     }
 
     @Override 
