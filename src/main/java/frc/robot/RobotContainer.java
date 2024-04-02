@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 //import frc.robot.backups.*;
-//import frc.robot.autoCommands.*;
+import frc.robot.autoCommands.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -84,7 +84,7 @@ public class RobotContainer {
 
         //Register Commands with PathPlanner
         NamedCommands.registerCommand("AutoIntake", new AutoIntake(
-            intakeSub, swerveSub, poseEstimatorSub, 
+            intakeSub, swerveSub, actuatorSub, poseEstimatorSub, 
             () -> 0,
             () -> 0,
             () -> 0
@@ -94,9 +94,15 @@ public class RobotContainer {
             () -> 0, 
             () -> 0
         ));
-        NamedCommands.registerCommand("AutoDefaultIntake", new AutoDefaultIntake(intakeSub));
+        NamedCommands.registerCommand("aAim", new aAim(actuatorSub, shooterSub, poseEstimatorSub));
+        NamedCommands.registerCommand("aDefaultIntake", new aDefaultIntake(intakeSub));
+        NamedCommands.registerCommand("aIntake", new aIntake(intakeSub));
+
+        NamedCommands.registerCommand("FSsetPoseStageNote", new FSsetPoseStageNote(poseEstimatorSub));
+        NamedCommands.registerCommand("FSsetPoseCenterNote", new FSsetPoseCenterNote(poseEstimatorSub));
+        NamedCommands.registerCommand("FSsetPoseSAmpNote", new FSsetPoseAmpNote(poseEstimatorSub));
        
-        autoChooser = AutoBuilder.buildAutoChooser("Close Speaker Manual"); 
+        autoChooser = AutoBuilder.buildAutoChooser("Optimized Front Speaker"); 
         SmartDashboard.putData("Auto Chooser:", autoChooser);
 
         // Configure the button bindings
@@ -123,7 +129,7 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> poseEstimatorSub.zeroHeading()));
         zeroActuator.whileTrue(new ZeroActuator(actuatorSub));
         autoIntake.whileTrue(new AutoIntake(
-            intakeSub, swerveSub, poseEstimatorSub, 
+            intakeSub, swerveSub, actuatorSub, poseEstimatorSub, 
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis),
             () -> -driver.getRawAxis(rotationAxis)
@@ -157,10 +163,6 @@ public class RobotContainer {
             ), 
             new ShootAmp(actuatorSub, shooterSub, intakeSub)
         ));*/
-    }
-
-    public void setVisionStdDevs(double visionStdDevs) {
-        poseEstimatorSub.setVisionStdDevs(visionStdDevs);
     }
 
     /**

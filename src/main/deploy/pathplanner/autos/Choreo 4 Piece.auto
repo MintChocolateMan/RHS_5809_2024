@@ -20,7 +20,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CS to RN"
+            "pathName": null
           }
         },
         {
@@ -30,13 +30,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "i_Intake"
+                  "name": null
                 }
               },
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Intake RN"
+                  "pathName": null
                 }
               }
             ]
@@ -51,7 +51,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RN to CN"
+            "pathName": null
           }
         },
         {
@@ -61,13 +61,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "i_Intake"
+                  "name": null
                 }
               },
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Intake CN"
+                  "pathName": null
                 }
               }
             ]
@@ -82,7 +82,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CN to LN"
+            "pathName": null
           }
         },
         {
@@ -92,13 +92,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "i_Intake"
+                  "name": null
                 }
               },
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Intake LN"
+                  "pathName": null
                 }
               }
             ]
@@ -113,6 +113,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Old",
   "choreoAuto": true
 }

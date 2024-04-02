@@ -113,7 +113,7 @@ public final class Constants {
         public static final double actuatorCurrentThresholdTime = 0.1;
         public static final boolean actuatorEnableCurrentLimit = true;
 
-        //Old method of control
+        //Old method of control - Currently not in use
         public static final PIDController actuatorPID = new PIDController(
             0.017,
             0,
@@ -128,10 +128,10 @@ public final class Constants {
 
     public static final class PoseEstimatorSub {
 
-        public static final double autoVisionStdDevs = 12;
-        public static final double teleopVisionStdDevs = .03; //.05
+        public static final double driveVisionStdDevs = 15;
+        public static final double aimVisionStdDevs = .03;
 
-        public static final double speakerTargetHeight = 2;//2.1 is real height
+        public static final double speakerTargetHeight = 2;
         public static final double shootkG = 1;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(
@@ -142,12 +142,12 @@ public final class Constants {
             new Translation2d(1.5, 5.55),
             new Rotation2d()
         );
-        public static final Pose2d redProtectedPose = new Pose2d(
-            new Translation2d(13.7, 4.1),
-            new Rotation2d(0)
+        public static final Pose2d redAmpPose = new Pose2d(
+            new Translation2d(14.67, 7.65),
+            new Rotation2d()
         );
-        public static final Pose2d blueProtectedPose = new Pose2d(
-            new Translation2d(2.8, 4.1),
+        public static final Pose2d blueAmpPose = new Pose2d(
+            new Translation2d(1.83, 7.65),
             new Rotation2d()
         );
         public static final Pose2d redSpeakerPoseYaw = new Pose2d(

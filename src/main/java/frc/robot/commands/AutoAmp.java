@@ -93,6 +93,10 @@ public class AutoAmp extends Command {
         intakeSub.intakeMotorOff();
         swerveSub.drive(new Translation2d(0, 0), 0, false, false);
 
+        if (interrupted == false) {
+            poseEstimatorSub.setPoseTranslation(poseEstimatorSub.getAmpPose().getTranslation());
+        }
+
         shooterTimer.stop();
         shooterTimer.reset();
         intakeTimer.stop();

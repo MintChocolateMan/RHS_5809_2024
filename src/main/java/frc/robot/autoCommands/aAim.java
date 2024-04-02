@@ -1,34 +1,35 @@
-package frc.robot.commands;
+package frc.robot.autoCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
-public class AimClose extends Command {
+public class aAim extends Command {
   
     private final ActuatorSub actuatorSub;
     private final ShooterSub shooterSub;
+    private final PoseEstimatorSub poseEstimatorSub;
 
-    public AimClose(ActuatorSub actuatorSub, ShooterSub shooterSub) { 
+    public aAim(ActuatorSub actuatorSub, ShooterSub shooterSub, PoseEstimatorSub poseEstimatorSub) { 
 
         this.actuatorSub = actuatorSub;
         this.shooterSub = shooterSub;
+        this.poseEstimatorSub = poseEstimatorSub;
 
-        addRequirements(shooterSub);
+        addRequirements(actuatorSub);
     }
 
     @Override 
     public void initialize() {
         shooterSub.shooterMotorsOn();
-        actuatorSub.setDesiredAngle(Constants.ActuatorSub.closeAngle);
     }
 
     @Override 
-    public void execute() {}
+    public void execute() {
+        actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch());
+    }
 
     @Override
     public void end(boolean interrupted) {
-        actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
         shooterSub.shooterMotorsOff();
     }
 

@@ -1,6 +1,6 @@
 {
-  "robotWidth": 0.86,
-  "robotLength": 0.86,
+  "robotWidth": 0.914,
+  "robotLength": 0.914,
   "holonomicMode": true,
   "pathFolders": [
     "Close Speaker Manual",
@@ -10,6 +10,7 @@
     "Speaker Far Auto"
   ],
   "autoFolders": [
+    "Old",
     "Tests"
   ],
   "defaultMaxVel": 5.0,
