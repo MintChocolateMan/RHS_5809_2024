@@ -1,10 +1,10 @@
-package frc.robot.commands;
+package frc.robot.autoCommands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class AutoDefaultIntake extends Command {
+public class aDefaultIntake extends Command {
   
     private final IntakeSub intakeSub;
 
@@ -13,7 +13,7 @@ public class AutoDefaultIntake extends Command {
     private boolean intaked;
     private boolean reset;
 
-    public AutoDefaultIntake(IntakeSub intakeSub) { 
+    public aDefaultIntake(IntakeSub intakeSub) { 
 
         this.intakeSub = intakeSub;
 
@@ -35,7 +35,7 @@ public class AutoDefaultIntake extends Command {
 
     @Override 
     public void execute() {
-        if (timer.get() > .3) {
+        if (timer.get() > .2) {
             intaked = true;
         }
         if (intaked == true && reset == false) {
@@ -60,7 +60,7 @@ public class AutoDefaultIntake extends Command {
 
     @Override 
     public boolean isFinished() {
-        if (timer.get() > 0.5) return true;
+        if (timer.get() > 0.4) return true;
         else return false;
     }
 }

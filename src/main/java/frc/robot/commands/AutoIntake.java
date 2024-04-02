@@ -12,6 +12,7 @@ public class AutoIntake extends Command {
   
     private final IntakeSub intakeSub;
     private final SwerveSub swerveSub;
+    private final ActuatorSub actuatorSub;
     private final PoseEstimatorSub poseEstimatorSub;
 
     private DoubleSupplier translationSup;
@@ -24,10 +25,11 @@ public class AutoIntake extends Command {
     private boolean noteSeen;
     private double noteYaw;
 
-    public AutoIntake(IntakeSub intakeSub, SwerveSub swerveSub, PoseEstimatorSub poseEstimatorSub, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup) { //Command constructor
+    public AutoIntake(IntakeSub intakeSub, SwerveSub swerveSub, ActuatorSub actuatorSub, PoseEstimatorSub poseEstimatorSub, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup) { //Command constructor
 
         this.intakeSub = intakeSub;
         this.swerveSub = swerveSub;
+        this.actuatorSub = actuatorSub;
         this.poseEstimatorSub = poseEstimatorSub;
 
         this.translationSup = translationSup;
@@ -42,6 +44,7 @@ public class AutoIntake extends Command {
 
     @Override
     public void initialize() {
+        actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
         intakeSub.intakeMotorOn();
 
         noteSeen = false;

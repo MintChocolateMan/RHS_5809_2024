@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "HailMaryAim"
+            "name": null
           }
         },
         {
@@ -30,7 +30,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "HailMaryAim"
+                  "name": null
                 }
               },
               {
@@ -46,7 +46,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "i_Intake"
+                        "name": null
                       }
                     }
                   ]
@@ -55,7 +55,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "ShootAuto"
+                  "name": null
                 }
               },
               {
@@ -80,7 +80,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "i_Intake"
+                  "name": null
                 }
               },
               {
@@ -105,7 +105,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "SuckBack"
+                  "name": null
                 }
               },
               {
@@ -124,7 +124,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "SourceAim"
+                  "name": null
                 }
               },
               {
@@ -140,7 +140,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "i_Intake"
+                        "name": null
                       }
                     }
                   ]
@@ -165,7 +165,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "ShootAuto"
+                        "name": null
                       }
                     }
                   ]
@@ -177,6 +177,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Old",
   "choreoAuto": false
 }

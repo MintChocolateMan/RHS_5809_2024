@@ -47,7 +47,7 @@ public class AutoShoot extends Command {
     public void initialize() {
         shooterSub.shooterMotorsOn();
         shooterTimer.start();
-        poseEstimatorSub.setVisionStdDevs(Constants.PoseEstimatorSub.teleopVisionStdDevs);
+        poseEstimatorSub.setVisionStdDevs(Constants.PoseEstimatorSub.aimVisionStdDevs);
     }
 
     @Override 
@@ -80,7 +80,7 @@ public class AutoShoot extends Command {
         shooterTimer.reset();
         intakeTimer.stop();
         intakeTimer.reset();
-        poseEstimatorSub.setVisionStdDevs(Constants.PoseEstimatorSub.autoVisionStdDevs);
+        poseEstimatorSub.setVisionStdDevs(Constants.PoseEstimatorSub.driveVisionStdDevs);
     }
 
     @Override 

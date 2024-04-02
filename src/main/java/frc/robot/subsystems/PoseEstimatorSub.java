@@ -6,6 +6,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -44,6 +45,8 @@ public class PoseEstimatorSub extends SubsystemBase {
             swerveSub.getModulePositions(),
             getCloseSpeakerPose()
         );
+
+        setVisionStdDevs(Constants.PoseEstimatorSub.driveVisionStdDevs);
     }
 
     public Rotation2d getGyroYaw() {
@@ -62,12 +65,12 @@ public class PoseEstimatorSub extends SubsystemBase {
         poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(pose.getTranslation(), getPose().getRotation()));
     }
 
-    public void resetPoseToCloseSpeaker() {
-        setPoseTranslation(getCloseSpeakerPose());
+    public void setPoseTranslation(Translation2d translation) {
+        poseEstimator.resetPosition(getGyroYaw(), swerveSub.getModulePositions(), new Pose2d(translation, getPose().getRotation()));
     }
 
-    public void resetPoseToProtected() {
-        setPoseTranslation(getProtectedPose());
+    public void resetPoseToCloseSpeaker() {
+        setPoseTranslation(getCloseSpeakerPose());
     }
     
     public Rotation2d getHeading() {
@@ -119,16 +122,13 @@ public class PoseEstimatorSub extends SubsystemBase {
         else return Constants.PoseEstimatorSub.blueCloseSpeakerPose;
     }
 
-    public Pose2d getProtectedPose() {
+    public Pose2d getAmpPose() {
         var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()) {
-            if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-                return Constants.PoseEstimatorSub.redProtectedPose;
-            } else {
-                return Constants.PoseEstimatorSub.blueProtectedPose;
-            }
+        if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
+            return Constants.PoseEstimatorSub.redAmpPose;
+        } else {
+            return Constants.PoseEstimatorSub.blueAmpPose;
         }
-        else return Constants.PoseEstimatorSub.blueProtectedPose;
     }
 
     public Pose2d getSpeakerPoseYaw() {

@@ -61,7 +61,6 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_robotContainer.setVisionStdDevs(Constants.PoseEstimatorSub.autoVisionStdDevs);
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
@@ -81,7 +80,6 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    m_robotContainer.setVisionStdDevs(Constants.PoseEstimatorSub.teleopVisionStdDevs);
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();

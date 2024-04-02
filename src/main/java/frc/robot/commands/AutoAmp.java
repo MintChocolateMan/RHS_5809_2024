@@ -4,6 +4,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -92,6 +93,10 @@ public class AutoAmp extends Command {
         shooterSub.shooterMotorsOff();
         intakeSub.intakeMotorOff();
         swerveSub.drive(new Translation2d(0, 0), 0, false, false);
+
+        if (interrupted == false) {
+            poseEstimatorSub.setPoseTranslation(poseEstimatorSub.getAmpPose().getTranslation());
+        }
 
         shooterTimer.stop();
         shooterTimer.reset();

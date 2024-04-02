@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "SpeakerAim"
+                  "name": null
                 }
               },
               {
@@ -40,7 +40,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "ShootAuto"
+                        "name": null
                       }
                     }
                   ]
@@ -59,7 +59,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "i_Intake"
+                        "name": null
                       }
                     }
                   ]
@@ -71,6 +71,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Old",
   "choreoAuto": false
 }
