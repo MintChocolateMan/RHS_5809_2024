@@ -35,7 +35,7 @@ public final class Constants {
         );
         public static final double intakePIDGoal = -1.8;
 
-        public static final double maxIntakeError = 12;
+        public static final double maxIntakeError = 15;
 
         public static final int intakeCurrentLimit = 35;
         public static final int intakeCurrentThreshold = 50;
@@ -77,7 +77,7 @@ public final class Constants {
         public static final double maxA = 15;
         public static final double kP = 1.2;
         public static final double kI = .05;
-        public static final double kD = 0;
+        public static final double kD = 0.01;
         public static final double kS = 0;
         public static final double kV = 0;
         public static final double kA = 0;
@@ -129,10 +129,10 @@ public final class Constants {
     public static final class PoseEstimatorSub {
 
         public static final double driveVisionStdDevs = 15;
-        public static final double aimVisionStdDevs = .03;
+        public static final double aimVisionStdDevs = .02;
 
-        public static final double speakerTargetHeight = 2;
-        public static final double shootkG = 1;
+        public static final double speakerTargetHeight = 1.9;
+        public static final double shootkG = 1.2;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(
             new Translation2d(15, 5.55),

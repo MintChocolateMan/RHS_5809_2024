@@ -68,16 +68,17 @@ public class AutoIntake extends Command {
                 true
             );
         } else {
-            if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() - rotation) <= Constants.IntakeSub.maxIntakeError) {
-                translation = 1.5;
-            } else if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() - rotation) > Constants.IntakeSub.maxIntakeError) {
-                translation = 0.5;
-            }
             if (poseEstimatorSub.getValidNote() == true) {
                 noteYaw = poseEstimatorSub.getNoteYaw();
-                rotation = poseEstimatorSub.getPose().getRotation().getDegrees() - noteYaw;
+                rotation = swerveSub.swerveRotationPID.calculate(poseEstimatorSub.getPose().getRotation().getDegrees(), 
+                    poseEstimatorSub.getPose().getRotation().getDegrees() - noteYaw);
             }
-
+            if (Math.abs(noteYaw) <= Constants.IntakeSub.maxIntakeError) {
+                translation = 2;
+            } else if (Math.abs(noteYaw) > Constants.IntakeSub.maxIntakeError) {
+                translation = 0.5;
+            }
+            
             swerveSub.intakeDrive(new Translation2d(translation, 0), rotation);
         }
     }

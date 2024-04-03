@@ -5,13 +5,10 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,9 +18,6 @@ import frc.robot.Constants;
 public class SwerveSub extends SubsystemBase {;
     public SwerveModule[] mSwerveMods;
     PoseEstimatorSub poseEstimatorSub;
-
-    public PathPlannerPath scoreAmp;
-    public PathConstraints scoreAmpConstraints;
 
     public PIDController swerveRotationPID;
     public PIDController swerveTranslationPID;
@@ -65,13 +59,6 @@ public class SwerveSub extends SubsystemBase {;
                 },
                 this // Reference to this subsystem to set requirements
         );
-
-        scoreAmp = PathPlannerPath.fromPathFile("Score Amp");
-        scoreAmpConstraints = new PathConstraints(
-            2.0, 2.0,
-            Units.degreesToRadians(540), Units.degreesToRadians(720)
-        );
-
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -101,8 +88,8 @@ public class SwerveSub extends SubsystemBase {;
                 new ChassisSpeeds(
                     translation.getX() * Constants.Swerve.translationSensitivity, 
                     translation.getY() * Constants.Swerve.translationSensitivity, 
-                    swerveRotationPID.calculate(poseEstimatorSub.getPose().getRotation().getDegrees(), rotation)
-                ));
+                    rotation)
+            );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
         for(SwerveModule mod : mSwerveMods){
