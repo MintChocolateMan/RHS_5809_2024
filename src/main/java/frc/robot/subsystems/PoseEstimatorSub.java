@@ -175,6 +175,10 @@ public class PoseEstimatorSub extends SubsystemBase {
     public double getNoteYaw() {
         return LimelightHelpers.getTX("limelight-intake");
     }
+
+    public double getNoteTY() {
+        return LimelightHelpers.getTX("limelight-intake");
+    }
     
     public double getTargetYaw() {
         double targetYaw = (180 / Math.PI) * Math.atan( 1.0 *

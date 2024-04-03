@@ -5,7 +5,7 @@
       "x": 1.35,
       "y": 5.55
     },
-    "rotation": 7.405644465572224e-23
+    "rotation": -5.561829219285558e-26
   },
   "command": {
     "type": "sequential",
@@ -83,6 +83,132 @@
                       "type": "named",
                       "data": {
                         "name": "FSsetPoseAmpNote"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Front Speaker.7"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSsetPoseFarAmpNote"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAimHigh"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Front Speaker.9"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "aDefaultIntake"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aIntake"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Front Speaker.10"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSsetPoseFarCenterNote"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAimHigh"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Front Speaker.12"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "aDefaultIntake"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aIntake"
                       }
                     }
                   ]
