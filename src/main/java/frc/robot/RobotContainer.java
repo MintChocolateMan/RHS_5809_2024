@@ -94,16 +94,20 @@ public class RobotContainer {
             () -> 0, 
             () -> 0
         ));
-        NamedCommands.registerCommand("aAim", new aAim(actuatorSub, shooterSub, poseEstimatorSub));
+
+        NamedCommands.registerCommand("aAutoIntake", new aAutoIntake(intakeSub, swerveSub, poseEstimatorSub));
+        NamedCommands.registerCommand("aAimLow", new aAimLow(actuatorSub, shooterSub, poseEstimatorSub));
+
         NamedCommands.registerCommand("aDefaultIntake", new aDefaultIntake(intakeSub));
         NamedCommands.registerCommand("aIntake", new aIntake(intakeSub));
 
         NamedCommands.registerCommand("FSsetPoseStageNote", new FSsetPoseStageNote(poseEstimatorSub));
         NamedCommands.registerCommand("FSsetPoseCenterNote", new FSsetPoseCenterNote(poseEstimatorSub));
-        NamedCommands.registerCommand("FSsetPoseSAmpNote", new FSsetPoseAmpNote(poseEstimatorSub));
+        NamedCommands.registerCommand("FSsetPoseAmpNote", new FSsetPoseAmpNote(poseEstimatorSub));
        
-        autoChooser = AutoBuilder.buildAutoChooser("Optimized Front Speaker"); 
+        autoChooser = AutoBuilder.buildAutoChooser("Front Speaker Auto"); 
         SmartDashboard.putData("Auto Chooser:", autoChooser);
+        
 
         // Configure the button bindings
         configureButtonBindings();
@@ -170,6 +174,7 @@ public class RobotContainer {
      *
      * @return the command to run in autonomous
      */
+    
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
     }

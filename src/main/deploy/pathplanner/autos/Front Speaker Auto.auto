@@ -5,7 +5,7 @@
       "x": 1.35,
       "y": 5.55
     },
-    "rotation": -5.205728000135157e-27
+    "rotation": 7.405644465572224e-23
   },
   "command": {
     "type": "sequential",
@@ -18,148 +18,74 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "Front Speaker Auto.1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoIntake"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": null
+                  "name": "aAimLow"
                 }
               },
               {
-                "type": "path",
+                "type": "sequential",
                 "data": {
-                  "pathName": "Front Speaker Auto.3"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoIntake"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": null
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Front Speaker Auto.5"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoIntake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Front Speaker Auto.7"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoIntake"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": null
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Front Speaker Auto.9"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Front Speaker Auto.10"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoIntake"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": null
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Front Speaker Auto.12"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Front Speaker.1"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aAutoIntake"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FSsetPoseStageNote"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Front Speaker.3"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aAutoIntake"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FSsetPoseCenterNote"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Front Speaker.5"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aAutoIntake"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FSsetPoseAmpNote"
+                      }
+                    }
+                  ]
                 }
               }
             ]
