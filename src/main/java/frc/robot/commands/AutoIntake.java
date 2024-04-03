@@ -73,12 +73,12 @@ public class AutoIntake extends Command {
                 noteYaw = poseEstimatorSub.getNoteYaw();
                 rotation = swerveSub.swerveRotationPID.calculate(poseEstimatorSub.getPose().getRotation().getDegrees(), 
                     poseEstimatorSub.getPose().getRotation().getDegrees() - noteYaw);
-                strafe = swerveSub.swerveStrafePID.calculate(noteYaw, 0);
+                strafe = swerveSub.swerveStrafePID.calculate(noteYaw / 4, 0);
             }
             if (Math.abs(noteYaw) <= Constants.IntakeSub.maxIntakeError) {
-                translation = 2;
+                translation = 2.5;
             } else if (Math.abs(noteYaw) > Constants.IntakeSub.maxIntakeError) {
-                translation = 0.5;
+                translation = 1;
             }
             
             swerveSub.intakeDrive(new Translation2d(translation, strafe), rotation);
