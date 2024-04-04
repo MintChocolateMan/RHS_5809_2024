@@ -38,7 +38,8 @@ public class RobotContainer {
     private final Trigger intake = new Trigger(() -> { if(driver.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.5) return true; else return false; });
     private final JoystickButton autoAmp = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton aimStage = new JoystickButton(driver, XboxController.Button.kX.value);
-    private final JoystickButton aimFerry = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton aimDiagonalFerry = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton aimStraightFerry = new JoystickButton(driver, XboxController.Button.kB.value);
 
     /* Operator Keybinds */
     private final XboxController operator = new XboxController(1);
@@ -46,6 +47,8 @@ public class RobotContainer {
     private final POVButton climbersDown = new POVButton(operator, 180);
     private final JoystickButton actuatorSmallUp = new JoystickButton(operator, XboxController.Button.kY.value);
     private final JoystickButton actuatorSmallDown = new JoystickButton(operator, XboxController.Button.kA.value);
+    private final JoystickButton reverseIntake = new JoystickButton(operator, XboxController.Button.kX.value);
+    private final JoystickButton autoTrap = new JoystickButton(operator, XboxController.Button.kB.value);    
     
     /*
     // JOYSTICK Buttons
@@ -172,7 +175,11 @@ public class RobotContainer {
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis)
         ));
-        aimFerry.whileTrue(new AimFerry(swerveSub, shooterSub, actuatorSub,
+        aimDiagonalFerry.whileTrue(new AimDiagonalFerry(swerveSub, shooterSub, actuatorSub,
+            () -> -driver.getRawAxis(translationAxis),
+            () -> -driver.getRawAxis(strafeAxis)
+        ));
+        aimStraightFerry.whileTrue(new AimStraightFerry(swerveSub, shooterSub, actuatorSub,
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis)
         ));
@@ -186,6 +193,11 @@ public class RobotContainer {
         climbersDown.onTrue(new ClimbersDown(pneumaticSub));
         actuatorSmallDown.onTrue(new ActuatorSmallDown(actuatorSub));
         actuatorSmallUp.onTrue(new ActuatorSmallUp(actuatorSub));
+        reverseIntake.whileTrue(new ReverseIntake(intakeSub));
+        autoTrap.whileTrue(new AutoTrap(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub, 
+            () -> -driver.getRawAxis(translationAxis),
+            () -> -driver.getRawAxis(strafeAxis)
+        ));
 
     }
 

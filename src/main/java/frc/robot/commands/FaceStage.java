@@ -34,7 +34,6 @@ public class FaceStage extends Command {
     @Override
     public void initialize() {
         startYaw = poseEstimatorSub.getPose().getRotation().getDegrees();
-
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent() == true && alliance.get() == DriverStation.Alliance.Blue) {
             if (startYaw >= -60 && startYaw <= 60) {

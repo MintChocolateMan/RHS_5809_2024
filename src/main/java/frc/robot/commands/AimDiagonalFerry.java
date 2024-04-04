@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
-public class AimFerry extends Command {
+public class AimDiagonalFerry extends Command {
   
     private final SwerveSub swerveSub;
     private final ShooterSub shooterSub;
@@ -18,7 +18,7 @@ public class AimFerry extends Command {
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
 
-    public AimFerry(SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
+    public AimDiagonalFerry(SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
 
         this.swerveSub = swerveSub;
         this.shooterSub = shooterSub;

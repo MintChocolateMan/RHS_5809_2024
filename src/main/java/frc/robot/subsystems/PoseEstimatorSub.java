@@ -156,15 +156,34 @@ public class PoseEstimatorSub extends SubsystemBase {
     }
 
     public boolean getValidAmp() {
+        LimelightHelpers.setPipelineIndex("limelight-amp", 0);
         if (LimelightHelpers.getTV("limelight-amp") == true) return true;
         else return false;
     }
 
     public double getAmpTY() {
+        LimelightHelpers.setPipelineIndex("limelight-amp", 0);
         return LimelightHelpers.getTY("limelight-amp");
     }
     
     public double getAmpTX() {
+        LimelightHelpers.setPipelineIndex("limelight-amp", 0);
+        return LimelightHelpers.getTX("limelight-amp");
+    }
+
+    public boolean getValidTrap() {
+        LimelightHelpers.setPipelineIndex("limelight-amp", 1);
+        if (LimelightHelpers.getTV("limelight-amp") == true) return true;
+        else return false;
+    }
+
+    public double getTrapTY() {
+        LimelightHelpers.setPipelineIndex("limelight-amp", 1);
+        return LimelightHelpers.getTY("limelight-amp");
+    }
+    
+    public double getTrapTX() {
+        LimelightHelpers.setPipelineIndex("limelight-amp", 1);
         return LimelightHelpers.getTX("limelight-amp");
     }
 
@@ -173,6 +192,7 @@ public class PoseEstimatorSub extends SubsystemBase {
     }
 
     public double getNoteYaw() {
+        LimelightHelpers.setPipelineIndex("limelight-amp", 0);
         return LimelightHelpers.getTX("limelight-intake");
     }
 
