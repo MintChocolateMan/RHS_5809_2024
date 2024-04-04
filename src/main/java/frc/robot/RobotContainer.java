@@ -23,14 +23,13 @@ public class RobotContainer {
     /* Auto Chooser */
     private final SendableChooser<Command> autoChooser;
     
-    // XBox Controller Buttons
+    /* Driver Keybinds */
     private final XboxController driver = new XboxController(0);
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kRightStick.value);
-    private final POVButton climbersUp = new POVButton(driver, 0);
-    private final POVButton climbersDown = new POVButton(driver, 180);
+    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
+    private final JoystickButton faceStage = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final POVButton zeroGyro = new POVButton(driver, 270);
     private final POVButton zeroActuator = new POVButton(driver, 90);
     private final JoystickButton autoIntake = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
@@ -40,6 +39,13 @@ public class RobotContainer {
     private final JoystickButton autoAmp = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton aimStage = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton aimFerry = new JoystickButton(driver, XboxController.Button.kY.value);
+
+    /* Operator Keybinds */
+    private final XboxController operator = new XboxController(1);
+    private final POVButton climbersUp = new POVButton(operator, 0);
+    private final POVButton climbersDown = new POVButton(operator, 180);
+    private final JoystickButton actuatorSmallUp = new JoystickButton(operator, XboxController.Button.kY.value);
+    private final JoystickButton actuatorSmallDown = new JoystickButton(operator, XboxController.Button.kA.value);
     
     /*
     // JOYSTICK Buttons
@@ -64,9 +70,6 @@ public class RobotContainer {
     private final ShooterSub shooterSub = new ShooterSub();
     private final ActuatorSub actuatorSub = new ActuatorSub();
     private final PneumaticSub pneumaticSub = new PneumaticSub();
-    
-
-
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -94,13 +97,28 @@ public class RobotContainer {
             () -> 0, 
             () -> 0
         ));
+        NamedCommands.registerCommand("AutoAmp", new AutoAmp(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
+            () -> 0,
+            () -> 0 
+        ));
 
         NamedCommands.registerCommand("aAutoIntake", new aAutoIntake(intakeSub, swerveSub, poseEstimatorSub));
+        NamedCommands.registerCommand("aFastAutoIntake", new aFastAutoIntake(intakeSub, swerveSub, poseEstimatorSub));
         NamedCommands.registerCommand("aAimLow", new aAimLow(actuatorSub, shooterSub, poseEstimatorSub));
         NamedCommands.registerCommand("aAimHigh", new aAimHigh(actuatorSub, shooterSub, poseEstimatorSub));
 
         NamedCommands.registerCommand("aDefaultIntake", new aDefaultIntake(intakeSub));
         NamedCommands.registerCommand("aIntake", new aIntake(intakeSub));
+
+        NamedCommands.registerCommand("OFSsetPoseStageNote", new OFSsetPoseStageNote(poseEstimatorSub));
+        NamedCommands.registerCommand("OFSsetPoseCenterNote", new OFSsetPoseCenterNote(poseEstimatorSub));
+        NamedCommands.registerCommand("OFSsetPoseAmpNote", new OFSsetPoseAmpNote(poseEstimatorSub));
+
+        NamedCommands.registerCommand("OASsetPoseLeftNote", new OASsetPoseLeftNote(poseEstimatorSub));
+        NamedCommands.registerCommand("OASsetPoseRightNote", new OASsetPoseRightNote(poseEstimatorSub));
+
+        NamedCommands.registerCommand("OSsetPoseRightNote", new OSsetPoseRightNote(poseEstimatorSub));
+        NamedCommands.registerCommand("OSsetPoseLeftNote", new OSsetPoseLeftNote(poseEstimatorSub));
 
         NamedCommands.registerCommand("FSsetPoseStageNote", new FSsetPoseStageNote(poseEstimatorSub));
         NamedCommands.registerCommand("FSsetPoseCenterNote", new FSsetPoseCenterNote(poseEstimatorSub));
@@ -131,8 +149,7 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         
-        climbersUp.onTrue(new ClimbersUp(pneumaticSub));
-        climbersDown.onTrue(new ClimbersDown(pneumaticSub));
+        /* Driver Functions */
         zeroGyro.onTrue(new InstantCommand(() -> poseEstimatorSub.zeroHeading()));
         zeroActuator.whileTrue(new ZeroActuator(actuatorSub));
         autoIntake.whileTrue(new AutoIntake(
@@ -159,17 +176,17 @@ public class RobotContainer {
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis)
         ));
+        faceStage.whileTrue(new FaceStage(swerveSub, poseEstimatorSub, 
+            () -> -driver.getRawAxis(translationAxis),
+            () -> -driver.getRawAxis(strafeAxis)
+        ));
 
-        //unused code for pathplanning amp score
-        /*scoreAmp.whileTrue(new SequentialCommandGroup(
-            new a_AimAmp(actuatorSub), 
-            AutoBuilder.pathfindThenFollowPath(
-                swerveSub.scoreAmp,
-                swerveSub.scoreAmpConstraints,
-                0 // Rotation delay distance in meters. This is how far the robot should travel before attempting to rotate.
-            ), 
-            new ShootAmp(actuatorSub, shooterSub, intakeSub)
-        ));*/
+        /* Operator Functions */
+        climbersUp.onTrue(new ClimbersUp(pneumaticSub));
+        climbersDown.onTrue(new ClimbersDown(pneumaticSub));
+        actuatorSmallDown.onTrue(new ActuatorSmallDown(actuatorSub));
+        actuatorSmallUp.onTrue(new ActuatorSmallUp(actuatorSub));
+
     }
 
     /**

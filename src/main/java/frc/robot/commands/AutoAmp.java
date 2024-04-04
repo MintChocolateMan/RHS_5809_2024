@@ -83,7 +83,7 @@ public class AutoAmp extends Command {
         if (targetTimer.get() > 0.3) intakeTimer.start();
 
         if (intakeTimer.get() != 0) intakeSub.intakeMotorOn();
-        else intakeSub.intakeMotorToPID();
+        else if (intakeTimer.get() == 0) intakeSub.intakeMotorToPID();
     }
 
     @Override

@@ -50,6 +50,10 @@ public class ActuatorSub extends SubsystemBase {
         return zeroing;
     }
 
+    public void resetActuatorController() {
+        actuatorController.reset(getMotorPosition());
+    }
+
     public void setMotorPosition(double position) {
         actuatorMotor.setPosition(position);
     }

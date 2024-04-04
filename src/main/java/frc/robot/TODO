@@ -1,14 +1,14 @@
 TODO:
     Finalize Actuator Tuning
-    Make auto intake use strafe pid (TUNE)
-    Make aAutoIntake be fast when far and slow when close to the note (CALIBRATE LIMELIGHT AND CORAL)
-    use mathematical analysis to make the shooting better mimic the arc of gravity
+    Make auto intake use strafe pid (TUNE) - 
+    Make aAutoIntake be fast when far and slow when close to the note (CALIBRATE LIMELIGHT AND CORAL) -
+    use mathematical analysis to make the shooting better mimic the arc of gravity -
     test amp more
     test blue field
     make two other autos (stage side and amp side)
     Megatune the first auto
     Test the climb (maybe one climber?)
-    Implement actuator fine tuning
+    Implement actuator fine tuning - 
 
 
 

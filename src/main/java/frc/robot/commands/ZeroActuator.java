@@ -26,6 +26,7 @@ public class ZeroActuator extends Command {
 
     @Override
     public void end(boolean interrupted) {
+        actuatorSub.resetActuatorController();
         actuatorSub.actuatorMotorOff();
         actuatorSub.setMotorPosition(0);
         actuatorSub.setDesiredAngle(0);

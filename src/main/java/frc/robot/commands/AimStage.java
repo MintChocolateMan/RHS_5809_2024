@@ -18,7 +18,7 @@ public class AimStage extends Command {
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
 
-    public AimStage(SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
+    public AimStage(SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) {
 
         this.swerveSub = swerveSub;
         this.shooterSub = shooterSub;

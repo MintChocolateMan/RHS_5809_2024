@@ -68,6 +68,8 @@ public final class CTREConfigs {
         swerveDriveFXConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = Constants.Swerve.closedLoopRamp;
         
         //Actuator motor current limiting
+        actuatorFXConfig.Feedback.SensorToMechanismRatio = 1;
+        actuatorFXConfig.Feedback.RotorToSensorRatio = 1;
         actuatorFXConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.ActuatorSub.actuatorEnableCurrentLimit;
         actuatorFXConfig.CurrentLimits.SupplyCurrentLimit = Constants.ActuatorSub.actuatorCurrentLimit;
         actuatorFXConfig.CurrentLimits.SupplyCurrentThreshold = Constants.ActuatorSub.actuatorCurrentThreshold;

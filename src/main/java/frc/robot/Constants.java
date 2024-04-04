@@ -75,15 +75,15 @@ public final class Constants {
 
         public static final double maxV = 8;
         public static final double maxA = 15;
-        public static final double kP = 1.2;
+        public static final double kP = 1.3;
         public static final double kI = .05;
-        public static final double kD = 0.015;
-        public static final double kS = 0.01;
-        public static final double kV = 0.01;
+        public static final double kD = 0.03;
+        public static final double kS = 0;
+        public static final double kV = 0;
         public static final double kA = 0;
-        public static final double kG = 0.5;
+        public static final double kG = 0.55;
         public static final double kIZone = 5;
-        public static final double kIMax = .3;
+        public static final double kIMax = .2;
 
         public static final double shooterLength = 6.5;
         public static final double bottomLength = 17.1;
@@ -131,8 +131,8 @@ public final class Constants {
         public static final double driveVisionStdDevs = 15;
         public static final double aimVisionStdDevs = .01;
 
-        public static final double speakerTargetHeight = 1.9;
-        public static final double shootkG = 1.2;
+        public static final double speakerTargetHeight = 1.8;
+        public static final double shootkG = 1.8;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(
             new Translation2d(15, 5.55),
@@ -143,11 +143,11 @@ public final class Constants {
             new Rotation2d()
         );
         public static final Pose2d redAmpPose = new Pose2d(
-            new Translation2d(14.67, 7.65),
+            new Translation2d(14.7, 7.75),
             new Rotation2d()
         );
         public static final Pose2d blueAmpPose = new Pose2d(
-            new Translation2d(1.83, 7.65),
+            new Translation2d(1.8, 7.75),
             new Rotation2d()
         );
         public static final Pose2d redSpeakerPoseYaw = new Pose2d(
