@@ -54,10 +54,11 @@ public class aAutoIntake extends Command {
             noteYaw = poseEstimatorSub.getNoteYaw();
             strafe = swerveSub.swerveStrafePID.calculate(noteYaw, 0);
         }
+
         if (Math.abs(noteYaw) <= Constants.IntakeSub.maxIntakeError && poseEstimatorSub.getNoteTY() >= 0) {
-            translation = 1;
-        } else if (Math.abs(noteYaw) > Constants.IntakeSub.maxIntakeError || poseEstimatorSub.getNoteTY() < 0) {
-            translation = 0.5;
+            translation = 1.5;
+        } else if (Math.abs(noteYaw) > Constants.IntakeSub.maxIntakeError || poseEstimatorSub.getNoteTY() + 3 < 0) {
+            translation = 0.75;
         }
 
         if (intakeSub.getNoteLoaded() == true && wasEmpty == true) {

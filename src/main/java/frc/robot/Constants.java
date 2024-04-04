@@ -73,15 +73,15 @@ public final class Constants {
         public static final int actuatorMotorID = 19;
         public static final boolean actuatorMotorInverted = false;
 
-        public static final double maxV = 8;
-        public static final double maxA = 15;
-        public static final double kP = 1.3;
+        public static final double maxV = 10;
+        public static final double maxA = 10;
+        public static final double kP = 1.4;
         public static final double kI = .05;
-        public static final double kD = 0.03;
-        public static final double kS = 0;
-        public static final double kV = 0;
+        public static final double kD = 0;
+        public static final double kS = 0.01;
+        public static final double kV = 0.08;
         public static final double kA = 0;
-        public static final double kG = 0.55;
+        public static final double kG = 0.5;
         public static final double kIZone = 5;
         public static final double kIMax = .2;
 
@@ -128,10 +128,11 @@ public final class Constants {
 
     public static final class PoseEstimatorSub {
 
-        public static final double driveVisionStdDevs = 15;
-        public static final double aimVisionStdDevs = .01;
+        public static final double autoVisionStdDevs = 20;
+        public static final double teleopVisionStdDevs = 0.5;
+        public static final double aimVisionStdDevs = 0.01;
 
-        public static final double speakerTargetHeight = 1.8;
+        public static final double speakerTargetHeight = 2;
         public static final double shootkG = 1.8;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(
@@ -151,11 +152,11 @@ public final class Constants {
             new Rotation2d()
         );
         public static final Pose2d redSpeakerPoseYaw = new Pose2d(
-            new Translation2d(16.3, 5.55),
+            new Translation2d(16.4, 5.55),
             new Rotation2d()
         );
         public static final Pose2d blueSpeakerPoseYaw = new Pose2d(
-            new Translation2d(.2, 5.55),
+            new Translation2d(.1, 5.55),
             new Rotation2d()
         );
         public static final Pose2d redSpeakerPoseDistance = new Pose2d(

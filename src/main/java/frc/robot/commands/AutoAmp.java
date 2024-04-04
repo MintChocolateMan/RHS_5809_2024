@@ -80,7 +80,7 @@ public class AutoAmp extends Command {
 
         if (poseEstimatorSub.getValidAmp() == true) ampSeen = true;
 
-        if (targetTimer.get() > 0.3) intakeTimer.start();
+        if (targetTimer.get() > 0.1) intakeTimer.start();
 
         if (intakeTimer.get() != 0) intakeSub.intakeMotorOn();
         else if (intakeTimer.get() == 0) intakeSub.intakeMotorToPID();

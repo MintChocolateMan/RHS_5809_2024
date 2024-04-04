@@ -44,10 +44,10 @@ public class AimStage extends Command {
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
             swerveSub.driveWithRotationGoal(
-                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), -150);
+                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), -155);
         } else {
             swerveSub.driveWithRotationGoal(
-                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), -30);
+                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), -25);
         }
     }
 

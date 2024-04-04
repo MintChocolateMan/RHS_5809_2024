@@ -33,7 +33,7 @@ public class PoseEstimatorSub extends SubsystemBase {
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
 
-        visionStdDevs = 1;
+        visionStdDevs = Constants.PoseEstimatorSub.autoVisionStdDevs;
     }
 
     public void initialize(SwerveSub swerveSub) {
@@ -45,8 +45,6 @@ public class PoseEstimatorSub extends SubsystemBase {
             swerveSub.getModulePositions(),
             getCloseSpeakerPose()
         );
-
-        setVisionStdDevs(Constants.PoseEstimatorSub.driveVisionStdDevs);
     }
 
     public Rotation2d getGyroYaw() {
@@ -108,6 +106,14 @@ public class PoseEstimatorSub extends SubsystemBase {
 
     public void setVisionStdDevs(double visionStdDevs) {
         this.visionStdDevs = visionStdDevs;
+    }
+
+    public void setStandardVisionStdDevs() {
+        if (DriverStation.isAutonomousEnabled() == true) {
+            setVisionStdDevs(Constants.PoseEstimatorSub.autoVisionStdDevs);
+        } else {
+            setVisionStdDevs(Constants.PoseEstimatorSub.teleopVisionStdDevs);
+        }
     }
 
     public Pose2d getCloseSpeakerPose() {

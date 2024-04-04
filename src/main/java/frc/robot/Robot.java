@@ -34,13 +34,14 @@ public class Robot extends TimedRobot {
       PortForwarder.add(port, "limelight-shooter.local", port);
     }
 
+    /*
     for (int port = 5800; port <= 5809; port++) {
-      PortForwarder.add(port, "limelight-intake.local", port);
+      PortForwarder.add(port+10, "limelight-intake.local", port);
     }
 
     for (int port = 5800; port <= 5809; port++) {
-      PortForwarder.add(port, "limelight-amp.local", port);
-    }
+      PortForwarder.add(port+20, "limelight-amp.local", port);
+    }*/
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.

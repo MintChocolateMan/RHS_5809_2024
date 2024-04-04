@@ -75,6 +75,10 @@ public class ActuatorSub extends SubsystemBase {
         else return false;
     }
 
+    public void initActuator() {
+        setDesiredAngle(getAngleFromMotorPosition(getMotorPosition()));
+    }
+
     public void regulateDesiredAngle() {
         if (getDesiredAngle() > Constants.ActuatorSub.maxDesiredAngle) {
             setDesiredAngle(Constants.ActuatorSub.maxDesiredAngle);

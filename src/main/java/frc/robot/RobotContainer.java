@@ -109,6 +109,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("aFastAutoIntake", new aFastAutoIntake(intakeSub, swerveSub, poseEstimatorSub));
         NamedCommands.registerCommand("aAimLow", new aAimLow(actuatorSub, shooterSub, poseEstimatorSub));
         NamedCommands.registerCommand("aAimHigh", new aAimHigh(actuatorSub, shooterSub, poseEstimatorSub));
+        NamedCommands.registerCommand("aInitActuator", new aInitActuator(actuatorSub));
 
         NamedCommands.registerCommand("aDefaultIntake", new aDefaultIntake(intakeSub));
         NamedCommands.registerCommand("aIntake", new aIntake(intakeSub));

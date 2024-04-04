@@ -80,7 +80,7 @@ public class AutoShoot extends Command {
         shooterTimer.reset();
         intakeTimer.stop();
         intakeTimer.reset();
-        poseEstimatorSub.setVisionStdDevs(Constants.PoseEstimatorSub.driveVisionStdDevs);
+        poseEstimatorSub.setStandardVisionStdDevs();
     }
 
     @Override 
