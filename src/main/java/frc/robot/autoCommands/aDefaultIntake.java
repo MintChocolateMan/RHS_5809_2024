@@ -7,15 +7,17 @@ import frc.robot.subsystems.*;
 public class aDefaultIntake extends Command {
   
     private final IntakeSub intakeSub;
+    private final ShooterSub shooterSub;
 
     private Timer timer;
 
     private boolean intaked;
     private boolean reset;
 
-    public aDefaultIntake(IntakeSub intakeSub) { 
+    public aDefaultIntake(IntakeSub intakeSub, ShooterSub shooterSub) { 
 
         this.intakeSub = intakeSub;
+        this.shooterSub = shooterSub;
 
         timer = new Timer();
         timer.stop();
@@ -24,31 +26,30 @@ public class aDefaultIntake extends Command {
         intaked = false;
         reset = false;
 
-        addRequirements(intakeSub);
+        addRequirements(intakeSub, shooterSub);
     }
 
     @Override 
     public void initialize() {
+        shooterSub.shooterMotorsReverse();
         intakeSub.intakeMotorOn();
         timer.start();
     }
 
     @Override 
     public void execute() {
-        if (timer.get() > .2) {
-            intaked = true;
+        if (timer.get() < .3) {
+            intakeSub.intakeMotorOn();
         }
-        if (intaked == true && reset == false) {
-            intakeSub.resetIntakeMotorPosition();
+        else if (timer.get() > .3) {
+            intakeSub.intakeMotorReverse();
             reset = true;
-        }
-        if (intaked == true && reset == true) {
-            intakeSub.intakeMotorToPID();
         }
     }
 
     @Override 
     public void end(boolean interrupted) {
+        shooterSub.shooterMotorsOff();
         intakeSub.intakeMotorOff();
 
         timer.stop();
@@ -60,7 +61,7 @@ public class aDefaultIntake extends Command {
 
     @Override 
     public boolean isFinished() {
-        if (timer.get() > 0.4) return true;
+        if (timer.get() > 0.6) return true;
         else return false;
     }
 }

@@ -73,13 +73,13 @@ public final class Constants {
         public static final int actuatorMotorID = 19;
         public static final boolean actuatorMotorInverted = false;
 
-        public static final double maxV = 10;
+        public static final double maxV = 8;
         public static final double maxA = 10;
-        public static final double kP = 1.4;
+        public static final double kP = 1.2;
         public static final double kI = .05;
         public static final double kD = 0;
         public static final double kS = 0.01;
-        public static final double kV = 0.08;
+        public static final double kV = 0;
         public static final double kA = 0;
         public static final double kG = 0.5;
         public static final double kIZone = 5;
@@ -129,10 +129,10 @@ public final class Constants {
     public static final class PoseEstimatorSub {
 
         public static final double autoVisionStdDevs = 20;
-        public static final double teleopVisionStdDevs = 0.5;
+        public static final double teleopVisionStdDevs = 0.1;
         public static final double aimVisionStdDevs = 0.01;
 
-        public static final double speakerTargetHeight = 2.1;
+        public static final double speakerTargetHeight = 2.05;
         public static final double shootkG = 1.8;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(

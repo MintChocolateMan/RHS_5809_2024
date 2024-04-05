@@ -32,7 +32,7 @@ public class AimDiagonalFerry extends Command {
 
     @Override
     public void initialize() {
-        actuatorSub.setDesiredAngle(42);
+        actuatorSub.setDesiredAngle(44);
         shooterSub.shooterMotorsOn();
     }
 

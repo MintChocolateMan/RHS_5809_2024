@@ -42,7 +42,7 @@
           }
         },
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -52,22 +52,9 @@
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "aDefaultIntake"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "aAimHigh"
-                      }
-                    }
-                  ]
+                  "name": "aDefaultIntake"
                 }
               }
             ]
@@ -76,7 +63,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoShoot"
+            "name": "aAutoShoot"
           }
         },
         {
@@ -98,7 +85,7 @@
           }
         },
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -108,22 +95,9 @@
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "aDefaultIntake"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "aAimHigh"
-                      }
-                    }
-                  ]
+                  "name": "aDefaultIntake"
                 }
               }
             ]
@@ -132,7 +106,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoShoot"
+            "name": "aAutoShoot"
           }
         }
       ]

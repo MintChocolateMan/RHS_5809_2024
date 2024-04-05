@@ -5,7 +5,7 @@
       "x": 1.35,
       "y": 5.55
     },
-    "rotation": -5.561829219285558e-26
+    "rotation": 1.3435331079747667e-22
   },
   "command": {
     "type": "sequential",
@@ -110,7 +110,7 @@
           }
         },
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -120,22 +120,9 @@
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "aDefaultIntake"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "aAimHigh"
-                      }
-                    }
-                  ]
+                  "name": "aDefaultIntake"
                 }
               }
             ]
@@ -144,7 +131,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoShoot"
+            "name": "aAutoShoot"
           }
         }
       ]

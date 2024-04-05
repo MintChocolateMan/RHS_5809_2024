@@ -106,12 +106,13 @@ public class RobotContainer {
         ));
 
         NamedCommands.registerCommand("aAutoAmp", new aAutoAmp(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub));
+        NamedCommands.registerCommand("aAutoShoot", new aAutoShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub));
         NamedCommands.registerCommand("aAutoIntake", new aAutoIntake(intakeSub, swerveSub, poseEstimatorSub));
         NamedCommands.registerCommand("aFastAutoIntake", new aFastAutoIntake(intakeSub, swerveSub, poseEstimatorSub));
         NamedCommands.registerCommand("aAimLow", new aAimLow(actuatorSub, shooterSub, poseEstimatorSub));
         NamedCommands.registerCommand("aAimHigh", new aAimHigh(actuatorSub, shooterSub, poseEstimatorSub));
         NamedCommands.registerCommand("aInitActuator", new aInitActuator(actuatorSub));
-        NamedCommands.registerCommand("aDefaultIntake", new aDefaultIntake(intakeSub));
+        NamedCommands.registerCommand("aDefaultIntake", new aDefaultIntake(intakeSub, shooterSub));
         NamedCommands.registerCommand("aIntake", new aIntake(intakeSub));
 
         NamedCommands.registerCommand("OFSsetPoseStageNote", new OFSsetPoseStageNote(poseEstimatorSub));

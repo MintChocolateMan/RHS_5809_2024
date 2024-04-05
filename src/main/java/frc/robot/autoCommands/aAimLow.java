@@ -25,7 +25,7 @@ public class aAimLow extends Command {
 
     @Override 
     public void execute() {
-        actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch() - 3);
+        actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch() - 7);
     }
 
     @Override
