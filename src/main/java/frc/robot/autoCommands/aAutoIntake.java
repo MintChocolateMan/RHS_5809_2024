@@ -58,7 +58,7 @@ public class aAutoIntake extends Command {
         if (Math.abs(noteYaw) <= Constants.IntakeSub.maxIntakeError && poseEstimatorSub.getNoteTY() + 3 >= 0) {
             translation = 1.5;
         } else if (Math.abs(noteYaw) > Constants.IntakeSub.maxIntakeError || poseEstimatorSub.getNoteTY() + 3 < 0) {
-            translation = 0.75;
+            translation = 1.5; //THIS WAS 0.75
         }
 
         if (intakeSub.getNoteLoaded() == true && wasEmpty == true) {
