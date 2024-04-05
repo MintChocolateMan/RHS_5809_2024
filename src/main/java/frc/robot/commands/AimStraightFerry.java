@@ -32,7 +32,7 @@ public class AimStraightFerry extends Command {
 
     @Override
     public void initialize() {
-        actuatorSub.setDesiredAngle(Constants.ActuatorSub.stageAngle);
+        actuatorSub.setDesiredAngle(35);
         shooterSub.shooterMotorsOn();
     }
 

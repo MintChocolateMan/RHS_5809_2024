@@ -25,7 +25,7 @@ public class aAimHigh extends Command {
 
     @Override 
     public void execute() {
-        actuatorSub.setDesiredAngle(40);//poseEstimatorSub.getTargetPitch() + 2);
+        actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch() + 2);
     }
 
     @Override

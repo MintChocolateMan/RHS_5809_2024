@@ -32,7 +32,7 @@ public class AimDiagonalFerry extends Command {
 
     @Override
     public void initialize() {
-        actuatorSub.setDesiredAngle(Constants.ActuatorSub.stageAngle);
+        actuatorSub.setDesiredAngle(42);
         shooterSub.shooterMotorsOn();
     }
 
@@ -44,10 +44,10 @@ public class AimDiagonalFerry extends Command {
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
             swerveSub.driveWithRotationGoal(
-                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), -135);
+                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), -150);
         } else {
             swerveSub.driveWithRotationGoal(
-                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), -45);
+                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), -30);
         }
     }
 

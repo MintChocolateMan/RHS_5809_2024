@@ -143,6 +143,29 @@ public class SwerveSub extends SubsystemBase {;
         else return false;
     }
 
+    public boolean autonAmpDrive() {
+        SwerveModuleState[] swerveModuleStates =
+            Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+                new ChassisSpeeds(
+                    -swerveTranslationPID.calculate(poseEstimatorSub.getAmpTY(), 0), 
+                    -swerveStrafePID.calculate(poseEstimatorSub.getAmpTX() * 1.4, 0), 
+                    0
+                ));
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+
+        for(SwerveModule mod : mSwerveMods){
+            mod.setDesiredState(swerveModuleStates[mod.moduleNumber], true);
+        }
+
+        if ( Math.abs(poseEstimatorSub.getAmpTX()) < 5 &&
+            Math.abs(poseEstimatorSub.getAmpTY()) < 4 &&
+            poseEstimatorSub.getValidAmp() == true &&
+            getRobotRelativeSpeeds().vxMetersPerSecond < .3 &&
+            getRobotRelativeSpeeds().vyMetersPerSecond < .3
+        ) return true;
+        else return false;
+    }
+
     public boolean trapDrive(double rotation) {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(

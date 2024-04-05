@@ -97,7 +97,7 @@ public final class Constants {
         public static final double maxError = 2;
 
         public static final double maxDesiredAngle = 62;
-        public static final double minDesiredAngle = 28;
+        public static final double minDesiredAngle = 35;
 
         public static final double defaultAngle = 42;
 

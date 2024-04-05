@@ -105,18 +105,20 @@ public class RobotContainer {
             () -> 0 
         ));
 
+        NamedCommands.registerCommand("aAutoAmp", new aAutoAmp(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub));
         NamedCommands.registerCommand("aAutoIntake", new aAutoIntake(intakeSub, swerveSub, poseEstimatorSub));
         NamedCommands.registerCommand("aFastAutoIntake", new aFastAutoIntake(intakeSub, swerveSub, poseEstimatorSub));
         NamedCommands.registerCommand("aAimLow", new aAimLow(actuatorSub, shooterSub, poseEstimatorSub));
         NamedCommands.registerCommand("aAimHigh", new aAimHigh(actuatorSub, shooterSub, poseEstimatorSub));
         NamedCommands.registerCommand("aInitActuator", new aInitActuator(actuatorSub));
-
         NamedCommands.registerCommand("aDefaultIntake", new aDefaultIntake(intakeSub));
         NamedCommands.registerCommand("aIntake", new aIntake(intakeSub));
 
         NamedCommands.registerCommand("OFSsetPoseStageNote", new OFSsetPoseStageNote(poseEstimatorSub));
         NamedCommands.registerCommand("OFSsetPoseCenterNote", new OFSsetPoseCenterNote(poseEstimatorSub));
         NamedCommands.registerCommand("OFSsetPoseAmpNote", new OFSsetPoseAmpNote(poseEstimatorSub));
+        NamedCommands.registerCommand("OFSsetPoseFarAmpNote", new OFSsetPoseFarAmpNote(poseEstimatorSub));
+        NamedCommands.registerCommand("OFSsetPoseFarStageNote", new OFSsetPoseFarStageNote(poseEstimatorSub));
 
         NamedCommands.registerCommand("OASsetPoseLeftNote", new OASsetPoseLeftNote(poseEstimatorSub));
         NamedCommands.registerCommand("OASsetPoseRightNote", new OASsetPoseRightNote(poseEstimatorSub));

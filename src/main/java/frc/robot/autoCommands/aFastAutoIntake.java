@@ -39,9 +39,9 @@ public class aFastAutoIntake extends Command {
             noteYaw = poseEstimatorSub.getNoteYaw();
             strafe = swerveSub.swerveStrafePID.calculate(noteYaw, 0);
         }
-        if (Math.abs(noteYaw) <= Constants.IntakeSub.maxIntakeError && poseEstimatorSub.getNoteTY() >= 0) {
-            translation = 2;
-        } else if (Math.abs(noteYaw) > Constants.IntakeSub.maxIntakeError || poseEstimatorSub.getNoteTY() < 0) {
+        if (Math.abs(noteYaw) <= Constants.IntakeSub.maxIntakeError) {
+            translation = 2.5;
+        } else if (Math.abs(noteYaw) > Constants.IntakeSub.maxIntakeError) {
             translation = 1;
         }
         

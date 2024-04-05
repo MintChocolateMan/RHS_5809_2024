@@ -26,7 +26,7 @@ public class AutoAmp extends Command {
     Timer intakeTimer;
     Timer targetTimer;
 
-    public AutoAmp(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
+    public AutoAmp(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { 
 
         this.swerveSub = swerveSub;
         this.poseEstimatorSub = poseEstimatorSub;
