@@ -132,7 +132,7 @@ public final class Constants {
         public static final double teleopVisionStdDevs = 0.5;
         public static final double aimVisionStdDevs = 0.01;
 
-        public static final double speakerTargetHeight = 2;
+        public static final double speakerTargetHeight = 2.1;
         public static final double shootkG = 1.8;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(
