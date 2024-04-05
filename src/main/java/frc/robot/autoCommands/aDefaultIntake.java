@@ -1,5 +1,7 @@
 package frc.robot.autoCommands;
 
+import frc.robot.Constants;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
@@ -8,16 +10,18 @@ public class aDefaultIntake extends Command {
   
     private final IntakeSub intakeSub;
     private final ShooterSub shooterSub;
+    private final ActuatorSub actuatorSub;
 
     private Timer timer;
 
     private boolean intaked;
     private boolean reset;
 
-    public aDefaultIntake(IntakeSub intakeSub, ShooterSub shooterSub) { 
+    public aDefaultIntake(IntakeSub intakeSub, ShooterSub shooterSub, ActuatorSub actuatorSub) { 
 
         this.intakeSub = intakeSub;
         this.shooterSub = shooterSub;
+        this.actuatorSub = actuatorSub;
 
         timer = new Timer();
         timer.stop();
@@ -26,13 +30,14 @@ public class aDefaultIntake extends Command {
         intaked = false;
         reset = false;
 
-        addRequirements(intakeSub, shooterSub);
+        addRequirements(intakeSub, shooterSub, actuatorSub);
     }
 
     @Override 
     public void initialize() {
         shooterSub.shooterMotorsReverse();
         intakeSub.intakeMotorOn();
+        actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
         timer.start();
     }
 
@@ -61,7 +66,7 @@ public class aDefaultIntake extends Command {
 
     @Override 
     public boolean isFinished() {
-        if (timer.get() > 0.6) return true;
+        if (timer.get() > 0.7) return true;
         else return false;
     }
 }

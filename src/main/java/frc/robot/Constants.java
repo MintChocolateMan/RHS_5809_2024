@@ -75,8 +75,8 @@ public final class Constants {
 
         public static final double maxV = 8;
         public static final double maxA = 10;
-        public static final double kP = 1.2;
-        public static final double kI = .05;
+        public static final double kP = 1.25;
+        public static final double kI = .1;
         public static final double kD = 0;
         public static final double kS = 0.01;
         public static final double kV = 0;

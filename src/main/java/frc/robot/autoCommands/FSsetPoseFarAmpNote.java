@@ -9,7 +9,7 @@ public class FSsetPoseFarAmpNote extends Command {
   
     private final PoseEstimatorSub poseEstimatorSub;
 
-    private final Translation2d blueTranslation = new Translation2d(8.1, 7.5);
+    private final Translation2d blueTranslation = new Translation2d(8.1, 7.25);
 
     public FSsetPoseFarAmpNote(PoseEstimatorSub poseEstimatorSub) { 
   

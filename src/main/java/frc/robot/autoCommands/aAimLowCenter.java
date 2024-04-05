@@ -3,13 +3,13 @@ package frc.robot.autoCommands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class aAimLow extends Command {
+public class aAimLowCenter extends Command {
   
     private final ActuatorSub actuatorSub;
     private final ShooterSub shooterSub;
     private final PoseEstimatorSub poseEstimatorSub;
 
-    public aAimLow(ActuatorSub actuatorSub, ShooterSub shooterSub, PoseEstimatorSub poseEstimatorSub) { 
+    public aAimLowCenter(ActuatorSub actuatorSub, ShooterSub shooterSub, PoseEstimatorSub poseEstimatorSub) { 
 
         this.actuatorSub = actuatorSub;
         this.shooterSub = shooterSub;
@@ -25,7 +25,7 @@ public class aAimLow extends Command {
 
     @Override 
     public void execute() {
-        actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch() - 11);
+        actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch() - 2);
     }
 
     @Override

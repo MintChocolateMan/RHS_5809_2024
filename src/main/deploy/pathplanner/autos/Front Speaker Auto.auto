@@ -5,7 +5,7 @@
       "x": 1.35,
       "y": 5.55
     },
-    "rotation": 1.3435331079747667e-22
+    "rotation": 1.3396532296615163e-22
   },
   "command": {
     "type": "sequential",
@@ -15,6 +15,12 @@
           "type": "named",
           "data": {
             "name": "aInitActuator"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoShoot"
           }
         },
         {
@@ -48,7 +54,27 @@
                       "data": {
                         "name": "FSsetPoseStageNote"
                       }
-                    },
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAimLow"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
                     {
                       "type": "path",
                       "data": {
@@ -66,7 +92,27 @@
                       "data": {
                         "name": "FSsetPoseCenterNote"
                       }
-                    },
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAimLow"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
                     {
                       "type": "path",
                       "data": {
@@ -126,6 +172,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aDefaultIntake"
           }
         },
         {
