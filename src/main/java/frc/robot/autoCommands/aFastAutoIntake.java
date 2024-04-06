@@ -40,7 +40,7 @@ public class aFastAutoIntake extends Command {
             strafe = swerveSub.swerveStrafePID.calculate(noteYaw, 0);
         }
         if (Math.abs(noteYaw) <= Constants.IntakeSub.maxIntakeError) {
-            translation = 2.5;
+            translation = 2;
         } else if (Math.abs(noteYaw) > Constants.IntakeSub.maxIntakeError) {
             translation = 1;
         }

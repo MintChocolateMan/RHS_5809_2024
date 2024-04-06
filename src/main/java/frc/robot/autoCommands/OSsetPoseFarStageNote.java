@@ -5,13 +5,13 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class FSsetPoseCenterNote extends Command {
+public class OSsetPoseFarStageNote extends Command {
   
     private final PoseEstimatorSub poseEstimatorSub;
 
-    private final Translation2d blueTranslation = new Translation2d(2.8, 5.55);
+    private final Translation2d blueTranslation = new Translation2d(8.2, 4.1);
 
-    public FSsetPoseCenterNote(PoseEstimatorSub poseEstimatorSub) { 
+    public OSsetPoseFarStageNote(PoseEstimatorSub poseEstimatorSub) { 
   
         this.poseEstimatorSub = poseEstimatorSub;
 

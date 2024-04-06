@@ -27,6 +27,8 @@ public class PoseEstimatorSub extends SubsystemBase {
     double visionStdDevs;
 
     Field2d field = new Field2d();
+
+    private boolean autoNoteSeen;
     
     public PoseEstimatorSub() { 
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -34,6 +36,8 @@ public class PoseEstimatorSub extends SubsystemBase {
         gyro.setYaw(0);
 
         visionStdDevs = Constants.PoseEstimatorSub.autoVisionStdDevs;
+
+        autoNoteSeen = false;
     }
 
     public void initialize(SwerveSub swerveSub) {
@@ -204,6 +208,14 @@ public class PoseEstimatorSub extends SubsystemBase {
 
     public double getNoteTY() {
         return LimelightHelpers.getTX("limelight-intake");
+    }
+
+    public boolean getAutoNoteSeen() {
+        return autoNoteSeen;
+    }
+
+    public void setAutoNoteSeen(boolean autoNoteSeen) {
+        this.autoNoteSeen = autoNoteSeen;
     }
     
     public double getTargetYaw() {

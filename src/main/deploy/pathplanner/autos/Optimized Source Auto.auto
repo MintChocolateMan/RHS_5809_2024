@@ -1,0 +1,199 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.75,
+      "y": 4.4
+    },
+    "rotation": -60.16056848873644
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "aInitActuator"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aShootClose"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Optimized Source.1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAutoNoteStopDrive"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aFastAutoIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OSsetPoseRightNote"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Optimized Source.2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aDefaultIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoShoot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Optimized Source.3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAutoNoteStopDrive"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aFastAutoIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OSsetPoseLeftNote"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Optimized Source.4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aDefaultIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoShoot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Optimized Source.5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAutoNoteStopDrive"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aFastAutoIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OSsetPoseFarStageNote"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Optimized Source.6"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aDefaultIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoShoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": true
+}

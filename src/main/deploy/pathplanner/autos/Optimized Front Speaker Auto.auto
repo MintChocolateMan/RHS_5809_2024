@@ -5,7 +5,7 @@
       "x": 1.35,
       "y": 5.55
     },
-    "rotation": 1.3396532296615163e-22
+    "rotation": -3.076118994812729e-26
   },
   "command": {
     "type": "sequential",
@@ -38,9 +38,22 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "Front Speaker.1"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Optimized Front Speaker.1"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "aAutoNoteStopDrive"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -76,9 +89,22 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "Front Speaker.3"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Optimized Front Speaker.2"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "aAutoNoteStopDrive"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -114,9 +140,22 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "Front Speaker.5"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Optimized Front Speaker.3"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "aAutoNoteStopDrive"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -138,9 +177,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "Front Speaker.7"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Optimized Front Speaker.4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAutoNoteStopDrive"
+                }
+              }
+            ]
           }
         },
         {
@@ -162,7 +214,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Front Speaker.9"
+                  "pathName": "Optimized Front Speaker.5"
                 }
               },
               {
@@ -177,7 +229,57 @@
         {
           "type": "named",
           "data": {
-            "name": "aDefaultIntake"
+            "name": "aAutoShoot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Optimized Front Speaker.6"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAutoNoteStopDrive"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aFastAutoIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSsetPoseFarCenterNote"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Optimized Front Speaker.7"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aDefaultIntake"
+                }
+              }
+            ]
           }
         },
         {

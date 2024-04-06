@@ -14,9 +14,6 @@ public class aDefaultIntake extends Command {
 
     private Timer timer;
 
-    private boolean intaked;
-    private boolean reset;
-
     public aDefaultIntake(IntakeSub intakeSub, ShooterSub shooterSub, ActuatorSub actuatorSub) { 
 
         this.intakeSub = intakeSub;
@@ -26,9 +23,6 @@ public class aDefaultIntake extends Command {
         timer = new Timer();
         timer.stop();
         timer.reset();
-
-        intaked = false;
-        reset = false;
 
         addRequirements(intakeSub, shooterSub, actuatorSub);
     }
@@ -48,7 +42,6 @@ public class aDefaultIntake extends Command {
         }
         else if (timer.get() > .3) {
             intakeSub.intakeMotorReverse();
-            reset = true;
         }
     }
 
@@ -59,9 +52,6 @@ public class aDefaultIntake extends Command {
 
         timer.stop();
         timer.reset();
-
-        intaked = false;
-        reset = false;
     }
 
     @Override 

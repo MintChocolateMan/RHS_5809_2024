@@ -56,9 +56,9 @@ public class aAutoIntake extends Command {
         }
 
         if (Math.abs(noteYaw) <= Constants.IntakeSub.maxIntakeError && poseEstimatorSub.getNoteTY() + 3 >= 0) {
-            translation = 1.5;
+            translation = 1; // THIS WAS 1.5
         } else if (Math.abs(noteYaw) > Constants.IntakeSub.maxIntakeError || poseEstimatorSub.getNoteTY() + 3 < 0) {
-            translation = 1.5; //THIS WAS 0.75
+            translation = 1; //THIS WAS 0.75
         }
 
         if (intakeSub.getNoteLoaded() == true && wasEmpty == true) {
@@ -66,7 +66,7 @@ public class aAutoIntake extends Command {
         }
 
         if (timer.get() != 0) {
-            translation = 0;
+            translation = 1;
             strafe = 0;
         }
         
@@ -88,7 +88,7 @@ public class aAutoIntake extends Command {
 
     @Override 
     public boolean isFinished() {
-        if (timer.get() > .3) return true;
+        if (timer.get() > .2) return true;
         else return false;
     }
 }

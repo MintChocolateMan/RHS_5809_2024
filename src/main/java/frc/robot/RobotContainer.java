@@ -16,6 +16,10 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 //import frc.robot.backups.*;
 import frc.robot.autoCommands.*;
+import frc.robot.backupAutoCommands.aAimHigh;
+import frc.robot.backupAutoCommands.aAimLow;
+import frc.robot.backupAutoCommands.aAimLowCenter;
+import frc.robot.backupAutoCommands.aIntake;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -105,16 +109,33 @@ public class RobotContainer {
             () -> 0 
         ));
 
+        // Standard Auto Commands
         NamedCommands.registerCommand("aAutoAmp", new aAutoAmp(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub));
         NamedCommands.registerCommand("aAutoShoot", new aAutoShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub));
         NamedCommands.registerCommand("aAutoIntake", new aAutoIntake(intakeSub, swerveSub, poseEstimatorSub));
         NamedCommands.registerCommand("aFastAutoIntake", new aFastAutoIntake(intakeSub, swerveSub, poseEstimatorSub));
-        NamedCommands.registerCommand("aAimLow", new aAimLow(actuatorSub, shooterSub, poseEstimatorSub));
-        NamedCommands.registerCommand("aAimLowCenter", new aAimLowCenter(actuatorSub, shooterSub, poseEstimatorSub));
-        NamedCommands.registerCommand("aAimHigh", new aAimHigh(actuatorSub, shooterSub, poseEstimatorSub));
         NamedCommands.registerCommand("aInitActuator", new aInitActuator(actuatorSub));
         NamedCommands.registerCommand("aDefaultIntake", new aDefaultIntake(intakeSub, shooterSub, actuatorSub));
-        NamedCommands.registerCommand("aIntake", new aIntake(intakeSub));
+        
+        // Aiming Auto Commands
+        NamedCommands.registerCommand("aShootClose", new aShootClose(actuatorSub, shooterSub, intakeSub));
+        NamedCommands.registerCommand("aAimOutside", new aAimOutside(actuatorSub, shooterSub));
+        NamedCommands.registerCommand("aAimCenter", new aAimCenter(actuatorSub, shooterSub));
+
+        // Auto Note Intake
+        NamedCommands.registerCommand("aAutoNoteDetected", new aAutoNoteDetected(poseEstimatorSub));
+        NamedCommands.registerCommand("aAutoNoteStopDrive", new aAutoNoteStopDrive(poseEstimatorSub));
+
+        // SetPose Commands for All Autos
+        NamedCommands.registerCommand("FSsetPoseStageNote", new FSsetPoseStageNote(poseEstimatorSub));
+        NamedCommands.registerCommand("FSsetPoseCenterNote", new FSsetPoseCenterNote(poseEstimatorSub));
+        NamedCommands.registerCommand("FSsetPoseAmpNote", new FSsetPoseAmpNote(poseEstimatorSub));
+        NamedCommands.registerCommand("FSsetPoseFarAmpNote", new FSsetPoseFarAmpNote(poseEstimatorSub));
+        NamedCommands.registerCommand("FSsetPoseFarCenterNote", new FSsetPoseFarCenterNote(poseEstimatorSub));
+
+        NamedCommands.registerCommand("OSsetPoseRightNote", new OSsetPoseRightNote(poseEstimatorSub));
+        NamedCommands.registerCommand("OSsetPoseLeftNote", new OSsetPoseLeftNote(poseEstimatorSub));
+        NamedCommands.registerCommand("OSsetPoseFarStageNote", new OSsetPoseFarStageNote(poseEstimatorSub));
 
         NamedCommands.registerCommand("OFSsetPoseStageNote", new OFSsetPoseStageNote(poseEstimatorSub));
         NamedCommands.registerCommand("OFSsetPoseCenterNote", new OFSsetPoseCenterNote(poseEstimatorSub));
@@ -125,14 +146,13 @@ public class RobotContainer {
         NamedCommands.registerCommand("OASsetPoseLeftNote", new OASsetPoseLeftNote(poseEstimatorSub));
         NamedCommands.registerCommand("OASsetPoseRightNote", new OASsetPoseRightNote(poseEstimatorSub));
 
-        NamedCommands.registerCommand("OSsetPoseRightNote", new OSsetPoseRightNote(poseEstimatorSub));
-        NamedCommands.registerCommand("OSsetPoseLeftNote", new OSsetPoseLeftNote(poseEstimatorSub));
+        
 
-        NamedCommands.registerCommand("FSsetPoseStageNote", new FSsetPoseStageNote(poseEstimatorSub));
-        NamedCommands.registerCommand("FSsetPoseCenterNote", new FSsetPoseCenterNote(poseEstimatorSub));
-        NamedCommands.registerCommand("FSsetPoseAmpNote", new FSsetPoseAmpNote(poseEstimatorSub));
-        NamedCommands.registerCommand("FSsetPoseFarAmpNote", new FSsetPoseFarAmpNote(poseEstimatorSub));
-        NamedCommands.registerCommand("FSsetPoseFarCenterNote", new FSsetPoseFarCenterNote(poseEstimatorSub));
+        // Currently Unused Auto Commands
+        NamedCommands.registerCommand("aAimLowCenter", new aAimLowCenter(actuatorSub, shooterSub, poseEstimatorSub));
+        NamedCommands.registerCommand("aAimLow", new aAimLow(actuatorSub, shooterSub, poseEstimatorSub));
+        NamedCommands.registerCommand("aAimHigh", new aAimHigh(actuatorSub, shooterSub, poseEstimatorSub));
+        NamedCommands.registerCommand("aIntake", new aIntake(intakeSub));
        
         autoChooser = AutoBuilder.buildAutoChooser("Front Speaker Auto"); 
         SmartDashboard.putData("Auto Chooser:", autoChooser);

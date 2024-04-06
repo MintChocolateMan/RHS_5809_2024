@@ -1,8 +1,5 @@
 package frc.robot.autoCommands;
 
-import java.util.function.DoubleSupplier;
-
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,7 +14,6 @@ public class aAutoShoot extends Command {
     private final ActuatorSub actuatorSub;
     private final IntakeSub intakeSub;
 
-    Timer shooterTimer;
     Timer intakeTimer;
     Timer targetTimer;
 
@@ -31,9 +27,6 @@ public class aAutoShoot extends Command {
 
         addRequirements(swerveSub, shooterSub, actuatorSub, intakeSub);
 
-        shooterTimer = new Timer();
-        shooterTimer.stop();
-        shooterTimer.reset();
         intakeTimer = new Timer();
         intakeTimer.stop();
         intakeTimer.reset();
@@ -45,7 +38,6 @@ public class aAutoShoot extends Command {
     @Override 
     public void initialize() {
         shooterSub.shooterMotorsOn();
-        shooterTimer.start();
         poseEstimatorSub.setVisionStdDevs(Constants.PoseEstimatorSub.aimVisionStdDevs);
     }
 
@@ -60,7 +52,6 @@ public class aAutoShoot extends Command {
                 poseEstimatorSub.getTargetYaw()
                 ) == true && 
             actuatorSub.onTarget() == true &&
-            shooterTimer.hasElapsed(.5) &&
             poseEstimatorSub.getTargetPitch() > 35) {
                 targetTimer.start();
         } else {
@@ -79,8 +70,6 @@ public class aAutoShoot extends Command {
         shooterSub.shooterMotorsOff();
         intakeSub.intakeMotorOff();
         swerveSub.drive(new Translation2d(0, 0), 0, false, false);
-        shooterTimer.stop();
-        shooterTimer.reset();
         intakeTimer.stop();
         intakeTimer.reset();
         targetTimer.stop();
@@ -90,7 +79,7 @@ public class aAutoShoot extends Command {
 
     @Override 
     public boolean isFinished() {
-        if (intakeTimer.hasElapsed(.5)) return true;
+        if (intakeTimer.hasElapsed(.2)) return true;
         return false;
     }
 }
