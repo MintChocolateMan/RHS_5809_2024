@@ -24,7 +24,7 @@ public final class Constants {
     public static final class IntakeSub {
         public static final int intakeMotorID = 10;
         public static final double intakeMotorSpeed = .8;
-        public static final double intakeMotorReverseSpeed = .2;
+        public static final double intakeMotorReverseSpeed = .35;
         public static final boolean intakeMotorReversed = true;
         public static final int lineBreakerID = 1;
 
@@ -132,7 +132,7 @@ public final class Constants {
         public static final double teleopVisionStdDevs = 0.1;
         public static final double aimVisionStdDevs = 0.01;
 
-        public static final double speakerTargetHeight = 2.05;
+        public static final double speakerTargetHeight = 1.95;
         public static final double shootkG = 1.8;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(

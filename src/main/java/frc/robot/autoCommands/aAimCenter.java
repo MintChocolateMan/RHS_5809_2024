@@ -23,7 +23,7 @@ public class aAimCenter extends Command {
 
     @Override 
     public void execute() {
-        actuatorSub.setDesiredAngle(42);
+        actuatorSub.setDesiredAngle(41);
     }
 
     @Override

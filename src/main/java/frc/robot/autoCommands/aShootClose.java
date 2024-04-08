@@ -34,18 +34,21 @@ public class aShootClose extends Command {
 
     @Override 
     public void execute() {
-        if (timer.get() > .2) intakeSub.intakeMotorOn();
+        if (timer.get() > .3) intakeSub.intakeMotorOn();
     }
 
     @Override
     public void end(boolean interrupted) {
         shooterSub.shooterMotorsOff();
         intakeSub.intakeMotorOff();
+
+        timer.stop();
+        timer.reset();
     }
 
     @Override 
     public boolean isFinished() {
-        if (timer.get() > .4) return true;
+        if (timer.get() > .6) return true;
         else return false;
     }
 }

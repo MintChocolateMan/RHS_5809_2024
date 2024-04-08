@@ -23,7 +23,7 @@ public class aAimOutside extends Command {
 
     @Override 
     public void execute() {
-        actuatorSub.setDesiredAngle(40);
+        actuatorSub.setDesiredAngle(36);
     }
 
     @Override

@@ -19,8 +19,8 @@ public class AutoShoot extends Command {
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
 
-    Timer shooterTimer;
     Timer intakeTimer;
+    Timer targetTimer;
 
     public AutoShoot(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
     
@@ -35,18 +35,17 @@ public class AutoShoot extends Command {
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
 
-        shooterTimer = new Timer();
-        shooterTimer.stop();
-        shooterTimer.reset();
         intakeTimer = new Timer();
         intakeTimer.stop();
         intakeTimer.reset();
+        targetTimer = new Timer();
+        targetTimer.stop();
+        targetTimer.reset();
     }
 
     @Override 
     public void initialize() {
         shooterSub.shooterMotorsOn();
-        shooterTimer.start();
         poseEstimatorSub.setVisionStdDevs(Constants.PoseEstimatorSub.aimVisionStdDevs);
     }
 
@@ -63,10 +62,14 @@ public class AutoShoot extends Command {
                 poseEstimatorSub.getTargetYaw()
                 ) == true && 
             actuatorSub.onTarget() == true &&
-            shooterTimer.hasElapsed(.5) &&
             poseEstimatorSub.getTargetPitch() > 35) {
-                intakeTimer.start();
+                targetTimer.start();
+        } else {
+            targetTimer.stop();
+            targetTimer.reset();
         }
+
+        if (targetTimer.get() > .2) intakeTimer.start();
 
         if (intakeTimer.get() != 0) intakeSub.intakeMotorOn();
     }
@@ -77,8 +80,6 @@ public class AutoShoot extends Command {
         shooterSub.shooterMotorsOff();
         intakeSub.intakeMotorOff();
         swerveSub.drive(new Translation2d(0, 0), 0, false, false);
-        shooterTimer.stop();
-        shooterTimer.reset();
         intakeTimer.stop();
         intakeTimer.reset();
         poseEstimatorSub.setStandardVisionStdDevs();
@@ -86,7 +87,7 @@ public class AutoShoot extends Command {
 
     @Override 
     public boolean isFinished() {
-        if (intakeTimer.hasElapsed(.5)) return true;
+        if (intakeTimer.hasElapsed(.4)) return true;
         return false;
     }
 }
