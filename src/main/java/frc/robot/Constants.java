@@ -129,7 +129,7 @@ public final class Constants {
     public static final class PoseEstimatorSub {
 
         public static final double autoVisionStdDevs = 20;
-        public static final double teleopVisionStdDevs = 0.1;
+        public static final double teleopVisionStdDevs = 0.01;
         public static final double aimVisionStdDevs = 0.01;
 
         public static final double speakerTargetHeight = 1.8;//1.95;

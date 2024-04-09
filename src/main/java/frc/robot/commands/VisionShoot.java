@@ -6,6 +6,8 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.lib.util.LimelightHelpers;
+import frc.lib.util.LimelightHelpers.LimelightResults;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
@@ -19,11 +21,17 @@ public class VisionShoot extends Command {
 
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
+    private DoubleSupplier rotationSup;
 
     Timer intakeTimer;
     Timer targetTimer;
 
-    public VisionShoot(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
+    double pitch;
+    double yaw;
+
+    boolean speakerSeen = false;
+
+    public VisionShoot(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup) {
     
         this.swerveSub = swerveSub;
         this.poseEstimatorSub = poseEstimatorSub;
@@ -35,6 +43,7 @@ public class VisionShoot extends Command {
 
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
+        this.rotationSup = rotationSup;
 
         intakeTimer = new Timer();
         intakeTimer.stop();
@@ -42,6 +51,8 @@ public class VisionShoot extends Command {
         targetTimer = new Timer();
         targetTimer.stop();
         targetTimer.reset();
+
+        speakerSeen = false;
     }
 
     @Override 
@@ -54,14 +65,28 @@ public class VisionShoot extends Command {
     public void execute() {
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
-        
-        actuatorSub.setDesiredAngle(poseEstimatorSub.getSpeakerPitch());
+        double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
 
-        if (
-            swerveSub.driveWithRotationGoal(
+        if (LimelightHelpers.getTV("limelight-shooter") == true) {
+            pitch = poseEstimatorSub.getSpeakerPitch();
+            yaw = poseEstimatorSub.getSpeakerYaw();
+            yaw = LimelightHelpers.getTX("limelight-shooter") * .5;
+            speakerSeen = true;
+        }   
+        
+        actuatorSub.setDesiredAngle(pitch);
+
+
+        if (speakerSeen == false) {
+            swerveSub.drive(new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), rotationVal, true, false);
+        } else if (
+            /*swerveSub.driveWithRotationGoal(
                 new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
-                poseEstimatorSub.getSpeakerYaw()
-                ) == true && 
+                yaw
+                ) == true && */
+            swerveSub.driveAndAim(
+                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), yaw
+                ) == true &&
             actuatorSub.onTarget() == true &&
             poseEstimatorSub.getSpeakerPitch() > 35) {
                 targetTimer.start();
@@ -84,6 +109,7 @@ public class VisionShoot extends Command {
         intakeTimer.stop();
         intakeTimer.reset();
         poseEstimatorSub.setStandardVisionStdDevs();
+        speakerSeen = false;
     }
 
     @Override 

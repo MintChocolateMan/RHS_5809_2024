@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.util.LimelightHelpers;
 import frc.lib.util.SwerveModule;
 import frc.robot.Constants;
 
@@ -116,6 +117,25 @@ public class SwerveSub extends SubsystemBase {;
         }
 
         if (Math.abs(poseEstimatorSub.getPose().getRotation().getDegrees() - poseEstimatorSub.getTargetYaw()) < Constants.Swerve.maxError) return true;
+        else return false;
+    }
+
+    public boolean driveAndAim(Translation2d translation, double rotation) {
+        SwerveModuleState[] swerveModuleStates =
+            Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+                ChassisSpeeds.fromFieldRelativeSpeeds(
+                                    translation.getX() * Constants.Swerve.translationSensitivity, 
+                                    translation.getY() * Constants.Swerve.translationSensitivity, 
+                                    swerveRotationPID.calculate(rotation, 0), 
+                                    poseEstimatorSub.getHeadingFieldOriented()
+                                ));
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+
+        for(SwerveModule mod : mSwerveMods){
+            mod.setDesiredState(swerveModuleStates[mod.moduleNumber], true);
+        }
+
+        if (Math.abs(LimelightHelpers.getTX("limelight-shooter")) < Constants.Swerve.maxError) return true;
         else return false;
     }
 

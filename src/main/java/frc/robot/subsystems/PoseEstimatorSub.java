@@ -219,7 +219,8 @@ public class PoseEstimatorSub extends SubsystemBase {
     }
 
     public boolean getValidSpeaker() {
-        return LimelightHelpers.getTV("limelightShooter");
+        if (LimelightHelpers.getTV("limelight-Shooter") == true) return true;
+        else return false;
     }
 
     public double getSpeakerTX() {
@@ -264,7 +265,7 @@ public class PoseEstimatorSub extends SubsystemBase {
     }
 
     public double getSpeakerYaw() {
-        return (getPose().getRotation().getDegrees() - 90 - Math.acos(
+        double yaw = (getPose().getRotation().getDegrees() - 90 + (180 / Math.PI * Math.acos(
             (
                 Math.pow(getCameraSpeakerDistance(), 2) - 
                 Math.pow(getSpeakerDistance(), 2) -
@@ -272,7 +273,13 @@ public class PoseEstimatorSub extends SubsystemBase {
             ) / (
                 -2 * getCameraSpeakerDistance() * getSpeakerDistance()
             )
-        ));
+        )));
+
+        yaw = getPose().getRotation().getDegrees() - LimelightHelpers.getTX("limelight-shooter");
+
+        if (yaw > 180) return yaw - 360;
+        else if (yaw <= -180) return yaw + 360;
+        else return yaw;
     }  
     
     public double getTargetYaw() {
@@ -386,13 +393,20 @@ public class PoseEstimatorSub extends SubsystemBase {
         
         SmartDashboard.putData("Field", field);
 
-        SmartDashboard.putNumber("capture latentcy", LimelightHelpers.getLatency_Capture("limelight-shooter"));
-        SmartDashboard.putNumber("pipeline latentcy", LimelightHelpers.getLatency_Pipeline("limelight-shooter"));
+        SmartDashboard.putNumber("speaker yaw", getSpeakerYaw());
+        SmartDashboard.putNumber("speaker pitch", getSpeakerPitch());
+        SmartDashboard.putBoolean("valid speaker", getValidSpeaker());
+        SmartDashboard.putBoolean("valid vision", LimelightHelpers.getTV("limelight-shooter"));
+        SmartDashboard.putNumber("robotYaw", getPose().getRotation().getDegrees());
+        
+
+        //SmartDashboard.putNumber("capture latentcy", LimelightHelpers.getLatency_Capture("limelight-shooter"));
+        //SmartDashboard.putNumber("pipeline latentcy", LimelightHelpers.getLatency_Pipeline("limelight-shooter"));
 
 
         //SmartDashboard.putNumber("targetDistance", PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose()));
-        SmartDashboard.putNumber("targetPitch", getTargetPitch());
-        SmartDashboard.putNumber("stdDevs", getVisionStdDevs());
+        //SmartDashboard.putNumber("targetPitch", getTargetPitch());
+        //SmartDashboard.putNumber("stdDevs", getVisionStdDevs());
         //SmartDashboard.putNumber("targetYaw", getTargetYaw());
         //SmartDashboard.putNumber("heading", getHeading().getDegrees());
         //SmartDashboard.putNumber("gyro heading", getGyroYaw().getDegrees());

@@ -190,6 +190,11 @@ public class RobotContainer {
             () -> -driver.getRawAxis(translationAxis), 
             () -> -driver.getRawAxis(strafeAxis)
         ));
+        /*autoShoot.whileTrue(new VisionShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
+            () -> -driver.getRawAxis(translationAxis), 
+            () -> -driver.getRawAxis(strafeAxis),
+            () -> -driver.getRawAxis(rotationAxis)
+        ));*/
         aimClose.whileTrue(new AimClose(actuatorSub, shooterSub));
         intake.whileTrue(new Intake(intakeSub));
         autoAmp.whileTrue(new AutoAmp(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub, 
