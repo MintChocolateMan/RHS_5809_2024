@@ -217,6 +217,63 @@ public class PoseEstimatorSub extends SubsystemBase {
     public void setAutoNoteSeen(boolean autoNoteSeen) {
         this.autoNoteSeen = autoNoteSeen;
     }
+
+    public boolean getValidSpeaker() {
+        return LimelightHelpers.getTV("limelightShooter");
+    }
+
+    public double getSpeakerTX() {
+        return LimelightHelpers.getTX("limelight-shooter");
+    }
+
+    public double getSpeakerTY() {
+        return LimelightHelpers.getTY("limelight-shooter");
+    }
+
+    public double getCameraSpeakerDistance() {
+        return (
+            (Constants.PoseEstimatorSub.speakerTagHeight - Constants.PoseEstimatorSub.cameraHeight) /
+            Math.tan(Math.PI / 180 * (
+                30 + getSpeakerTY()
+            ))
+        );
+    }
+
+    public double getSpeakerDistance() {
+        return (
+            Math.sqrt(
+                Math.pow(Constants.PoseEstimatorSub.cameraOffset, 2) +
+                Math.pow(getCameraSpeakerDistance(), 2) - (
+                    2 * Constants.PoseEstimatorSub.cameraOffset * getCameraSpeakerDistance() * Math.cos(Math.PI / 180 * (
+                        90 + getSpeakerTX()
+                    ))
+                )
+            )
+        );
+    }
+
+    public double getSpeakerPitch() {
+        return (180 / Math.PI * Math.atan(
+            (
+                Constants.PoseEstimatorSub.speakerTargetHeight
+            ) / 
+            (
+                getSpeakerDistance()
+            )
+        ));
+    }
+
+    public double getSpeakerYaw() {
+        return (getPose().getRotation().getDegrees() - 90 - Math.acos(
+            (
+                Math.pow(getCameraSpeakerDistance(), 2) - 
+                Math.pow(getSpeakerDistance(), 2) -
+                Math.pow(Constants.PoseEstimatorSub.cameraOffset, 2)
+            ) / (
+                -2 * getCameraSpeakerDistance() * getSpeakerDistance()
+            )
+        ));
+    }  
     
     public double getTargetYaw() {
         double targetYaw = (180 / Math.PI) * Math.atan( 1.0 *
@@ -328,6 +385,9 @@ public class PoseEstimatorSub extends SubsystemBase {
         update();
         
         SmartDashboard.putData("Field", field);
+
+        SmartDashboard.putNumber("capture latentcy", LimelightHelpers.getLatency_Capture("limelight-shooter"));
+        SmartDashboard.putNumber("pipeline latentcy", LimelightHelpers.getLatency_Pipeline("limelight-shooter"));
 
 
         //SmartDashboard.putNumber("targetDistance", PhotonUtils.getDistanceToPose(getPose(), getSpeakerTargetPose()));
