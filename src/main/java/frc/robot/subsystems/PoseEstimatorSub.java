@@ -28,6 +28,8 @@ public class PoseEstimatorSub extends SubsystemBase {
     Field2d field = new Field2d();
 
     private boolean autoNoteSeen;
+
+    private int tagCount;
     
     public PoseEstimatorSub() { 
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -37,6 +39,8 @@ public class PoseEstimatorSub extends SubsystemBase {
         visionStdDevs = Constants.PoseEstimatorSub.autoVisionStdDevs;
 
         autoNoteSeen = false;
+
+        tagCount = 0;
     }
 
     public void initialize(SwerveSub swerveSub) {
@@ -117,6 +121,14 @@ public class PoseEstimatorSub extends SubsystemBase {
         } else {
             setVisionStdDevs(Constants.PoseEstimatorSub.teleopVisionStdDevs);
         }
+    }
+
+    public void setTagCount(int tagCount) {
+        this.tagCount = tagCount;
+    }
+
+    public int getTagCount() {
+        return tagCount;
     }
 
     public Pose2d getCloseSpeakerPose() {
@@ -400,6 +412,7 @@ public class PoseEstimatorSub extends SubsystemBase {
         LimelightHelpers.SetRobotOrientation(Constants.PoseEstimatorSub.shooterCamera, 
             getPose().getRotation().getDegrees(), 0, 0, 0, 0, 0);
         LimelightHelpers.PoseEstimate botPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.PoseEstimatorSub.shooterCamera);
+        setTagCount(botPose.tagCount);
         if (Math.abs(gyro.getRate()) > 720) rejectUpdate = true;
         if (botPose.tagCount == 0) rejectUpdate = true;
         if (rejectUpdate == false) {

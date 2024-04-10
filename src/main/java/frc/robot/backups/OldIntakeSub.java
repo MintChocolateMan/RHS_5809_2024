@@ -1,7 +1,8 @@
-package frc.robot.subsystems;
+package frc.robot.backups;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.subsystems.CandleSub;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -9,14 +10,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
-public class UpdatedIntakeSub extends SubsystemBase {
+public class OldIntakeSub extends SubsystemBase {
 
     public TalonFX intakeMotor;
     private DigitalInput lineBreaker;
 
     private CandleSub candleSub;
     
-    public UpdatedIntakeSub(CandleSub candleSub) { 
+    public OldIntakeSub(CandleSub candleSub) { 
         intakeMotor = new TalonFX(Constants.IntakeSub.intakeMotorID);
         intakeMotor.getConfigurator().apply(Robot.ctreConfigs.intakeFXConfig);
         intakeMotor.setInverted(Constants.IntakeSub.intakeMotorReversed);

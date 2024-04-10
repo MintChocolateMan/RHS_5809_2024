@@ -28,6 +28,9 @@ public final class Constants {
         public static final boolean intakeMotorReversed = true;
         public static final int lineBreakerID = 1;
 
+        public static final int intakeLineBreakerID = 0;
+        public static final int shooterLineBreakerID = 1;
+
         public static final PIDController intakePID = new PIDController(
             0.05,
             0,

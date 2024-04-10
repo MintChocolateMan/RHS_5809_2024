@@ -75,6 +75,7 @@ public class aAutoIntake extends Command {
 
     @Override 
     public void end(boolean interrupted) {
+        intakeSub.endIntakeOverride();
         intakeSub.intakeMotorOff();
         swerveSub.drive(new Translation2d(0, 0), 0, false, false);
 

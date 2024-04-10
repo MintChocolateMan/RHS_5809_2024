@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -12,33 +11,50 @@ import com.ctre.phoenix6.hardware.TalonFX;
 public class IntakeSub extends SubsystemBase {
 
     public TalonFX intakeMotor;
-    private DigitalInput lineBreaker;
+    private DigitalInput intakeLineBreaker;
+    private DigitalInput shooterLineBreaker;
 
-    private CandleSub candleSub;
+    private boolean intakeOverride;
     
-    public IntakeSub(CandleSub candleSub) { 
+    public IntakeSub() { 
         intakeMotor = new TalonFX(Constants.IntakeSub.intakeMotorID);
         intakeMotor.getConfigurator().apply(Robot.ctreConfigs.intakeFXConfig);
         intakeMotor.setInverted(Constants.IntakeSub.intakeMotorReversed);
         intakeMotor.setPosition(Constants.IntakeSub.intakePIDGoal);
-        lineBreaker = new DigitalInput(Constants.IntakeSub.lineBreakerID);
+        intakeLineBreaker = new DigitalInput(Constants.IntakeSub.intakeLineBreakerID);
+        shooterLineBreaker = new DigitalInput(Constants.IntakeSub.shooterLineBreakerID);
 
-        this.candleSub = candleSub;
+        intakeOverride = false;
     }
 
-    public boolean getNoteLoaded() {
-        if (lineBreaker.get()) {
-            return false;
-        } else return true;
+    public void setIntakeOverride(boolean intakeOverride) {
+        this.intakeOverride = intakeOverride;
     }
 
-    public void updateLEDs() {
-        if (getNoteLoaded() == true) {
-            candleSub.setLEDsGreen();
-        } else candleSub.setLEDsCyan();
+    public void startIntakeOverride() {
+        intakeOverride = true;
+    }
+
+    public void endIntakeOverride() {
+        intakeOverride = false;
+    }
+
+    public boolean getIntakeLineBreaker() {
+        if (intakeLineBreaker.get() == false) return true;
+        else return false;
+    }
+
+    public boolean getShooterLineBreaker() {
+        if (shooterLineBreaker.get() == false) return true;
+        else return false;
     }
 
     public void intakeMotorOn() {
+        startIntakeOverride();
+        intakeMotor.set(Constants.IntakeSub.intakeMotorSpeed);
+    }
+
+    public void intakeMotorOnDefault() {
         intakeMotor.set(Constants.IntakeSub.intakeMotorSpeed);
     }
 
@@ -52,6 +68,17 @@ public class IntakeSub extends SubsystemBase {
 
     public void intakeMotorOff() {
         intakeMotor.set(0);
+    }
+
+    public boolean getNoteLoaded() {
+        if (getIntakeLineBreaker() || getShooterLineBreaker()) return true;
+        else return false;
+    }
+
+    public void suckBack() {
+        if (getShooterLineBreaker() && getIntakeLineBreaker()) intakeMotorSlow();
+        else if (getIntakeLineBreaker()) intakeMotorOn();
+        else intakeMotorOff();
     }
 
     public double getIntakeMotorPosition() {
@@ -68,7 +95,7 @@ public class IntakeSub extends SubsystemBase {
 
     @Override 
     public void periodic() {
-        updateLEDs();
+        if (intakeOverride == false) suckBack();
 
         SmartDashboard.putBoolean("Note Loaded", getNoteLoaded());
     }

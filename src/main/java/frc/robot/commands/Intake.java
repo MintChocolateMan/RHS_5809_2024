@@ -24,6 +24,7 @@ public class Intake extends Command {
 
     @Override 
     public void end(boolean interrupted) {
+        intakeSub.endIntakeOverride();
         intakeSub.intakeMotorOff();
     }
 

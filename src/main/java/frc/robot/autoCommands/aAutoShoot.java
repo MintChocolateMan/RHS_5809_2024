@@ -73,6 +73,7 @@ public class aAutoShoot extends Command {
 
     @Override 
     public void end(boolean interrupted) {
+        intakeSub.endIntakeOverride();
         actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
         shooterSub.shooterMotorsOff();
         intakeSub.intakeMotorOff();

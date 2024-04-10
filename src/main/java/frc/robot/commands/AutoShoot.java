@@ -78,10 +78,13 @@ public class AutoShoot extends Command {
         if (targetTimer.get() > .2) intakeTimer.start();
 
         if (intakeTimer.get() != 0) intakeSub.intakeMotorOn();
+        
+        intakeSub.intakeMotorOn();
     }
 
     @Override 
     public void end(boolean interrupted) {
+        intakeSub.endIntakeOverride();
         actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
         shooterSub.shooterMotorsOff();
         intakeSub.intakeMotorOff();

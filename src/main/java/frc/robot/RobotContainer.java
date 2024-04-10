@@ -20,6 +20,8 @@ import frc.robot.backupAutoCommands.aAimHigh;
 import frc.robot.backupAutoCommands.aAimLow;
 import frc.robot.backupAutoCommands.aAimLowCenter;
 import frc.robot.backupAutoCommands.aIntake;
+import frc.robot.backups.AutoAmp;
+import frc.robot.backups.aAutoAmp;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -71,12 +73,12 @@ public class RobotContainer {
 
     /* Subsystems */
     private final PoseEstimatorSub poseEstimatorSub = new PoseEstimatorSub();
-    private final CandleSub candleSub = new CandleSub();
     private final SwerveSub swerveSub = new SwerveSub(poseEstimatorSub);
-    private final IntakeSub intakeSub = new IntakeSub(candleSub);
+    private final IntakeSub intakeSub = new IntakeSub();
     private final ShooterSub shooterSub = new ShooterSub();
     private final ActuatorSub actuatorSub = new ActuatorSub();
     private final PneumaticSub pneumaticSub = new PneumaticSub();
+    private final CandleSub candleSub = new CandleSub(intakeSub, poseEstimatorSub);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -91,6 +93,8 @@ public class RobotContainer {
             )
         );
         intakeSub.setDefaultCommand(new DefaultIntake(intakeSub));
+
+        candleSub.updateLEDs();
 
         //Register Commands with PathPlanner
         NamedCommands.registerCommand("AutoIntake", new AutoIntake(
