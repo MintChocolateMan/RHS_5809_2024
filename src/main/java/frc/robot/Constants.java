@@ -73,7 +73,7 @@ public final class Constants {
         public static final int actuatorMotorID = 19;
         public static final boolean actuatorMotorInverted = false;
 
-        public static final double maxV = 8;
+        /*public static final double maxV = 8;
         public static final double maxA = 10;
         public static final double kP = 1.25;
         public static final double kI = .1;
@@ -83,6 +83,18 @@ public final class Constants {
         public static final double kA = 0;
         public static final double kG = 0.5;
         public static final double kIZone = 5;
+        public static final double kIMax = .2;*/
+
+        public static final double maxV = 3;
+        public static final double maxA = 8;
+        public static final double kP = 1.5;
+        public static final double kI = 0.3;
+        public static final double kD = 0;
+        public static final double kS = 0;
+        public static final double kV = 0;
+        public static final double kA = 0;
+        public static final double kG = 0.4;
+        public static final double kIZone = 3;
         public static final double kIMax = .2;
 
         public static final double shooterLength = 6.5;
@@ -94,15 +106,14 @@ public final class Constants {
         public static final double shooterCenterOfMass = .25;
         public static final double actuatorRate = .3846;
 
-        public static final double maxError = 2;
+        public static final double maxError = 2; //2
 
         public static final double maxDesiredAngle = 62;
-        public static final double minDesiredAngle = 35;
-
+        public static final double minDesiredAngle = 30;
         public static final double defaultAngle = 42;
 
         public static final double closeAngle = 62;
-        public static final double stageAngle = 38;
+        public static final double stageAngle = 34; //38
         public static final double ampAngle = 62;
         public static final double ferryAngle = 55;
 
@@ -128,15 +139,20 @@ public final class Constants {
 
     public static final class PoseEstimatorSub {
 
+        public static final String shooterCamera = "limelight-shooter";
+        public static final String intakeCamera = "limelight-intake";
+
         public static final double autoVisionStdDevs = 20;
         public static final double teleopVisionStdDevs = 0.01;
         public static final double aimVisionStdDevs = 0.01;
 
-        public static final double speakerTargetHeight = 1.8;//1.95;
+        public static final double speakerTargetHeight = 2.1; //2;//1.95;
         public static final double speakerTagHeight = 1.45;
         public static final double cameraHeight = .546;
         public static final double cameraOffset = .304;
-        public static final double shootkG = 1.8;
+        public static final double farShootkG = .8; //1.8;
+        public static final double mediumShootkG = 1.2;
+        public static final double closeShootkG = 1.6;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(
             new Translation2d(15, 5.55),

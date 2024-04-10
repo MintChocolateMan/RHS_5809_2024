@@ -8,7 +8,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -355,7 +354,7 @@ public class PoseEstimatorSub extends SubsystemBase {
         return bestAngle;
     }*/
     
-    public double getTargetPitch() {
+    /*public double getTargetPitch() {
         return (180 / Math.PI) * Math.atan(
             Constants.PoseEstimatorSub.speakerTargetHeight / 
             Math.sqrt(
@@ -365,12 +364,50 @@ public class PoseEstimatorSub extends SubsystemBase {
                 Math.pow(getPose().getX() - getSpeakerPoseDistance().getX(), 2) +
                 Math.pow(getPose().getY() - getSpeakerPoseDistance().getY(), 2)
             );
+    }*/
+
+    public double getTargetPitch() {
+        double speakerDistance = Math.sqrt(
+            Math.pow(getPose().getX() - getSpeakerPoseDistance().getX(), 2) +
+            Math.pow(getPose().getY() - getSpeakerPoseDistance().getY(), 2) + .2
+        );
+
+        double pitch = (180 / Math.PI) * Math.atan(
+            Constants.PoseEstimatorSub.speakerTargetHeight / speakerDistance
+        );
+
+        if (speakerDistance < 1.5) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.closeShootkG;
+        else if (speakerDistance < 3) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.mediumShootkG;
+        else return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.farShootkG;
+
+        
+
+        /*return (180 / Math.PI) * Math.atan(
+            Constants.PoseEstimatorSub.speakerTargetHeight / 
+            Math.sqrt(
+                Math.pow(getPose().getX() - getSpeakerPoseDistance().getX(), 2) +
+                Math.pow(getPose().getY() - getSpeakerPoseDistance().getY(), 2) + .2
+            )) + Constants.PoseEstimatorSub.shootkG * (
+                Math.pow(getPose().getX() - getSpeakerPoseDistance().getX(), 2) +
+                Math.pow(getPose().getY() - getSpeakerPoseDistance().getY(), 2)
+            );*/
     }
 
     public void update() {
         poseEstimator.update(getGyroYaw(), swerveSub.getModulePositions());
 
-        /* LimeLight Code Copied from website */
+        boolean rejectUpdate = false;
+        LimelightHelpers.SetRobotOrientation(Constants.PoseEstimatorSub.shooterCamera, 
+            getPose().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+        LimelightHelpers.PoseEstimate botPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.PoseEstimatorSub.shooterCamera);
+        if (Math.abs(gyro.getRate()) > 720) rejectUpdate = true;
+        if (botPose.tagCount == 0) rejectUpdate = true;
+        if (rejectUpdate == false) {
+            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(getVisionStdDevs(), getVisionStdDevs(), 9999999));
+            poseEstimator.addVisionMeasurement(botPose.pose, botPose.timestampSeconds);
+        }
+    
+        /*         // Megatag 1 code RIP
         LimelightHelpers.PoseEstimate limelightBotpose = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-shooter");
         if(limelightBotpose.tagCount >= 2) {
             poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(getVisionStdDevs(), getVisionStdDevs(),9999999));
@@ -381,7 +418,7 @@ public class PoseEstimatorSub extends SubsystemBase {
                     (LimelightHelpers.getLatency_Capture("limelight-shooter") / 1000)
             );
                 //limelightBotpose.timestampSeconds);
-        }
+        }*/
 
         field.setRobotPose(getPose());
     }

@@ -20,6 +20,7 @@ public class AutoShoot extends Command {
     private DoubleSupplier strafeSup;
 
     Timer intakeTimer;
+    Timer shooterTimer;
     Timer targetTimer;
 
     public AutoShoot(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
@@ -38,6 +39,9 @@ public class AutoShoot extends Command {
         intakeTimer = new Timer();
         intakeTimer.stop();
         intakeTimer.reset();
+        shooterTimer = new Timer();
+        shooterTimer.stop();
+        shooterTimer.reset();
         targetTimer = new Timer();
         targetTimer.stop();
         targetTimer.reset();
@@ -46,6 +50,7 @@ public class AutoShoot extends Command {
     @Override 
     public void initialize() {
         shooterSub.shooterMotorsOn();
+        shooterTimer.start();
         poseEstimatorSub.setVisionStdDevs(Constants.PoseEstimatorSub.aimVisionStdDevs);
     }
 
@@ -62,7 +67,8 @@ public class AutoShoot extends Command {
                 poseEstimatorSub.getTargetYaw()
                 ) == true && 
             actuatorSub.onTarget() == true &&
-            poseEstimatorSub.getTargetPitch() > 35) {
+            poseEstimatorSub.getTargetPitch() > 30 && 
+            shooterTimer.get() > .2) {
                 targetTimer.start();
         } else {
             targetTimer.stop();
@@ -82,6 +88,10 @@ public class AutoShoot extends Command {
         swerveSub.drive(new Translation2d(0, 0), 0, false, false);
         intakeTimer.stop();
         intakeTimer.reset();
+        shooterTimer.stop();
+        shooterTimer.reset();
+        targetTimer.stop();
+        targetTimer.reset();
         poseEstimatorSub.setStandardVisionStdDevs();
     }
 

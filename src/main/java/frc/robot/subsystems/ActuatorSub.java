@@ -116,7 +116,7 @@ public class ActuatorSub extends SubsystemBase {
         );
     }
 
-    public double getGravityFeedforward(double angle) {
+    /*public double getGravityFeedforward(double angle) {
         return Constants.ActuatorSub.kG / (
             (
                 Constants.ActuatorSub.shooterMass * Constants.ActuatorSub.shooterCenterOfMass * 9.8 * Math.sin(
@@ -128,6 +128,30 @@ public class ActuatorSub extends SubsystemBase {
                         Constants.ActuatorSub.bottomLength / (Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition()) * Math.sin( Math.PI / 180 * (
                             angle - Constants.ActuatorSub.shooterMinAngle + Constants.ActuatorSub.bottomAngle
                         ))
+                    ))
+                ))
+            )
+        );
+    }*/
+
+    public double getGravityFeedforward(double angle) {
+        return Constants.ActuatorSub.kG * (
+            (
+                Constants.ActuatorSub.shooterMass * Constants.ActuatorSub.shooterCenterOfMass * 9.8 * Math.sin( Math.PI / 180 * (
+                    90 - angle - Constants.ActuatorSub.shooterMinAngle
+                ))
+            ) / (
+                Constants.ActuatorSub.shooterLength * Math.sin(Math.PI / 180 * (
+                    180 - (180 / Math.PI * Math.acos(
+                        (
+                            Math.pow(Constants.ActuatorSub.bottomLength, 2) -
+                            Math.pow(Constants.ActuatorSub.shooterLength, 2) -
+                            Math.pow(Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition(), 2)
+                        ) / (
+                            -2 * Constants.ActuatorSub.shooterLength * (
+                                Constants.ActuatorSub.actuatorMinLength + Constants.ActuatorSub.actuatorRate * getMotorPosition()
+                            )
+                        )
                     ))
                 ))
             )
