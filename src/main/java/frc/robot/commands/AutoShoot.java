@@ -19,9 +19,9 @@ public class AutoShoot extends Command {
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
 
-    Timer intakeTimer;
-    Timer shooterTimer;
     Timer targetTimer;
+
+    boolean onTarget;
 
     public AutoShoot(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub, DoubleSupplier translationSup, DoubleSupplier strafeSup) { //Command constructor
     
@@ -36,21 +36,16 @@ public class AutoShoot extends Command {
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
 
-        intakeTimer = new Timer();
-        intakeTimer.stop();
-        intakeTimer.reset();
-        shooterTimer = new Timer();
-        shooterTimer.stop();
-        shooterTimer.reset();
         targetTimer = new Timer();
         targetTimer.stop();
         targetTimer.reset();
+
+        onTarget = false;
     }
 
     @Override 
     public void initialize() {
         shooterSub.shooterMotorsOn();
-        shooterTimer.start();
         poseEstimatorSub.setVisionStdDevs(Constants.PoseEstimatorSub.aimVisionStdDevs);
     }
 
@@ -67,32 +62,24 @@ public class AutoShoot extends Command {
                 poseEstimatorSub.getTargetYaw()
                 ) == true && 
             actuatorSub.onTarget() == true &&
-            poseEstimatorSub.getTargetPitch() > 30 && 
-            shooterTimer.get() > .2) {
+            poseEstimatorSub.getTargetPitch() > 30) {
                 targetTimer.start();
         } else {
             targetTimer.stop();
             targetTimer.reset();
         }
 
-        if (targetTimer.get() > .2) intakeTimer.start();
+        if (targetTimer.get() > .3) onTarget = true;
 
-        if (intakeTimer.get() != 0) intakeSub.intakeMotorOn();
-        
-        intakeSub.intakeMotorOn();
+        if (onTarget == true) intakeSub.intakeMotorOn();
     }
 
     @Override 
     public void end(boolean interrupted) {
-        intakeSub.endIntakeOverride();
         actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
         shooterSub.shooterMotorsOff();
         intakeSub.intakeMotorOff();
         swerveSub.drive(new Translation2d(0, 0), 0, false, false);
-        intakeTimer.stop();
-        intakeTimer.reset();
-        shooterTimer.stop();
-        shooterTimer.reset();
         targetTimer.stop();
         targetTimer.reset();
         poseEstimatorSub.setStandardVisionStdDevs();
@@ -100,7 +87,7 @@ public class AutoShoot extends Command {
 
     @Override 
     public boolean isFinished() {
-        if (intakeTimer.hasElapsed(.4)) return true;
+        if (intakeSub.getShooterLineBreaker() == false) return true;
         return false;
     }
 }

@@ -16,7 +16,6 @@ public class ReverseIntake extends Command {
 
     @Override 
     public void initialize() {
-        intakeSub.startIntakeOverride();
         intakeSub.intakeMotorReverse();
     }
 
@@ -25,7 +24,6 @@ public class ReverseIntake extends Command {
 
     @Override 
     public void end(boolean interrupted) {
-        intakeSub.endIntakeOverride();
         intakeSub.intakeMotorOff();
     }
 

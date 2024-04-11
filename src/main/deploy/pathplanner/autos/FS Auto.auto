@@ -1,0 +1,280 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.35,
+      "y": 5.55
+    },
+    "rotation": -1.2595163446860678e-19
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "aInitActuator"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSaimPreload"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShoot"
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FS.1"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aAutoNoteStopDrive"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSposeStage"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSaimStage"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShoot"
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FS.2"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aAutoNoteStopDrive"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSposeCenter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSaimCenter"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShoot"
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FS.3"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aAutoNoteStopDrive"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSposeAmp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSaimStage"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShoot"
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FS.4"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aAutoNoteStopDrive"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSposeFarAmp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FS.5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoShoot"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "FS.6"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAutoNoteStopDrive"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSposeFarAmp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FS.7"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoShoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": true
+}

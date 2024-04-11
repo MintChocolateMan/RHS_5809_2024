@@ -1,15 +1,22 @@
-package frc.robot.commands;
+package frc.robot.autoCommands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class Intake extends Command {
+public class aIntake extends Command {
   
     private final IntakeSub intakeSub;
 
-    public Intake(IntakeSub intakeSub) { 
-       
+    private Timer timer;
+
+    public aIntake(IntakeSub intakeSub) { 
+
         this.intakeSub = intakeSub;
+
+        timer = new Timer();
+        timer.stop();
+        timer.reset();
 
         addRequirements(intakeSub);
     }
@@ -17,6 +24,7 @@ public class Intake extends Command {
     @Override 
     public void initialize() {
         intakeSub.intakeMotorOn();
+        timer.start();
     }
 
     @Override 
@@ -25,10 +33,14 @@ public class Intake extends Command {
     @Override 
     public void end(boolean interrupted) {
         intakeSub.intakeMotorOff();
+
+        timer.stop();
+        timer.reset();
     }
 
-    @Override
+    @Override 
     public boolean isFinished() {
-        return false;
+        if (timer.get() > .2) return true;
+        else return false;
     }
 }

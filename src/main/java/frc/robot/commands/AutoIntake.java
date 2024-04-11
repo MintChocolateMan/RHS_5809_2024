@@ -87,7 +87,6 @@ public class AutoIntake extends Command {
 
     @Override 
     public void end(boolean interrupted) {
-        intakeSub.endIntakeOverride();
         intakeSub.intakeMotorOff();
         swerveSub.drive(new Translation2d(0, 0), 0, false, false);
 
@@ -97,7 +96,7 @@ public class AutoIntake extends Command {
 
     @Override 
     public boolean isFinished() {
-        if (intakeSub.getNoteLoaded() == true) return true;
+        if (intakeSub.getIntakeLineBreaker()) return true;
         else return false;
     }
 }

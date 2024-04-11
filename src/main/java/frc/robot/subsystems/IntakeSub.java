@@ -59,14 +59,29 @@ public class IntakeSub extends SubsystemBase {
     }
 
     public void intakeMotorReverse() {
+        startIntakeOverride();
+        intakeMotor.set(-Constants.IntakeSub.intakeMotorReverseSpeed);
+    }
+
+    public void intakeMotorReverseDefault() {
         intakeMotor.set(-Constants.IntakeSub.intakeMotorReverseSpeed);
     }
 
     public void intakeMotorSlow() {
+        startIntakeOverride();
+        intakeMotor.set(Constants.IntakeSub.intakeMotorReverseSpeed);
+    }
+
+    public void intakeMotorSlowDefault() {
         intakeMotor.set(Constants.IntakeSub.intakeMotorReverseSpeed);
     }
 
     public void intakeMotorOff() {
+        endIntakeOverride();
+        intakeMotor.set(0);
+    }
+
+    public void intakeMotorOffDefault() {
         intakeMotor.set(0);
     }
 
@@ -76,9 +91,9 @@ public class IntakeSub extends SubsystemBase {
     }
 
     public void suckBack() {
-        if (getShooterLineBreaker() && getIntakeLineBreaker()) intakeMotorSlow();
-        else if (getIntakeLineBreaker()) intakeMotorOn();
-        else intakeMotorOff();
+        if (getShooterLineBreaker() && getIntakeLineBreaker()) intakeMotorSlowDefault();
+        else if (getIntakeLineBreaker()) intakeMotorOnDefault();
+        else intakeMotorOffDefault();
     }
 
     public double getIntakeMotorPosition() {
