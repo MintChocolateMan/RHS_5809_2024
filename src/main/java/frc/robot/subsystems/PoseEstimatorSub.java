@@ -251,7 +251,7 @@ public class PoseEstimatorSub extends SubsystemBase {
         );
     }
 
-    public double getSpeakerDistance() {
+    /*public double getSpeakerDistance() {
         return (
             Math.sqrt(
                 Math.pow(Constants.PoseEstimatorSub.cameraOffset, 2) +
@@ -262,7 +262,7 @@ public class PoseEstimatorSub extends SubsystemBase {
                 )
             )
         );
-    }
+    }*/
 
     public double getSpeakerPitch() {
         return (180 / Math.PI * Math.atan(
@@ -378,6 +378,13 @@ public class PoseEstimatorSub extends SubsystemBase {
             );
     }*/
 
+    public double getSpeakerDistance() {
+        return Math.sqrt(
+            Math.pow(getPose().getX() - getSpeakerPoseDistance().getX(), 2) +
+            Math.pow(getPose().getY() - getSpeakerPoseDistance().getY(), 2) + .2
+        );
+    }
+
     public double getTargetPitch() {
         double speakerDistance = Math.sqrt(
             Math.pow(getPose().getX() - getSpeakerPoseDistance().getX(), 2) +
@@ -388,9 +395,11 @@ public class PoseEstimatorSub extends SubsystemBase {
             Constants.PoseEstimatorSub.speakerTargetHeight / speakerDistance
         );
 
-        if (speakerDistance < 1.5) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.closeShootkG;
-        else if (speakerDistance < 3) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.mediumShootkG;
-        else return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.farShootkG;
+        if (speakerDistance < 2) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.twokG;
+        else if (speakerDistance < 3) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.threekG;
+        else if (speakerDistance < 3.5) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.threeDotFivekG;
+        else if (speakerDistance < 4) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.fourkG;
+        else return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.farkG;
 
         
 
@@ -443,11 +452,15 @@ public class PoseEstimatorSub extends SubsystemBase {
         
         SmartDashboard.putData("Field", field);
 
-        SmartDashboard.putNumber("speaker yaw", getSpeakerYaw());
-        SmartDashboard.putNumber("speaker pitch", getSpeakerPitch());
-        SmartDashboard.putBoolean("valid speaker", getValidSpeaker());
-        SmartDashboard.putBoolean("valid vision", LimelightHelpers.getTV("limelight-shooter"));
-        SmartDashboard.putNumber("robotYaw", getPose().getRotation().getDegrees());
+        SmartDashboard.putNumber("Speaker Distance", getSpeakerDistance());
+        SmartDashboard.putNumber("Speaker Pitch", getTargetPitch());
+
+
+        //SmartDashboard.putNumber("speaker yaw", getSpeakerYaw());
+        //SmartDashboard.putNumber("speaker pitch", getSpeakerPitch());
+        //SmartDashboard.putBoolean("valid speaker", getValidSpeaker());
+        //SmartDashboard.putBoolean("valid vision", LimelightHelpers.getTV("limelight-shooter"));
+        //SmartDashboard.putNumber("robotYaw", getPose().getRotation().getDegrees());
         
 
         //SmartDashboard.putNumber("capture latentcy", LimelightHelpers.getLatency_Capture("limelight-shooter"));

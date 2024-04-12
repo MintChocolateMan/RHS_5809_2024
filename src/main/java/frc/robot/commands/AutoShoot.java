@@ -20,6 +20,7 @@ public class AutoShoot extends Command {
     private DoubleSupplier strafeSup;
 
     Timer targetTimer;
+    Timer intakeTimer;
 
     boolean onTarget;
 
@@ -39,6 +40,9 @@ public class AutoShoot extends Command {
         targetTimer = new Timer();
         targetTimer.stop();
         targetTimer.reset();
+        intakeTimer = new Timer();
+        intakeTimer.stop();
+        intakeTimer.reset();
 
         onTarget = false;
     }
@@ -72,6 +76,8 @@ public class AutoShoot extends Command {
         if (targetTimer.get() > .3) onTarget = true;
 
         if (onTarget == true) intakeSub.intakeMotorOn();
+
+        if (intakeSub.getShooterLineBreaker() == false) intakeTimer.start();
     }
 
     @Override 
@@ -82,12 +88,16 @@ public class AutoShoot extends Command {
         swerveSub.drive(new Translation2d(0, 0), 0, false, false);
         targetTimer.stop();
         targetTimer.reset();
+        intakeTimer.stop();
+        intakeTimer.reset();
         poseEstimatorSub.setStandardVisionStdDevs();
+
+        onTarget = false;
     }
 
     @Override 
     public boolean isFinished() {
-        if (intakeSub.getShooterLineBreaker() == false) return true;
+        if (intakeTimer.get() > .1) return true;
         return false;
     }
 }

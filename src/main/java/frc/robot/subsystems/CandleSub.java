@@ -63,11 +63,11 @@ public class CandleSub extends SubsystemBase {
     }
 
     public void updateBlink() {
-        if (blinkTimer.get() > .5 && blink == false) {
+        if (blinkTimer.get() > .2 && blink == false) {
             blinkTimer.reset();
             blinkTimer.start();
             blink = true;
-        } else if (blinkTimer.get() > .5 && blink == true) {
+        } else if (blinkTimer.get() > .2 && blink == true) {
             blinkTimer.reset();
             blinkTimer.start();
             blink = false;

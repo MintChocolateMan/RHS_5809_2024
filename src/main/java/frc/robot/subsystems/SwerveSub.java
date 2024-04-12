@@ -5,6 +5,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -23,6 +25,9 @@ public class SwerveSub extends SubsystemBase {;
     public PIDController swerveRotationPID;
     public PIDController swerveTranslationPID;
     public PIDController swerveStrafePID;
+
+    public PathPlannerPath ampPath;
+    public PathConstraints ampConstraints;
 
     public SwerveSub(PoseEstimatorSub poseEstimatorSub) {
         this.poseEstimatorSub = poseEstimatorSub;
@@ -60,6 +65,9 @@ public class SwerveSub extends SubsystemBase {;
                 },
                 this // Reference to this subsystem to set requirements
         );
+
+        ampPath = PathPlannerPath.fromPathFile("ampPath");
+        ampConstraints = new PathConstraints(2, 2, 6.28, 6.28);
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {

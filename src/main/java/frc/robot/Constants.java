@@ -112,11 +112,11 @@ public final class Constants {
         public static final double maxError = 2; //2
 
         public static final double maxDesiredAngle = 62;
-        public static final double minDesiredAngle = 30;
-        public static final double defaultAngle = 42;
+        public static final double minDesiredAngle = 35;
+        public static final double defaultAngle = 45;
 
         public static final double closeAngle = 62;
-        public static final double stageAngle = 34; //38
+        public static final double stageAngle = 38; 
         public static final double ampAngle = 62;
         public static final double ferryAngle = 55;
 
@@ -153,9 +153,12 @@ public final class Constants {
         public static final double speakerTagHeight = 1.45;
         public static final double cameraHeight = .546;
         public static final double cameraOffset = .304;
-        public static final double farShootkG = .8; //1.8;
-        public static final double mediumShootkG = 1.2;
-        public static final double closeShootkG = 1.6;
+
+        public static final double farkG = .5;
+        public static final double fourkG = .65;
+        public static final double threeDotFivekG = .7;
+        public static final double threekG = .85;
+        public static final double twokG = 1.4;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(
             new Translation2d(15, 5.55),

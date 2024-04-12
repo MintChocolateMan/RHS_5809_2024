@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 //import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 //import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -90,7 +92,6 @@ public class RobotContainer {
                 robotCentric
             )
         );
-        intakeSub.setDefaultCommand(new DefaultIntake(intakeSub));
 
         candleSub.updateLEDs();
 
@@ -214,17 +215,18 @@ public class RobotContainer {
             () -> -driver.getRawAxis(translationAxis), 
             () -> -driver.getRawAxis(strafeAxis)
         ));
-        /*autoShoot.whileTrue(new VisionShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub,
-            () -> -driver.getRawAxis(translationAxis), 
-            () -> -driver.getRawAxis(strafeAxis),
-            () -> -driver.getRawAxis(rotationAxis)
-        ));*/
         aimClose.whileTrue(new AimClose(actuatorSub, shooterSub));
         intake.whileTrue(new Intake(intakeSub));
-        autoAmp.whileTrue(new AutoAmp(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub, 
+        /*autoAmp.whileTrue(new AutoAmp(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub, 
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis)
-        ));
+        ));*/
+        autoAmp.whileTrue(new ParallelRaceGroup(
+            new AimAmp(actuatorSub, shooterSub), 
+            new SequentialCommandGroup(
+                AutoBuilder.pathfindThenFollowPath(swerveSub.ampPath, swerveSub.ampConstraints), 
+                new ShootAmp(intakeSub)
+            )));
         aimStage.whileTrue(new AimStage(swerveSub, shooterSub, actuatorSub,
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis)
