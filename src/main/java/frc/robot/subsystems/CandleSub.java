@@ -85,15 +85,13 @@ public class CandleSub extends SubsystemBase {
         updateBlink();
         updateIntake();
         if (intakeSub.getNoteLoaded() == false && poseEstimatorSub.getValidNote() == false) {
-            candle.setLEDs(0, 0, 255);
+            candle.setLEDs(31, 0, 255);
         } else if (intakeSub.getNoteLoaded() == false && poseEstimatorSub.getValidNote() == true) {
-            if (blink) candle.setLEDs(255, 255, 0);
-            else candle.setLEDs(0, 0, 128);
+            candle.setLEDs(255, 166, 0);
         } else if (intakeTimer.get() != 0 && intakeTimer.get() <= 1) {
             candle.setLEDs(0, 255, 0);
         } else if (intakeTimer.get() > 1 && poseEstimatorSub.getTagCount() > 1) {
-            if (blink) candle.setLEDs(0, 255, 255);
-            else candle.setLEDs(0, 255, 0);
+            candle.setLEDs(0, 255, 255);
         }
     }
 

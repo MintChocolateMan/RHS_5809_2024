@@ -16,8 +16,11 @@ public class aAutoShoot extends Command {
 
     Timer cutoffTimer;
     Timer targetTimer;
+    Timer shooterTimer;
+    Timer intakeTimer;
 
     boolean onTarget;
+    boolean primed;
 
     public aAutoShoot(PoseEstimatorSub poseEstimatorSub, SwerveSub swerveSub, ShooterSub shooterSub, ActuatorSub actuatorSub, IntakeSub intakeSub) { //Command constructor
     
@@ -35,19 +38,31 @@ public class aAutoShoot extends Command {
         cutoffTimer = new Timer();
         cutoffTimer.stop();
         cutoffTimer.reset();
+        shooterTimer = new Timer();
+        shooterTimer.stop();
+        shooterTimer.reset();
+        intakeTimer = new Timer();
+        intakeTimer.stop();
+        intakeTimer.reset();
 
         onTarget = false;
+        primed = false;
     }
 
     @Override 
     public void initialize() {
-        shooterSub.shooterMotorsOn();
         poseEstimatorSub.setVisionStdDevs(Constants.PoseEstimatorSub.aimVisionStdDevs);
         cutoffTimer.start();
     }
 
     @Override 
     public void execute() {
+        if (intakeSub.getSuckBacked() == true) primed = true;
+
+        if (primed == true) {
+            shooterSub.shooterMotorsOn();
+            shooterTimer.start();
+        }
         
         actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch());
 
@@ -57,7 +72,8 @@ public class aAutoShoot extends Command {
                 poseEstimatorSub.getTargetYaw()
                 ) == true && 
             actuatorSub.onTarget() == true &&
-            poseEstimatorSub.getTargetPitch() > 35) {
+            poseEstimatorSub.getTargetPitch() > 35 && 
+            shooterTimer.get() > .3) {
                 targetTimer.start();
         } else {
             targetTimer.stop();
@@ -68,7 +84,9 @@ public class aAutoShoot extends Command {
 
         if (onTarget == true) intakeSub.intakeMotorOn();
 
-        if (cutoffTimer.get() > 1.7) intakeSub.intakeMotorOn();
+        if (intakeSub.getShooterLineBreaker() == false && primed == true) intakeTimer.start();
+
+        if (cutoffTimer.get() > 2) intakeSub.intakeMotorOn();
     }
 
     @Override 
@@ -81,12 +99,19 @@ public class aAutoShoot extends Command {
         targetTimer.reset();
         cutoffTimer.stop();
         cutoffTimer.reset();
+        shooterTimer.stop();
+        shooterTimer.reset();
+        intakeTimer.stop();
+        intakeTimer.reset();
+        primed = false;
+        onTarget = false;
         poseEstimatorSub.setStandardVisionStdDevs();
     }
 
     @Override 
     public boolean isFinished() {
-        if (intakeSub.getShooterLineBreaker() == false || cutoffTimer.get() > 2) return true;
+        if (intakeTimer.get() > .1) return true;
+        else if (cutoffTimer.get() > 2.5) return true;
         return false;
     }
 }

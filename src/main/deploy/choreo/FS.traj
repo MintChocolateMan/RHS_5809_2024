@@ -1713,15 +1713,6 @@
   ],
   "eventMarkers": [
     {
-      "timestamp": 0.4427457798815083,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "aIntake"
-        }
-      }
-    },
-    {
       "timestamp": 0.7160151198488456,
       "command": {
         "type": "named",
@@ -1751,9 +1742,22 @@
     {
       "timestamp": 3.2795677721402514,
       "command": {
-        "type": "named",
+        "type": "sequential",
         "data": {
-          "name": "aIntake"
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "aIntake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "FSaimAmp"
+              }
+            }
+          ]
         }
       }
     },
@@ -1763,15 +1767,6 @@
         "type": "named",
         "data": {
           "name": "aAutoNoteDetected"
-        }
-      }
-    },
-    {
-      "timestamp": 4.562778133929382,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "aIntake"
         }
       }
     },

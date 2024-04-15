@@ -20,7 +20,7 @@ public class FSaimCenter extends Command {
 
     @Override 
     public void execute() {
-        actuatorSub.setDesiredAngle(45);
+        actuatorSub.setDesiredAngle(47);
     }
 
     @Override

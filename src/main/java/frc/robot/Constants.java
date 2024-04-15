@@ -28,8 +28,8 @@ public final class Constants {
         public static final boolean intakeMotorReversed = true;
         public static final int lineBreakerID = 1;
 
-        public static final int intakeLineBreakerID = 0;
-        public static final int shooterLineBreakerID = 1;
+        public static final int intakeLineBreakerID = 1;
+        public static final int shooterLineBreakerID = 0;
 
         public static final PIDController intakePID = new PIDController(
             0.05,
@@ -111,13 +111,13 @@ public final class Constants {
 
         public static final double maxError = 2; //2
 
-        public static final double maxDesiredAngle = 62;
+        public static final double maxDesiredAngle = 64;
         public static final double minDesiredAngle = 35;
         public static final double defaultAngle = 45;
 
         public static final double closeAngle = 62;
         public static final double stageAngle = 38; 
-        public static final double ampAngle = 62;
+        public static final double ampAngle = 64;
         public static final double ferryAngle = 55;
 
         public static final double actuatorDownSpeed = .03;
@@ -149,16 +149,20 @@ public final class Constants {
         public static final double teleopVisionStdDevs = 0.01;
         public static final double aimVisionStdDevs = 0.01;
 
-        public static final double speakerTargetHeight = 2.1; //2;//1.95;
+        public static final double speakerTargetHeight = 2.05; //2;//1.95;
         public static final double speakerTagHeight = 1.45;
         public static final double cameraHeight = .546;
         public static final double cameraOffset = .304;
 
         public static final double farkG = .5;
-        public static final double fourkG = .65;
+        public static final double fourDotFivekG = .4;
+        public static final double fourDotTwoFivekG = .5;
+        public static final double fourkG = .6;
+        public static final double threeDotSevenFivekG = .55;
         public static final double threeDotFivekG = .7;
-        public static final double threekG = .85;
-        public static final double twokG = 1.4;
+        public static final double threekG = .7;
+        public static final double twoDotFivekG = .8;
+        public static final double twokG = 1.2;
 
         public static final Pose2d redCloseSpeakerPose = new Pose2d(
             new Translation2d(15, 5.55),
@@ -221,14 +225,14 @@ public final class Constants {
 
         public static final double translationSensitivity = 1;
         public static final double rotationSensitivity = 1;
-        public static final double maxError = 5;
+        public static final double maxError = 8;
 
-        public static final double maxIntakeError = 5;
+        public static final double maxIntakeError = 8;
         
         public static final PIDController swerveRotationPID = new PIDController(
-            0.1,
+            0.12,
             0,
-            .015
+            .02
         );
 
         public static final PIDController swerveTranslationPID = new PIDController(
@@ -306,7 +310,7 @@ public final class Constants {
         /** Meters per Second */
         public static final double maxSpeed = 5.5; // 4.6//normally 5.5 TODO: This must be tuned to specific robot
         /** Radians per Second */
-        public static final double maxAngularVelocity = 9; //TODO: This must be tuned to specific robot
+        public static final double maxAngularVelocity = 12; //TODO: This must be tuned to specific robot
 
         /* Neutral Modes */
         public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Coast;

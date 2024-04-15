@@ -7,12 +7,14 @@ import frc.robot.subsystems.*;
 public class ShootAmp extends Command {
   
     private final IntakeSub intakeSub;
+    private final ActuatorSub actuatorSub;
 
     private Timer timer;
 
-    public ShootAmp(IntakeSub intakeSub) { 
+    public ShootAmp(IntakeSub intakeSub, ActuatorSub actuatorSub) { 
        
         this.intakeSub = intakeSub;
+        this.actuatorSub = actuatorSub;
 
         addRequirements(intakeSub);
 
@@ -27,7 +29,11 @@ public class ShootAmp extends Command {
     }
 
     @Override 
-    public void execute() {}
+    public void execute() {
+        if (actuatorSub.onTarget() == true) timer.start();
+
+        if (timer.get() != 0) intakeSub.intakeMotorOn();
+    }
 
     @Override 
     public void end(boolean interrupted) {

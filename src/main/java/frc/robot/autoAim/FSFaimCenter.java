@@ -3,11 +3,11 @@ package frc.robot.autoAim;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class FSaimStage extends Command {
+public class FSFaimCenter extends Command {
   
     private final ActuatorSub actuatorSub;
 
-    public FSaimStage(ActuatorSub actuatorSub) { 
+    public FSFaimCenter(ActuatorSub actuatorSub) { 
 
         this.actuatorSub = actuatorSub;
 
@@ -20,7 +20,7 @@ public class FSaimStage extends Command {
 
     @Override 
     public void execute() {
-        actuatorSub.setDesiredAngle(47);
+        actuatorSub.setDesiredAngle(40);
     }
 
     @Override

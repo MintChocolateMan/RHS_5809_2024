@@ -9,7 +9,7 @@ public class FSposeCenter extends Command {
   
     private final PoseEstimatorSub poseEstimatorSub;
 
-    private final Translation2d blueTranslation = new Translation2d(2.5, 5.55);
+    private final Translation2d blueTranslation = new Translation2d(2.8, 5.55);
 
     public FSposeCenter(PoseEstimatorSub poseEstimatorSub) { 
   

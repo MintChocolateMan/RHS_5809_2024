@@ -98,6 +98,7 @@ public class RobotContainer {
         //Register Commands with PathPlanner
         NamedCommands.registerCommand("aAutoShoot", new aAutoShoot(poseEstimatorSub, swerveSub, shooterSub, actuatorSub, intakeSub));
         NamedCommands.registerCommand("aAutoIntake", new aAutoIntake(intakeSub, swerveSub, poseEstimatorSub));
+        NamedCommands.registerCommand("aAutoIntakeShoot", new aAutoIntakeShoot(intakeSub, swerveSub, poseEstimatorSub));
         NamedCommands.registerCommand("aInitActuator", new aInitActuator(actuatorSub));
         NamedCommands.registerCommand("aAutoNoteDetected", new aAutoNoteDetected(poseEstimatorSub));
         NamedCommands.registerCommand("aAutoNoteStopDrive", new aAutoNoteStopDrive(poseEstimatorSub));
@@ -114,6 +115,13 @@ public class RobotContainer {
         NamedCommands.registerCommand("FSaimStage", new FSaimStage(actuatorSub));
         NamedCommands.registerCommand("FSaimCenter", new FSaimCenter(actuatorSub));
         NamedCommands.registerCommand("FSaimAmp", new FSaimAmp(actuatorSub));
+
+        //FSF Auto
+        NamedCommands.registerCommand("FSFaimCenter", new FSFaimCenter(actuatorSub));
+        NamedCommands.registerCommand("FSFaimAmp", new FSFaimAmp(actuatorSub));
+        NamedCommands.registerCommand("FSFaimFarAmp", new FSFaimFarAmp(actuatorSub));
+        NamedCommands.registerCommand("FSFaimFarCenter", new FSFaimFarCenter(actuatorSub));
+
 
 
 
@@ -225,7 +233,7 @@ public class RobotContainer {
             new AimAmp(actuatorSub, shooterSub), 
             new SequentialCommandGroup(
                 AutoBuilder.pathfindThenFollowPath(swerveSub.ampPath, swerveSub.ampConstraints), 
-                new ShootAmp(intakeSub)
+                new ShootAmp(intakeSub, actuatorSub)
             )));
         aimStage.whileTrue(new AimStage(swerveSub, shooterSub, actuatorSub,
             () -> -driver.getRawAxis(translationAxis),

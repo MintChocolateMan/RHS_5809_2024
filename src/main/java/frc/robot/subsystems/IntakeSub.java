@@ -17,6 +17,7 @@ public class IntakeSub extends SubsystemBase {
     private boolean intakeOverride;
     
     private boolean intaked;
+    private boolean suckBacked;
 
     public IntakeSub() { 
         intakeMotor = new TalonFX(Constants.IntakeSub.intakeMotorID);
@@ -29,6 +30,11 @@ public class IntakeSub extends SubsystemBase {
         intakeOverride = false;
 
         intaked = false;
+        suckBacked = false;
+    }
+
+    public boolean getSuckBacked() {
+        return suckBacked;
     }
 
     public void setIntakeOverride(boolean intakeOverride) {
@@ -97,9 +103,13 @@ public class IntakeSub extends SubsystemBase {
     public void suckBack() {
         if (getIntakeLineBreaker() == false && getShooterLineBreaker() == false) {
             intaked = false;
+            suckBacked = false;
         } else if (getIntakeLineBreaker() == false && getShooterLineBreaker() == true) {
             intaked = true;
-        } 
+            suckBacked = false;
+        } else if (intaked == true && getIntakeLineBreaker() == true) {
+            suckBacked = true;
+        }
         if (getIntakeLineBreaker() == false && getShooterLineBreaker() == false) {
             intakeMotor.setVoltage(0);
         } else if (intaked == false && getIntakeLineBreaker() == true) {

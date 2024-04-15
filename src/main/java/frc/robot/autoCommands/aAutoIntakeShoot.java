@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class aAutoIntake extends Command {
+public class aAutoIntakeShoot extends Command {
   
     private final IntakeSub intakeSub;
     private final SwerveSub swerveSub;
@@ -20,7 +20,7 @@ public class aAutoIntake extends Command {
 
     private Timer intakeTimer;
 
-    public aAutoIntake(IntakeSub intakeSub, SwerveSub swerveSub, PoseEstimatorSub poseEstimatorSub) { 
+    public aAutoIntakeShoot(IntakeSub intakeSub, SwerveSub swerveSub, PoseEstimatorSub poseEstimatorSub) { 
 
         this.intakeSub = intakeSub;
         this.swerveSub = swerveSub;
@@ -49,16 +49,14 @@ public class aAutoIntake extends Command {
             wasEmpty = true;
         }
 
+        if (intakeSub.getIntakeLineBreaker() == true) intakeTimer.start();
+
         if (poseEstimatorSub.getValidNote() == true) {
             noteYaw = poseEstimatorSub.getNoteYaw();
             strafe = swerveSub.swerveStrafePID.calculate(noteYaw, 0);
         }
 
-        if (intakeSub.getIntakeLineBreaker() == true) intakeTimer.start();
-        else {
-            intakeTimer.stop();
-            intakeTimer.reset();
-        }
+        if (intakeTimer.get() != 0) strafe = 0;
         
         swerveSub.intakeDrive(new Translation2d(1.5, strafe), 0);
     }
@@ -78,7 +76,7 @@ public class aAutoIntake extends Command {
 
     @Override 
     public boolean isFinished() {
-        if (intakeTimer.get() > .1 && wasEmpty == true) return true;
+        if (intakeTimer.get() > .4 && wasEmpty == true) return true;
         else return false;
     }
 }

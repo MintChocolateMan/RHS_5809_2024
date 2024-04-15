@@ -5,7 +5,7 @@
       "x": 1.35,
       "y": 5.55
     },
-    "rotation": -1.2595163446860678e-19
+    "rotation": -1.6387105163040197e-35
   },
   "command": {
     "type": "sequential",
@@ -56,19 +56,13 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "FSaimStage"
-          }
-        },
-        {
           "type": "race",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FS.1"
+                  "pathName": "Dumb 4 note.1"
                 }
               },
               {
@@ -89,63 +83,13 @@
         {
           "type": "named",
           "data": {
-            "name": "FSposeStage"
+            "name": "FSaimPreload"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "FSaimStage"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "aShoot"
-                }
-              },
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FS.2"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "aAutoNoteStopDrive"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "aAutoIntake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "FSposeCenter"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "FSaimCenter"
+            "pathName": "Dumb 4 note.2"
           }
         },
         {
@@ -163,34 +107,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "race",
+                      "type": "wait",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "FS.3"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "aAutoNoteStopDrive"
-                            }
-                          }
-                        ]
+                        "waitTime": 0.2
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "aAutoIntakeShoot"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "FSposeAmp"
+                        "name": "aIntake"
                       }
                     }
                   ]
@@ -206,7 +131,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FS.4"
+                  "pathName": "Dumb 4 note.3"
                 }
               },
               {
@@ -227,19 +152,45 @@
         {
           "type": "named",
           "data": {
-            "name": "FSposeFarAmp"
+            "name": "FSaimPreload"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "FS.5"
+            "pathName": "Dumb 4 note.4"
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "aAutoShoot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShoot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.2
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aIntake"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
@@ -249,7 +200,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FS.6"
+                  "pathName": "Dumb 4 note.5"
                 }
               },
               {
@@ -270,19 +221,114 @@
         {
           "type": "named",
           "data": {
-            "name": "FSposeFarAmp"
+            "name": "FSaimPreload"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "FS.7"
+            "pathName": "Dumb 4 note.6"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShoot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.2
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aIntake"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Dumb 4 note.7"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAutoNoteStopDrive"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "aAutoShoot"
+            "name": "aAutoIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSaimPreload"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Dumb 4 note.8"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShoot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.2
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aIntake"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         }
       ]

@@ -9,7 +9,7 @@ public class FSposeAmp extends Command {
   
     private final PoseEstimatorSub poseEstimatorSub;
 
-    private final Translation2d blueTranslation = new Translation2d(2.5, 6.8);
+    private final Translation2d blueTranslation = new Translation2d(3.37, 7.3);
 
     public FSposeAmp(PoseEstimatorSub poseEstimatorSub) { 
   

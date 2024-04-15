@@ -20,7 +20,7 @@ public class FSaimAmp extends Command {
 
     @Override 
     public void execute() {
-        actuatorSub.setDesiredAngle(38);
+        actuatorSub.setDesiredAngle(36);
     }
 
     @Override

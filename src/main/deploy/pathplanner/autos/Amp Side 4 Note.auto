@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.35,
-      "y": 5.55
+      "x": 0.8,
+      "y": 6.7
     },
-    "rotation": -1.2595163446860678e-19
+    "rotation": 60.16056848873644
   },
   "command": {
     "type": "sequential",
@@ -56,19 +56,13 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "FSaimStage"
-          }
-        },
-        {
           "type": "race",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FS.1"
+                  "pathName": "Amp Side 4 Note.1"
                 }
               },
               {
@@ -87,65 +81,15 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "FSposeStage"
+            "pathName": "Amp Side 4 Note.2"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "FSaimStage"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "aShoot"
-                }
-              },
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FS.2"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "aAutoNoteStopDrive"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "aAutoIntake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "FSposeCenter"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "FSaimCenter"
+            "name": "FSaimPreload"
           }
         },
         {
@@ -163,34 +107,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "race",
+                      "type": "wait",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "FS.3"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "aAutoNoteStopDrive"
-                            }
-                          }
-                        ]
+                        "waitTime": 0.2
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "aAutoIntakeShoot"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "FSposeAmp"
+                        "name": "aIntake"
                       }
                     }
                   ]
@@ -206,7 +131,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FS.4"
+                  "pathName": "Amp Side 4 Note.3"
                 }
               },
               {
@@ -225,21 +150,47 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "FSposeFarAmp"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "FS.5"
+            "pathName": "Amp Side 4 Note.2"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "aAutoShoot"
+            "name": "FSaimPreload"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShoot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.2
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aIntake"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
@@ -249,7 +200,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FS.6"
+                  "pathName": "Amp Side 4 Note.5"
                 }
               },
               {
@@ -268,21 +219,47 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "FSposeFarAmp"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "FS.7"
+            "pathName": "Amp Side 4 Note.6"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "aAutoShoot"
+            "name": "FSaimPreload"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShoot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.2
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aIntake"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         }
       ]

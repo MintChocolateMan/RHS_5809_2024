@@ -5,7 +5,7 @@
       "x": 1.35,
       "y": 5.55
     },
-    "rotation": -1.2595163446860678e-19
+    "rotation": 8.072395244978373e-26
   },
   "command": {
     "type": "sequential",
@@ -58,94 +58,7 @@
         {
           "type": "named",
           "data": {
-            "name": "FSaimStage"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "FS.1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "aAutoNoteStopDrive"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "aAutoIntake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "FSposeStage"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "FSaimStage"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "aShoot"
-                }
-              },
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FS.2"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "aAutoNoteStopDrive"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "aAutoIntake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "FSposeCenter"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "FSaimCenter"
+            "name": "FSFaimAmp"
           }
         },
         {
@@ -169,7 +82,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "FS.3"
+                              "pathName": "FS Far Auto.1"
                             }
                           },
                           {
@@ -206,7 +119,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FS.4"
+                  "pathName": "FS Far Auto.2"
                 }
               },
               {
@@ -231,9 +144,121 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "FSFaimFarAmp"
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "FS.5"
+            "pathName": "FS Far Auto.3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSFaimCenter"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShoot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "FS Far Auto.4"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "aAutoNoteStopDrive"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aAutoIntakeShoot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FSposeCenter"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "FS Far Auto.5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAutoNoteStopDrive"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSposeFarCenter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSFaimFarCenter"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FS Far Auto.6"
           }
         },
         {
@@ -249,7 +274,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FS.6"
+                  "pathName": "FS Far Auto.7"
                 }
               },
               {
@@ -270,19 +295,51 @@
         {
           "type": "named",
           "data": {
-            "name": "FSposeFarAmp"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "FS.7"
+            "name": "FSposeStage"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "aAutoShoot"
+            "name": "FSaimPreload"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FS Far Auto.8"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShoot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.2
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aIntake"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         }
       ]

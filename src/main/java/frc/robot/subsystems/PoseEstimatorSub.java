@@ -396,12 +396,14 @@ public class PoseEstimatorSub extends SubsystemBase {
         );
 
         if (speakerDistance < 2) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.twokG;
+        else if (speakerDistance < 2.5) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.twoDotFivekG;
         else if (speakerDistance < 3) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.threekG;
         else if (speakerDistance < 3.5) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.threeDotFivekG;
+        else if (speakerDistance < 3.75) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.threeDotSevenFivekG;
         else if (speakerDistance < 4) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.fourkG;
+        else if (speakerDistance < 4.25) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.fourDotTwoFivekG;
+        else if (speakerDistance < 4.5) return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.fourDotFivekG;
         else return pitch + Math.pow(speakerDistance, 2) * Constants.PoseEstimatorSub.farkG;
-
-        
 
         /*return (180 / Math.PI) * Math.atan(
             Constants.PoseEstimatorSub.speakerTargetHeight / 

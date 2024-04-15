@@ -221,9 +221,22 @@
     {
       "timestamp": 0.5193652854536719,
       "command": {
-        "type": "named",
+        "type": "sequential",
         "data": {
-          "name": "aIntake"
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "aIntake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "FSaimAmp"
+              }
+            }
+          ]
         }
       }
     },
