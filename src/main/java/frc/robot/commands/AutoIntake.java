@@ -63,8 +63,8 @@ public class AutoIntake extends Command {
             double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
 
             swerveSub.drive(
-                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
-                rotationVal * Constants.Swerve.maxAngularVelocity, 
+                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed / 2), 
+                rotationVal * Constants.Swerve.maxAngularVelocity / 3, 
                 true,
                 true
             );

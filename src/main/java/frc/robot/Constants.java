@@ -90,13 +90,13 @@ public final class Constants {
 
         public static final double maxV = 3;
         public static final double maxA = 8;
-        public static final double kP = 1.5;
+        public static final double kP = 1.3;
         public static final double kI = 0.3;
         public static final double kD = 0;
-        public static final double kS = 0;
-        public static final double kV = 0;
+        public static final double kS = 0.1;
+        public static final double kV = 0.3;
         public static final double kA = 0;
-        public static final double kG = 0.4;
+        public static final double kG = 0.5;
         public static final double kIZone = 3;
         public static final double kIMax = .2;
 
@@ -149,7 +149,7 @@ public final class Constants {
         public static final double teleopVisionStdDevs = 0.01;
         public static final double aimVisionStdDevs = 0.01;
 
-        public static final double speakerTargetHeight = 2.05; //2;//1.95;
+        public static final double speakerTargetHeight = 2.1; //2;//1.95;
         public static final double speakerTagHeight = 1.45;
         public static final double cameraHeight = .546;
         public static final double cameraOffset = .304;
@@ -232,7 +232,7 @@ public final class Constants {
         public static final PIDController swerveRotationPID = new PIDController(
             0.12,
             0,
-            .02
+            .015
         );
 
         public static final PIDController swerveTranslationPID = new PIDController(

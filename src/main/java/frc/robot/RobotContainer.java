@@ -104,6 +104,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("aAutoNoteStopDrive", new aAutoNoteStopDrive(poseEstimatorSub));
         NamedCommands.registerCommand("aIntake", new aIntake(intakeSub));
         NamedCommands.registerCommand("aShoot", new aShoot(shooterSub));
+        NamedCommands.registerCommand("aShootPreload", new aShootPreload(intakeSub, shooterSub));
 
         //FS Auto
         NamedCommands.registerCommand("FSposeStage", new FSposeStage(poseEstimatorSub));
@@ -187,7 +188,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("aAimLow", new aAimLow(actuatorSub, shooterSub, poseEstimatorSub));
         NamedCommands.registerCommand("aAimHigh", new aAimHigh(actuatorSub, shooterSub, poseEstimatorSub));
        
-        autoChooser = AutoBuilder.buildAutoChooser("Front Speaker Auto"); 
+        autoChooser = AutoBuilder.buildAutoChooser("Adaptable Front Speaker"); 
         SmartDashboard.putData("Auto Chooser:", autoChooser);
         
 

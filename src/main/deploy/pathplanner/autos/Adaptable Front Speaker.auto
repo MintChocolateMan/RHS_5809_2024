@@ -1,0 +1,237 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.4,
+      "y": 5.55
+    },
+    "rotation": -3.652684385420309e-26
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "aInitActuator"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSaimPreload"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aShootPreload"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Dumb 4 note.7"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aAutoNoteStopDrive"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAutoIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "FSaimPreload"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Dumb 4 note.8"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShootPreload"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Dumb 4 note.1"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aAutoNoteStopDrive"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAutoIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "FSaimPreload"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Dumb 4 note.2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShootPreload"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Dumb 4 note.5"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aAutoNoteStopDrive"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAutoIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "FSaimPreload"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Dumb 4 note.6"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShootPreload"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Dumb 4 note.3"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aAutoNoteStopDrive"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAutoIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "FSaimPreload"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Dumb 4 note.4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShootPreload"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": true
+}

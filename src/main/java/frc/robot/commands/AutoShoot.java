@@ -19,6 +19,7 @@ public class AutoShoot extends Command {
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
 
+
     Timer targetTimer;
     Timer intakeTimer;
 
@@ -58,6 +59,9 @@ public class AutoShoot extends Command {
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
         
+        /*if (swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond < 2 && swerveSub.getRobotRelativeSpeeds().vyMetersPerSecond < 2) {
+            actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch());
+        }*/
         actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch());
 
         if (
@@ -66,7 +70,7 @@ public class AutoShoot extends Command {
                 poseEstimatorSub.getTargetYaw()
                 ) == true && 
             actuatorSub.onTarget() == true &&
-            poseEstimatorSub.getTargetPitch() > 30) {
+            poseEstimatorSub.getTargetPitch() > 35) {
                 targetTimer.start();
         } else {
             targetTimer.stop();

@@ -1,0 +1,137 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.75,
+      "y": 4.4
+    },
+    "rotation": -60.16056848873644
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "aInitActuator"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSaimPreload"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aShootPreload"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Adaptable Source Auto.1"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aAutoNoteStopDrive"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAutoIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "FSaimPreload"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Adaptable Source Auto.2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShootPreload"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Adaptable Source Auto.3"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aAutoNoteStopDrive"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAutoIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "FSaimPreload"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Adaptable Source Auto.4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShootPreload"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": true
+}

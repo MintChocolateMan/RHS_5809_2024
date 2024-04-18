@@ -20,7 +20,7 @@ public class FSaimPreload extends Command {
 
     @Override 
     public void execute() {
-        actuatorSub.setDesiredAngle(56);
+        actuatorSub.setDesiredAngle(58);
     }
 
     @Override

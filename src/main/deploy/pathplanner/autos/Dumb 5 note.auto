@@ -24,9 +24,35 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "aShootPreload"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShoot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.3
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aIntake"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
@@ -64,6 +90,75 @@
           "type": "path",
           "data": {
             "pathName": "Dumb 4 note.2"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "aShoot"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.3
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "aIntake"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Dumb 4 note.3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "aAutoNoteStopDrive"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "aAutoIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FSaimPreload"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Dumb 4 note.4"
           }
         },
         {
