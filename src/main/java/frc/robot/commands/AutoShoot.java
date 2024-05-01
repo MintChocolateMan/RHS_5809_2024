@@ -59,10 +59,10 @@ public class AutoShoot extends Command {
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
         
-        /*if (swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond < 2 && swerveSub.getRobotRelativeSpeeds().vyMetersPerSecond < 2) {
+        if (swerveSub.getRobotRelativeSpeeds().vxMetersPerSecond < 2 && swerveSub.getRobotRelativeSpeeds().vyMetersPerSecond < 2) {
             actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch());
-        }*/
-        actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch());
+        } else actuatorSub.setDesiredAngle(Constants.ActuatorSub.defaultAngle);
+        //actuatorSub.setDesiredAngle(poseEstimatorSub.getTargetPitch());
 
         if (
             swerveSub.driveWithRotationGoal(

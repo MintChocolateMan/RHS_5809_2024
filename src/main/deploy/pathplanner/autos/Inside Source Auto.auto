@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.35,
-      "y": 5.55
+      "x": 0.8,
+      "y": 4.35
     },
-    "rotation": -1.6387105163040197e-35
+    "rotation": -60.16056848873644
   },
   "command": {
     "type": "sequential",
@@ -20,7 +20,7 @@
         {
           "type": "named",
           "data": {
-            "name": "FSaimPreloadHigh"
+            "name": "FSaimPreload"
           }
         },
         {
@@ -40,7 +40,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Dumb 4 note.1"
+                        "pathName": "Adaptable Source Auto.3"
                       }
                     },
                     {
@@ -67,7 +67,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Dumb 4 note.2"
+                  "pathName": "Adaptable Source Auto.4"
                 }
               },
               {
@@ -90,7 +90,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Dumb 4 note.3"
+                        "pathName": "Adaptable Source Auto.1"
                       }
                     },
                     {
@@ -117,107 +117,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Dumb 4 note.4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "aShootPreload"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Dumb 4 note.7"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "aAutoNoteStopDrive"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "aAutoIntake"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "FSaimPreload"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Dumb 4 note.8"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "aShootPreload"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Dumb 4 note.5"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "aAutoNoteStopDrive"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "aAutoIntake"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "FSaimPreload"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Dumb 4 note.6"
+                  "pathName": "Adaptable Source Auto.2"
                 }
               },
               {

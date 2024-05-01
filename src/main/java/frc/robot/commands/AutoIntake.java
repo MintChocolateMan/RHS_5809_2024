@@ -70,10 +70,10 @@ public class AutoIntake extends Command {
             );
         } else {
             if (poseEstimatorSub.getValidNote() == true) {
-                noteYaw = poseEstimatorSub.getNoteYaw();
+                noteYaw = (poseEstimatorSub.getNoteYaw() * 2 / 3);
                 rotation = swerveSub.swerveRotationPID.calculate(poseEstimatorSub.getPose().getRotation().getDegrees(), 
                     poseEstimatorSub.getPose().getRotation().getDegrees() - noteYaw);
-                strafe = swerveSub.swerveStrafePID.calculate(noteYaw / 4, 0);
+                strafe = swerveSub.swerveStrafePID.calculate(noteYaw / 3, 0);
             }
             if (Math.abs(noteYaw) <= Constants.IntakeSub.maxIntakeError) {
                 translation = 2.5;

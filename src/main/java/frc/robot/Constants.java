@@ -90,13 +90,13 @@ public final class Constants {
 
         public static final double maxV = 3;
         public static final double maxA = 8;
-        public static final double kP = 1.3;
+        public static final double kP = 1.25;
         public static final double kI = 0.3;
         public static final double kD = 0;
         public static final double kS = 0.1;
-        public static final double kV = 0.3;
+        public static final double kV = 0.35;
         public static final double kA = 0;
-        public static final double kG = 0.5;
+        public static final double kG = 0.6;
         public static final double kIZone = 3;
         public static final double kIMax = .2;
 
@@ -145,7 +145,7 @@ public final class Constants {
         public static final String shooterCamera = "limelight-shooter";
         public static final String intakeCamera = "limelight-intake";
 
-        public static final double autoVisionStdDevs = 20;
+        public static final double autoVisionStdDevs = 10;
         public static final double teleopVisionStdDevs = 0.01;
         public static final double aimVisionStdDevs = 0.01;
 

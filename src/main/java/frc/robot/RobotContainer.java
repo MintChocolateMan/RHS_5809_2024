@@ -113,6 +113,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("FSposeFarAmp", new FSposeFarAmp(poseEstimatorSub));
         NamedCommands.registerCommand("FSposeFarCenter", new FSposeFarCenter(poseEstimatorSub));
         NamedCommands.registerCommand("FSaimPreload", new FSaimPreload(actuatorSub));
+        NamedCommands.registerCommand("FSaimPreloadHigh", new FSaimPreloadHigh(actuatorSub));
         NamedCommands.registerCommand("FSaimStage", new FSaimStage(actuatorSub));
         NamedCommands.registerCommand("FSaimCenter", new FSaimCenter(actuatorSub));
         NamedCommands.registerCommand("FSaimAmp", new FSaimAmp(actuatorSub));
@@ -264,6 +265,10 @@ public class RobotContainer {
             () -> -driver.getRawAxis(strafeAxis)
         ));
 
+    }
+
+    public void setVisionSTDs() {
+        poseEstimatorSub.setStandardVisionStdDevs();
     }
 
     /**
